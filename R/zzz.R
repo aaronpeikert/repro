@@ -1,3 +1,3 @@
 .onAttach <- function(...){
-  library("usethis")
+  do.call("library", list("usethis"))
 }
