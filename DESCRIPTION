@@ -31,4 +31,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Depends: R (>= 3.6.0)
 Imports: 
-    usethis
+    usethis,
+    xfun,
+    fs,
+    glue,
+    stringr
