@@ -36,3 +36,5 @@ Imports:
     fs,
     glue,
     stringr
+URL: https://github.com/aaronpeikert/repro
+BugReports: https://github.com/aaronpeikert/repro/issues
