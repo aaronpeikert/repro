@@ -8,7 +8,10 @@
 <!-- badges: end -->
 
 The goal of repro is to make the setup of a reproducible workflow with
-RMarkdown, Git, Make & Docker as easy as possible.
+RMarkdown, Git, Make & Docker as easy as possible. To that end it builds
+upon the great [`usethis`-package](https://github.com/r-lib/usethis).
+The reproducible workflow mirrors the one proposed by [Peikert &
+Brandmaier (2019)](https://psyarxiv.com/8xzqy/).
 
 ## Installation
 
