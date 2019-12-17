@@ -2,11 +2,12 @@
 #'
 #' Adds dependencies as a new RUN statement to Dockerfile
 #'
-#' @param packages Which packages to add
+#' @param packages Which packages to add.
 #' @param github Are there github packages?
-#' @param strict Defaults to TRUE, force a specific version for github packages
+#' @param strict Defaults to TRUE, force a specific version for github packages.
+#' @export
 
-use_docker_packages <- function(packages, github = NULL, strict = TRUE){
+  use_docker_packages <- function(packages, github = NULL, strict = TRUE){
   save_as <- "Dockerfile"
   if(!fs::file_exists(save_as)){
     usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))

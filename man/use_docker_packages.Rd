@@ -7,11 +7,11 @@
 use_docker_packages(packages, github = NULL, strict = TRUE)
 }
 \arguments{
-\item{packages}{Which packages to add}
+\item{packages}{Which packages to add.}
 
 \item{github}{Are there github packages?}
 
-\item{strict}{Defaults to TRUE, force a specific version for github packages}
+\item{strict}{Defaults to TRUE, force a specific version for github packages.}
 }
 \description{
 Adds dependencies as a new RUN statement to Dockerfile
