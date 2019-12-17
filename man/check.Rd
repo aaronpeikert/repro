@@ -3,11 +3,17 @@
 \name{check}
 \alias{check}
 \alias{check_docker}
+\alias{check_make}
+\alias{check_git}
 \alias{check_brew}
 \alias{check_choco}
 \title{Check System Dependencies}
 \usage{
 check_docker(install = TRUE)
+
+check_make(install = TRUE)
+
+check_git(install = TRUE)
 
 check_brew(install = TRUE)
 
