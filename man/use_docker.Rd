@@ -7,12 +7,12 @@
 use_docker(rver = NULL, stack = "verse", date = Sys.Date())
 }
 \arguments{
-\item{rver}{which r version to use, defaults to current version}
+\item{rver}{which r version to use, defaults to current version.}
 
-\item{stack}{from which stack to use, possible values are c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")}
+\item{stack}{which stack to use, possible values are \code{c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")}.}
 
-\item{date}{which date should be used for package instalation, defaults to today}
+\item{date}{which date should be used for package instalation, defaults to today.}
 }
 \description{
-Uses Docker in the current project.
+Add or modify the Dockerfile in the current project.
 }
