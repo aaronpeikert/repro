@@ -1,13 +1,15 @@
 #' Add dependencies to Dockerfile
 #'
-#' Adds dependencies as a new RUN statement to Dockerfile
+#' Adds package dependencies as a new RUN statement to Dockerfile.
+#' Sorts packages first into source (cran & github) and then alphabetically.
 #'
 #' @param packages Which packages to add.
 #' @param github Are there github packages?
 #' @param strict Defaults to TRUE, force a specific version for github packages.
+#' @param open Should the `Dockerfile` be opened?
 #' @export
 
-  use_docker_packages <- function(packages, github = NULL, strict = TRUE){
+  use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = TRUE){
   save_as <- "Dockerfile"
   if(!fs::file_exists(save_as)){
     usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))
@@ -64,5 +66,7 @@
   # write out
   usethis::ui_done("Adding {ui_value(to_write)} to {ui_path('Dockerfile')}")
   xfun::write_utf8(c(dockerfile, to_write), path)
-  usethis::edit_file(path)
+  if(open){
+    usethis::edit_file(path)
+  }
 }
