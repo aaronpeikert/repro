@@ -2,7 +2,7 @@
 % Please edit documentation in R/docker.R
 \name{use_docker}
 \alias{use_docker}
-\title{Using Docker}
+\title{Use Docker}
 \usage{
 use_docker(rver = NULL, stack = "verse", date = Sys.Date())
 }
