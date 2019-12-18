@@ -22,9 +22,13 @@ else
 	DUSER = --user $(UID)
 endif
 
+### Docker Command ###
+
 ifeq ($(DOCKER),TRUE)
 	DRUN := docker $(DCMD) $(DFLAGS)
 endif
+
+### Docker Image ###
 
 docker: build
 build: Dockerfile
