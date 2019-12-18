@@ -2,7 +2,7 @@
 % Please edit documentation in R/docker_windows_path.R
 \name{docker_windows_path}
 \alias{docker_windows_path}
-\title{Genereate the weird format for docker on windows.}
+\title{Generate the weird format for docker on windows.}
 \usage{
 docker_windows_path(path = NULL)
 }
@@ -10,5 +10,5 @@ docker_windows_path(path = NULL)
 \item{path}{Some windows path. If NULL the current directory.}
 }
 \description{
-Genereate the weird format for docker on windows.
+Generate the weird format for docker on windows.
 }

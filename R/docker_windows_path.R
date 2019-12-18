@@ -1,5 +1,6 @@
-#' Genereate the weird format for docker on windows.
+#' Generate the weird format for docker on windows.
 #' @param path Some windows path. If NULL the current directory.
+#' @export
 docker_windows_path <- function(path = NULL){
   if(is.null(path))path <- usethis::proj_path()
   path <- stringr::str_split(path, ":")[[1]]
