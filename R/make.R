@@ -51,7 +51,7 @@ use_make_docker <- function(use_docker = TRUE, dockerignore = TRUE){
   usethis::use_template(
     "Makefile_Docker",
     "Makefile_Docker",
-    ignore = TRUE,
+    ignore = FALSE,
     open = FALSE,
     package = "repro"
   )
@@ -59,7 +59,7 @@ use_make_docker <- function(use_docker = TRUE, dockerignore = TRUE){
     usethis::use_template(
       "dockerignore",
       ".dockerignore",
-      ignore = TRUE,
+      ignore = FALSE,
       open = FALSE,
       package = "repro"
     )
