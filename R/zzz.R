@@ -1,7 +1,9 @@
 .onAttach <- function(...){
-  do.call("library", list("usethis", character.only = TRUE))
-  usethis::ui_info("repro is BETA software! Please report any bugs:\n{usethis::ui_value('https://github.com/aaronpeikert/repro/issues')}")
-  usethis::ui_info("Attaching {usethis::ui_code('usethis')}.")
+  packageStartupMessage(
+    usethis::ui_info(
+    "repro is BETA software! Please report any bugs:
+    {usethis::ui_value('https://github.com/aaronpeikert/repro/issues')}")
+  )
 }
 
 get_os <- function(){
