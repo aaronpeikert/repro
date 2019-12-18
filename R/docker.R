@@ -18,7 +18,7 @@ use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date()){
     data = list(rver = rver,
                 stack = stack,
                 date = date),
-    ignore = TRUE,
+    ignore = FALSE,
     open = TRUE,
     package = "repro"
   )
