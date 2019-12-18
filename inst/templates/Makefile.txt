@@ -3,6 +3,7 @@ projekt := $(notdir $(CURDIR))
 all:
 
 {{#wrapper}}
+### Wrap Commands ###
 # if a command is to be send to another process e.g. a container/scheduler use:
 # $(RUN1) mycommand --myflag $(RUN2)
 RUN1 = $(QRUN1) $(SRUN) $(DRUN)
@@ -10,6 +11,7 @@ RUN2 = $(QRUN2)
 
 {{/wrapper}}
 {{#docker}}
+### Docker ###
 # please mind the unusual way to specify the path
 WINPATH = {{winpath}}
 include Makefile_Docker
