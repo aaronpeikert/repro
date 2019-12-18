@@ -1,0 +1,13 @@
+### Singularity Command ###
+
+ifeq ($(SINGULARITY),TRUE)
+	SRUN := singularity $(SCMD) $(SFLAGS)
+	current_dir=/home/rstudio
+endif
+
+### Singularity Image ###
+
+singularity: $(PROJECT).sif
+
+$(PROJECT).sif: docker
+	singularity build $@ docker-daemon://$(PROJECT):latest

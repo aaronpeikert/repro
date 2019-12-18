@@ -1,5 +1,5 @@
 projekt := $(notdir $(CURDIR))
-
+# list below your targets and their recipies
 all:
 
 {{#wrapper}}
@@ -12,12 +12,20 @@ RUN2 = $(QRUN2)
 {{/wrapper}}
 {{#docker}}
 ### Docker ###
-# please mind the unusual way to specify the path
+# this is a workaround for windows users
+# please set WINDOWS=TRUE and adapt WINPATh if you are a windows user
+# note the unusual way to specify the path
 WINPATH = {{winpath}}
 include Makefile_Docker
 
 {{/docker}}
+{{#singularity}}
+### Singularity ###
+include Makefile_Singularity
+
+{{/singularity}}
 {{#inspect}}
 # use `make print-anyvariable` to inspect the value of any variable
 print-%: ; @echo $* = $($*)
+
 {{/inspect}}

@@ -4,11 +4,14 @@
 \alias{make}
 \alias{use_make}
 \alias{use_make_docker}
+\alias{use_make_singularity}
 \title{Use Make}
 \usage{
 use_make(docker = FALSE, singularity = FALSE, torque = FALSE)
 
 use_make_docker(use_docker = TRUE, dockerignore = TRUE)
+
+use_make_singularity(use_singularity = TRUE)
 }
 \arguments{
 \item{docker}{If true a setup is created that can partially send make commands to a Docker container}
@@ -20,6 +23,8 @@ use_make_docker(use_docker = TRUE, dockerignore = TRUE)
 \item{use_docker}{If true \code{use_docker()} is called.}
 
 \item{dockerignore}{If true a .dockerignore file is created.}
+
+\item{use_singularity}{If true \code{use_singularity()} is called.}
 }
 \description{
 Add a (GNU-)Makefile(s) with special emphasis on the use of containers.
