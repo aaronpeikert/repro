@@ -1,0 +1,34 @@
+### Docker Options ###
+# --user indicates which user to emulate
+# -v which directory on the host should be accessable in the container
+# the last argument is the name of the container which is the project name
+DFLAGS = --rm $(DUSER) -v $(DDIR):$(DHOME) $(PROJECT)
+DCMD = run
+DHOME = /home/rstudio
+
+# docker for windows needs a pretty unusual path specification
+# which needs to be specified *manually*
+ifeq ($(WINDOWS),TRUE)
+ifndef WINDIR
+$(error WINDIR is not set)
+endif
+	DDIR := WINDIR
+	# is meant to be empty
+	UID :=
+	DUSER :=
+else
+	DDIR := $(CURDIR)
+	UID = $(shell id -u)
+	DUSER = --user $(UID)
+endif
+
+ifeq ($(DOCKER),TRUE)
+	DRUN := docker $(DCMD) $(DFLAGS)
+endif
+
+docker: build
+build: Dockerfile
+	docker build -t $(projekt) .
+save-docker: $(projekt).tar.gz
+$(projekt).tar.gz:
+	docker save $(projekt):latest | gzip > $@

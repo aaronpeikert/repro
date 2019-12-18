@@ -1,1 +1,21 @@
 projekt := $(notdir $(CURDIR))
+
+all:
+
+{{#wrapper}}
+# if a command is to be send to another process e.g. a container/scheduler use:
+# $(RUN1) mycommand --myflag $(RUN2)
+RUN1 = $(QRUN1) $(SRUN) $(DRUN)
+RUN2 = $(QRUN2)
+
+{{/wrapper}}
+{{#docker}}
+# please mind the unusual way to specify the path
+WINPATH = {{winpath}}
+include Makefile_Docker
+
+{{/docker}}
+{{#inspect}}
+# use `make print-anyvariable` to inspect the value of any variable
+print-%: ; @echo $* = $($*)
+{{/inspect}}
