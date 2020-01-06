@@ -90,7 +90,7 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = T
     return(invisible(NULL))
   }
   # write out
-  usethis::ui_done("Adding {ui_value(to_write)} to {ui_path('Dockerfile')}")
+  usethis::ui_done("Adding {usethis::ui_value(to_write)} to {usethis::ui_path('Dockerfile')}")
   xfun::write_utf8(c(dockerfile, to_write), path)
   if(open){
     usethis::edit_file(path)
