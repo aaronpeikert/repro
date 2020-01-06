@@ -1,0 +1,11 @@
+### TORQUE Options ###
+WALLTIME = {walltime}
+MEMORY = 3gb
+QUEUE = default
+QFLAGS = -d $(CURDIR) -q $(QUEUE) -l nodes=1:ppn=$(NCORES) -l walltime=$(WALLTIME) -l mem=$(MEMORY)
+
+### TORQUE Command ###
+ifeq ($(TORQUE),TRUE)
+	QRUN1 := qsub $(QFLAGS) -F "
+	QRUN2 := " forward.sh
+endif
