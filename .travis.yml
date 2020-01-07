@@ -11,7 +11,6 @@ env:
     - _R_CHECK_TIMINGS_="0"  ## get the timing information for the examples for all of your functions
 
 r:
-  - oldrel
   - release
   - devel
 
