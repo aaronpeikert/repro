@@ -4,8 +4,7 @@
 \alias{use_docker_packages}
 \title{Add dependencies to Dockerfile}
 \usage{
-use_docker_packages(packages, github = NULL, strict = TRUE,
-  open = TRUE)
+use_docker_packages(packages, github = NULL, strict = TRUE, open = TRUE)
 }
 \arguments{
 \item{packages}{Which packages to add.}

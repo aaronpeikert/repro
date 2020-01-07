@@ -4,10 +4,12 @@
 \alias{docker_windows_path}
 \title{Generate the weird format for docker on windows.}
 \usage{
-docker_windows_path(path = NULL)
+docker_windows_path(path = NULL, todo = interactive())
 }
 \arguments{
 \item{path}{Some windows path. If NULL the current directory.}
+
+\item{todo}{Should an actionable advice be given. Defaults to TRUE.}
 }
 \description{
 Generate the weird format for docker on windows.

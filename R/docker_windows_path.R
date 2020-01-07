@@ -1,5 +1,6 @@
 #' Generate the weird format for docker on windows.
 #' @param path Some windows path. If NULL the current directory.
+#' @param todo Should an actionable advice be given. Defaults to TRUE.
 #' @export
 docker_windows_path <- function(path = NULL, todo = interactive()){
   if(is.null(path))path <- usethis::proj_path()
