@@ -11,11 +11,14 @@ NULL
 #' @rdname check
 #' @export
 check_docker <- function(install = TRUE){
-  # ask for the docker version
-  docker <- silent_command("docker", "-v")
-  # a command that is succesfull returns in shell returns 0
-  if(isTRUE(docker == 0L))usethis::ui_done("Docker is installed, don't worry.")
-  else{
+  if(is.na(getOption("repro.docker"))){
+    # ask for the docker version
+    options(repro.docker = silent_command("docker", "-v") == 0L)
+  }
+  # a command that is succesfull returns 0
+  if(isTRUE(getOption("repro.docker"))){
+    usethis::ui_done("Docker is installed, don't worry.")
+  } else {
     usethis::ui_oops("Docker is not installed.")
     if(install){
       if(get_os() == "windows"){
@@ -37,16 +40,20 @@ check_docker <- function(install = TRUE){
       }
     }
   }
+  invisible(getOption("repro.docker"))
 }
 
 #' @rdname check
 #' @export
 check_make <- function(install = TRUE){
-  # ask for the docker version
-  make <- silent_command("make", "-v")
-  # a command that is succesfull returns in shell returns 0
-  if(isTRUE(make == 0L))usethis::ui_done("Make is installed, don't worry.")
-  else{
+  if(is.na(getOption("repro.make"))){
+    # ask for the make version
+    # a command that is succesfull returns 0
+    options(repro.docker = silent_command("make", "-v") == 0L)
+  }
+  if(isTRUE(getOption("repro.make"))){
+    usethis::ui_done("Make is installed, don't worry.")
+  } else {
     usethis::ui_oops("Make is not installed.")
     if(install){
       if(get_os() == "windows"){
@@ -67,16 +74,20 @@ check_make <- function(install = TRUE){
       }
     }
   }
+  invisible(getOption("repro.make"))
 }
 
 #' @rdname check
 #' @export
 check_git <- function(install = TRUE){
-  # ask for the docker version
-  make <- silent_command("git", "--version")
-  # a command that is succesfull returns in shell returns 0
-  if(isTRUE(make == 0L))usethis::ui_done("Git is installed, don't worry.")
-  else{
+  if(is.na(getOption("repro.git"))){
+    # ask for the make version
+    # a command that is succesfull returns 0
+    options(repro.docker = silent_command("git", "--version") == 0L)
+  }
+  if(isTRUE(getOption("repro.git"))){
+    usethis::ui_done("Git is installed, don't worry.")
+  } else {
     usethis::ui_oops("Git is not installed.")
     if(install){
       if(get_os() == "windows"){
@@ -97,14 +108,18 @@ check_git <- function(install = TRUE){
       }
     }
   }
+  invisible(getOption("repro.git"))
 }
 
 #' @rdname check
 #' @export
 check_brew <- function(install = TRUE){
-  # ask for the chocolately version
-  choco <- silent_command("brew", "--version")
-  if(choco == 0L){
+  if(is.na(getOption("repro.brew"))){
+    # ask for the make version
+    # a command that is succesfull returns 0
+    options(repro.docker = silent_command("brew", "--version") == 0L)
+  }
+  if(isTRUE(getOption("repro.brew"))){
     usethis::ui_done("Homebrew is installed.")
   } else {
     usethis::ui_oops("Homebrew is not installed.")
@@ -113,14 +128,18 @@ check_brew <- function(install = TRUE){
       usethis::ui_todo("Restart your computer.")
     }
   }
+  invisible(getOption("repro.brew"))
 }
 
 #' @rdname check
 #' @export
 check_choco <- function(install = TRUE){
-  # ask for the chocolately version
-  choco <- silent_command("choco", "-v")
-  if(choco == 0L){
+  if(is.na(getOption("repro.choco"))){
+    # ask for the make version
+    # a command that is succesfull returns 0
+    options(repro.choco = silent_command("choco", "-v") == 0L)
+  }
+  if(isTRUE(getOption("repro.choco"))){
     usethis::ui_done("Chocolately is installed.")
   } else {
     usethis::ui_oops("Chocolately is not installed.")
@@ -130,4 +149,5 @@ check_choco <- function(install = TRUE){
       usethis::ui_todo("Restart your computer.")
     }
   }
+  invisible(getOption("repro.choco"))
 }
