@@ -11,10 +11,10 @@ expect_unicode_output <- function(object, match){
   invisible(val)
 }
 expect_ok <- function(object){
-  expect_unicode_output(object, "\\u2714")
+  expect_unicode_output(object, "^\\u2714")
 }
 expect_oops <- function(object){
-  expect_unicode_output(object, "\\u2716")
+  expect_unicode_output(object, "^\\u2716")
 }
 
 test_that("options set to TRUE are recognized.", {
@@ -41,7 +41,7 @@ test_that("options set to TRUE are recognized.", {
   options(opts)
 })
 
-test_that("set options set to FALSE are recognized.", {
+test_that("options set to FALSE are recognized.", {
   opts <- options()
   options(
     repro.docker = FALSE,
@@ -61,6 +61,85 @@ test_that("set options set to FALSE are recognized.", {
   expect_false(check_git())
   expect_false(check_choco())
   expect_false(check_brew())
+
+  options(opts)
+})
+
+test_that("the correct instalation hint for Windows is given.", {
+  opts <- options()
+  options(
+    repro.docker = FALSE,
+    repro.make = FALSE,
+    repro.git = FALSE,
+    repro.choco = FALSE,
+    repro.os = "windows"
+  )
+  testthat::expect_output(check_docker(), "windows", ignore.case = TRUE)
+  testthat::expect_output(check_docker(), "choco install", ignore.case = TRUE)
+  testthat::expect_output(check_docker(), "chocolately", ignore.case = TRUE)
+  testthat::expect_output(check_docker(), "docker", ignore.case = TRUE)
+
+  testthat::expect_output(check_make(), "windows", ignore.case = TRUE)
+  testthat::expect_output(check_make(), "choco install", ignore.case = TRUE)
+  testthat::expect_output(check_make(), "chocolately", ignore.case = TRUE)
+  testthat::expect_output(check_make(), "make", ignore.case = TRUE)
+
+  testthat::expect_output(check_git(), "windows", ignore.case = TRUE)
+  testthat::expect_output(check_git(), "choco install", ignore.case = TRUE)
+  testthat::expect_output(check_git(), "chocolately", ignore.case = TRUE)
+  testthat::expect_output(check_git(), "git", ignore.case = TRUE)
+
+  testthat::expect_output(check_choco(), "choco", ignore.case = TRUE)
+
+  options(opts)
+})
+
+test_that("the correct instalation hint for OS X is given.", {
+  opts <- options()
+  options(
+    repro.docker = FALSE,
+    repro.make = FALSE,
+    repro.git = FALSE,
+    repro.brew = FALSE,
+    repro.os = "osx"
+  )
+  testthat::expect_output(check_docker(), "os x", ignore.case = TRUE)
+  testthat::expect_output(check_docker(), "brew cask", ignore.case = TRUE)
+  testthat::expect_output(check_docker(), "brew", ignore.case = TRUE)
+  testthat::expect_output(check_docker(), "docker", ignore.case = TRUE)
+
+
+  testthat::expect_output(check_git(), "os x", ignore.case = TRUE)
+  testthat::expect_output(check_git(), "brew cask", ignore.case = TRUE)
+  testthat::expect_output(check_git(), "brew", ignore.case = TRUE)
+  testthat::expect_output(check_git(), "git", ignore.case = TRUE)
+
+  testthat::expect_output(check_make(), "os x", ignore.case = TRUE)
+  testthat::expect_output(check_make(), "brew cask", ignore.case = TRUE)
+  testthat::expect_output(check_make(), "brew", ignore.case = TRUE)
+  testthat::expect_output(check_make(), "make", ignore.case = TRUE)
+
+  testthat::expect_output(check_brew(), "brew", ignore.case = TRUE)
+
+  options(opts)
+})
+
+test_that("the correct instalation hint for linux is given.", {
+  opts <- options()
+  options(
+    repro.docker = FALSE,
+    repro.make = FALSE,
+    repro.git = FALSE,
+    repro.os = "linux"
+  )
+  testthat::expect_output(check_docker(), "package manager", ignore.case = TRUE)
+  testthat::expect_output(check_docker(), "docker", ignore.case = TRUE)
+
+  testthat::expect_output(check_git(), "package manager", ignore.case = TRUE)
+  testthat::expect_output(check_git(), "git", ignore.case = TRUE)
+
+  testthat::expect_output(check_make(), "package manager", ignore.case = TRUE)
+  testthat::expect_output(check_make(), "make", ignore.case = TRUE)
 
   options(opts)
 })
