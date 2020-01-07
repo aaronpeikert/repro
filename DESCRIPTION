@@ -38,3 +38,5 @@ Imports:
     stringr
 URL: https://github.com/aaronpeikert/repro
 BugReports: https://github.com/aaronpeikert/repro/issues
+Suggests: 
+    testthat (>= 2.1.0)
