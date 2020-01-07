@@ -12,8 +12,6 @@ env:
 
 os:
   - linux
-  - osx
-  - windows
 
 r:
   - release
