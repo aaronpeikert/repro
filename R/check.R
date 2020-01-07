@@ -49,7 +49,7 @@ check_make <- function(install = TRUE){
   if(is.na(getOption("repro.make"))){
     # ask for the make version
     # a command that is succesfull returns 0
-    options(repro.docker = silent_command("make", "-v") == 0L)
+    options(repro.make = silent_command("make", "-v") == 0L)
   }
   if(isTRUE(getOption("repro.make"))){
     usethis::ui_done("Make is installed, don't worry.")
@@ -83,7 +83,7 @@ check_git <- function(install = TRUE){
   if(is.na(getOption("repro.git"))){
     # ask for the make version
     # a command that is succesfull returns 0
-    options(repro.docker = silent_command("git", "--version") == 0L)
+    options(repro.git = silent_command("git", "--version") == 0L)
   }
   if(isTRUE(getOption("repro.git"))){
     usethis::ui_done("Git is installed, don't worry.")
@@ -117,7 +117,7 @@ check_brew <- function(install = TRUE){
   if(is.na(getOption("repro.brew"))){
     # ask for the make version
     # a command that is succesfull returns 0
-    options(repro.docker = silent_command("brew", "--version") == 0L)
+    options(repro.brew = silent_command("brew", "--version") == 0L)
   }
   if(isTRUE(getOption("repro.brew"))){
     usethis::ui_done("Homebrew is installed.")

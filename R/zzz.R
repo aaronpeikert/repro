@@ -34,7 +34,7 @@ get_os <- function(){
         os <- "linux"
     }
     os <- tolower(os)
-    options(repro.docker = os)
+    options(repro.os = os)
     return(os)
   } else {
     return(getOption("repro.os"))
