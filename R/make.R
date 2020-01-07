@@ -7,12 +7,13 @@
 #' @param use_docker If true `use_docker()` is called.
 #' @param use_singularity If true `use_singularity()` is called.
 #' @param dockerignore If true a .dockerignore file is created.
+#' @param open Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.
 #' @name make
 NULL
 
 #' @rdname make
 #' @export
-use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE){
+use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open = TRUE){
   # start out with the simplist Makefile possible
   template_data <- list(wrapper = FALSE,
                         docker = FALSE,
@@ -42,7 +43,7 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE){
       "Makefile",
       data = template_data,
       ignore = FALSE,
-      open = TRUE,
+      open = open,
       package = "repro"
     )
     # check if there are some Rmds, if so recomend recommend to add it
@@ -58,13 +59,13 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE){
 
 #' @rdname make
 #' @export
-use_make_docker <- function(use_docker = TRUE, dockerignore = TRUE){
+use_make_docker <- function(use_docker = TRUE, dockerignore = TRUE, open = FALSE){
   if(!fs::file_exists("Dockerfile") & use_docker)use_docker()
   usethis::use_template(
     "Makefile_Docker",
     "Makefile_Docker",
     ignore = FALSE,
-    open = FALSE,
+    open = open,
     package = "repro"
   )
   if(dockerignore){
@@ -72,7 +73,7 @@ use_make_docker <- function(use_docker = TRUE, dockerignore = TRUE){
       "dockerignore",
       ".dockerignore",
       ignore = FALSE,
-      open = FALSE,
+      open = open,
       package = "repro"
     )
   }
@@ -80,7 +81,7 @@ use_make_docker <- function(use_docker = TRUE, dockerignore = TRUE){
 
 #' @rdname make
 #' @export
-use_make_singularity <- function(use_singularity = TRUE){
+use_make_singularity <- function(use_singularity = TRUE, open = FALSE){
   if(use_singularity)1 + 2 #fixme
   usethis::use_template(
     "Makefile_Singularity",

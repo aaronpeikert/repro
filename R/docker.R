@@ -5,9 +5,10 @@
 #' @param rver which r version to use, defaults to current version.
 #' @param stack which stack to use, possible values are `c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")`.
 #' @param date which date should be used for package instalation, defaults to today.
+#' @param open Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.
 #' @export
 
-use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date()){
+use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date(), open = TRUE){
   if (is.null(rver)) {
     rver <- glue::glue(R.version$major, ".", R.version$minor)
   }
