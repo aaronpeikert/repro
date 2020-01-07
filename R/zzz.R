@@ -1,9 +1,4 @@
 .onLoad <- function(...){
-  packageStartupMessage(
-    usethis::ui_info(
-    "repro is BETA software! Please report any bugs:
-    {usethis::ui_value('https://github.com/aaronpeikert/repro/issues')}")
-  )
   op <- options()
   op.repro <- list(
     repro.docker = NA,
@@ -17,6 +12,14 @@
   if(any(toset)) options(op.repro[toset])
 
   invisible()
+}
+
+.onAttach <- function(...){
+  packageStartupMessage(
+    usethis::ui_info(
+      "repro is BETA software! Please report any bugs:
+    {usethis::ui_value('https://github.com/aaronpeikert/repro/issues')}")
+  )
 }
 
 get_os <- function(){
