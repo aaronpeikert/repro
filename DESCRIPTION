@@ -39,4 +39,5 @@ Imports:
 URL: https://github.com/aaronpeikert/repro
 BugReports: https://github.com/aaronpeikert/repro/issues
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    covr

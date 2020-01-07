@@ -5,9 +5,10 @@
 
 <!-- badges: start -->
 
-[![Build
-Status](https://travis-ci.com/aaronpeikert/repro.svg?branch=master)](https://travis-ci.com/aaronpeikert/repro)[![Build
-Status](https://codecov.io/gh/aaronpeikert/repro/branch/master/graph/badge.svg)](https://codecov.io/gh/aaronpeikert/repro/)
+[![Travis build
+status](https://travis-ci.org/aaronpeikert/repro.svg?branch=master)](https://travis-ci.org/aaronpeikert/repro)
+[![Codecov test
+coverage](https://codecov.io/gh/aaronpeikert/repro/branch/master/graph/badge.svg)](https://codecov.io/gh/aaronpeikert/repro?branch=master)
 <!-- badges: end -->
 
 The goal of repro is to make the setup of a reproducible workflow with
