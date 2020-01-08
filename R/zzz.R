@@ -10,7 +10,6 @@
     )
   toset <- !(names(op.repro) %in% names(op))
   if(any(toset)) options(op.repro[toset])
-
   invisible()
 }
 
