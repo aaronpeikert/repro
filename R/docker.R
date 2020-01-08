@@ -20,7 +20,7 @@ use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date(), open = T
                 stack = stack,
                 date = date),
     ignore = FALSE,
-    open = TRUE,
+    open = open,
     package = "repro"
   )
 }
@@ -49,41 +49,41 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = T
   dockerfile <- xfun::read_utf8(path)
 
   # github stuff has these symbols
-  on_github <- stringr::str_detect(packages, "[/|@]")
-  github <- packages[on_github]
+  on_github <- packages[stringr::str_detect(packages, "[/|@]")]
   # everything else is assumed to be on cran
-  cran <- packages[!on_github]
-  if(!isTRUE(github) && any(on_github)){
+  on_cran <- packages[!(packages %in% on_github)]
+  if(!isTRUE(github) & (length(on_github) > 0)){
     usethis::ui_warn("Some packages seem to come from GitHub.
             Set {usethis::ui_code('github = TRUE')} to silence this warning.")
   }
-  if(isTRUE(strict) & any(!stringr::str_detect(github, "@"))){
+  if(isTRUE(strict) & any(!stringr::str_detect(on_github, "@"))){
     usethis::ui_stop("Some github packages are without fixed version. Use the following scheme:
             {usethis::ui_code('author/package@version')}
-            version can be a git tag or hash")
+            version can be a git tag or hash or
+            set {usethis::ui_code('strict = FALSE')} on your own risk.")
   }
 
   # sort alphabetically and remove duplicates
-  github <- unique(github)
-  github <- sort(github)
-  cran <- unique(cran)
-  cran <- sort(cran)
+  on_github <- unique(on_github)
+  on_github <- sort(on_github)
+  on_cran <- unique(on_cran)
+  on_cran <- sort(on_cran)
 
   # construct Dockerfile entries
   # and write them appended to Dockerfile
   to_write <- character()
-  if(length(cran) > 0){
+  if(length(on_cran) > 0){
     cran_code <- c(
       "RUN install2.r --error --skipinstalled \\\ ",
-      stringr::str_c("  ", cran[-length(cran)], " \\\ "),
-      stringr::str_c("  ", cran[length(cran)]))
+      stringr::str_c("  ", on_cran[-length(on_cran)], " \\\ "),
+      stringr::str_c("  ", on_cran[length(on_cran)]))
     to_write <- c(to_write, cran_code)
   }
-  if(length(github) > 0){
+  if(length(on_github) > 0){
     github_code <- c(
       "RUN installGithub.r \\\ ",
-      stringr::str_c("  ", github[-length(github)], " \\\ "),
-      stringr::str_c("  ", github[length(github)]))
+      stringr::str_c("  ", on_github[-length(on_github)], " \\\ "),
+      stringr::str_c("  ", on_github[length(on_github)]))
     to_write <- c(to_write, github_code)
   }
   if(!isTRUE(length(to_write) > 0L)){
