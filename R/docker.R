@@ -73,18 +73,14 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = T
   # and write them appended to Dockerfile
   to_write <- character()
   if(length(on_cran) > 0){
-    cran_code <- c(
-      "RUN install2.r --error --skipinstalled \\\ ",
-      stringr::str_c("  ", on_cran[-length(on_cran)], " \\\ "),
-      stringr::str_c("  ", on_cran[length(on_cran)]))
-    to_write <- c(to_write, cran_code)
+    cran_entry <- docker_entry_install(on_github,
+                                       "install2.r",
+                                       "--error --skipinstalled")
+    to_write <- c(to_write, cran_entry)
   }
   if(length(on_github) > 0){
-    github_code <- c(
-      "RUN installGithub.r \\\ ",
-      stringr::str_c("  ", on_github[-length(on_github)], " \\\ "),
-      stringr::str_c("  ", on_github[length(on_github)]))
-    to_write <- c(to_write, github_code)
+    github_entry <- docker_entry_install(on_github, "installGithub.r")
+    to_write <- c(to_write, github_entry)
   }
   if(!isTRUE(length(to_write) > 0L)){
     usethis::ui_oops("No new packages added!")
@@ -96,4 +92,18 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = T
   if(open){
     usethis::edit_file(path)
   }
+  invisible(to_write)
+}
+
+docker_entry_install <- function(packages, cmd, flags = NULL, collapse = TRUE){
+  entry <- stringr::str_c("RUN", cmd, flags, "\\\ ", sep = " ")
+  if(length(packages) == 1L){
+    entry <- c(entry, stringr::str_c("  ", packages))
+  } else {
+    entry <- c(entry,
+               stringr::str_c("  ", packages[-length(packages)], " \\\ "),
+               stringr::str_c("  ", packages[length(packages)]))
+  }
+  if(collapse)entry <- stringr::str_c(entry, collapse = "\n")
+  entry
 }

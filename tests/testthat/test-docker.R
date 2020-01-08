@@ -31,3 +31,25 @@ test_that("use_docker_packages warns about github packages",{
                                      open = FALSE),
                  NA)
 })
+
+test_that("docker_entry_install returns only characters", {
+  expect_length(docker_entry_install("test",
+                                     "installGithub.r",
+                                     collapse = FALSE), 2L)
+
+  expect_length(docker_entry_install(c("test", "another_test"),
+                                     "installGithub.r",
+                                     collapse = FALSE), 3L)
+
+  expect_length(docker_entry_install(c("test", "another_test"),
+                                     "installGithub.r",
+                                     collapse = TRUE), 1L)
+  expect_match(docker_entry_install(c("test", "another_test"),
+                                     "installGithub.r",
+                                     collapse = TRUE),
+                "test")
+  expect_match(docker_entry_install(c("test", "another_test"),
+                                    "installGithub.r",
+                                    collapse = TRUE),
+               "another_test")
+})
