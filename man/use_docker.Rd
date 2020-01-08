@@ -4,7 +4,7 @@
 \alias{use_docker}
 \title{Use Docker}
 \usage{
-use_docker(rver = NULL, stack = "verse", date = Sys.Date())
+use_docker(rver = NULL, stack = "verse", date = Sys.Date(), open = TRUE)
 }
 \arguments{
 \item{rver}{which r version to use, defaults to current version.}
@@ -12,6 +12,8 @@ use_docker(rver = NULL, stack = "verse", date = Sys.Date())
 \item{stack}{which stack to use, possible values are \code{c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")}.}
 
 \item{date}{which date should be used for package instalation, defaults to today.}
+
+\item{open}{Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.}
 }
 \description{
 Add or modify the Dockerfile in the current project.
