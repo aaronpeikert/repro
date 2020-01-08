@@ -32,7 +32,7 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
   # add Singularity (and implicitly Docker)
   if(singularity)use_make_singularity()
   if(fs::file_exists("Makefile_Singularity") & singularity){
-    if(!isTRUE(docker))usethis::ui_stop("Singularity depends in this setup on Docker.\nSet {usethis::ui_code('docker = TRUE')} & {usethis::ui_code('singularity = TRUE')}")
+    if(!fs::file_exists("Dockerfile"))usethis::ui_stop("Singularity depends in this setup on Docker.\nSet {usethis::ui_code('docker = TRUE')} & {usethis::ui_code('singularity = TRUE')}")
     template_data$singularity <- TRUE
   }
   if(fs::file_exists("Makefile")){
