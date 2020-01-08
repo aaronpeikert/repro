@@ -82,10 +82,6 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = T
     github_entry <- docker_entry_install(on_github, "installGithub.r")
     to_write <- c(to_write, github_entry)
   }
-  if(!isTRUE(length(to_write) > 0L)){
-    usethis::ui_oops("No new packages added!")
-    return(invisible(NULL))
-  }
   # write out
   usethis::ui_done("Adding {usethis::ui_value(to_write)} to {usethis::ui_path('Dockerfile')}")
   xfun::write_utf8(c(dockerfile, to_write), path)

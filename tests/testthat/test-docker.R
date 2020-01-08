@@ -30,6 +30,10 @@ test_that("use_docker_packages warns about github packages",{
                                      github = TRUE,
                                      open = FALSE),
                  NA)
+  expect_warning(use_docker_packages("usethis",
+                                     github = TRUE,
+                                     open = FALSE),
+                 NA)
 })
 
 test_that("docker_entry_install returns only characters", {
