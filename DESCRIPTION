@@ -35,7 +35,8 @@ Imports:
     xfun,
     fs,
     glue,
-    stringr
+    stringr,
+    yaml
 URL: https://github.com/aaronpeikert/repro
 BugReports: https://github.com/aaronpeikert/repro/issues
 Suggests: 
