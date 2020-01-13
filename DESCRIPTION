@@ -31,7 +31,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
 Depends: R (>= 3.6.0)
 Imports: 
-    usethis,
+    usethis (>= 1.5.1),
     xfun,
     fs,
     glue,
