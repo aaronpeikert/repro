@@ -33,21 +33,11 @@ use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date(), open = T
 #' @param packages Which packages to add.
 #' @param github Are there github packages?
 #' @param strict Defaults to TRUE, force a specific version for github packages.
-#' @param open Should the `Dockerfile` be opened?
+#' @param write Should the file be written to disk?
+#' @param open Should the file be opened?
 #' @export
 
-use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = TRUE){
-  save_as <- "Dockerfile"
-  if(!fs::file_exists(save_as)){
-    usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))
-    usethis::ui_todo(glue::glue("Run {ui_code('use_docker()')} to create {usethis::ui_path(save_as)}."))
-    return(invisible(NULL))
-  }
-
-  # read dockerfile
-  path <- usethis::proj_path("Dockerfile")
-  dockerfile <- xfun::read_utf8(path)
-
+use_docker_packages <- function(packages, github = NULL, strict = TRUE, write = TRUE, open = write){
   # github stuff has these symbols
   on_github <- packages[stringr::str_detect(packages, "[/|@]")]
   # everything else is assumed to be on cran
@@ -82,16 +72,32 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, open = T
     github_entry <- docker_entry_install(on_github, "installGithub.r")
     to_write <- c(to_write, github_entry)
   }
-  # write out
-  usethis::ui_done("Adding {usethis::ui_value(to_write)} to {usethis::ui_path('Dockerfile')}")
-  xfun::write_utf8(c(dockerfile, to_write), path)
-  if(open){
-    usethis::edit_file(path)
-  }
-  invisible(to_write)
+  docker_entry(to_write, "Dockerfile", write, open)
 }
 
-docker_entry_install <- function(packages, cmd, flags = NULL, collapse = TRUE){
+docker_entry <- function(entry, file, write, open){
+  if(write){
+    save_as <- "Dockerfile"
+    if(!fs::file_exists(save_as)){
+      usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))
+      usethis::ui_todo(glue::glue("Run {ui_code('use_docker()')} to create {usethis::ui_path(save_as)}."))
+      return(invisible(NULL))
+    }
+    # read dockerfile
+    path <- usethis::proj_path("Dockerfile")
+    dockerfile <- xfun::read_utf8(path)
+    usethis::ui_done("Adding {usethis::ui_value(entry)} to {usethis::ui_path('Dockerfile')}")
+    if(open){
+      usethis::edit_file(path)
+    }
+    xfun::write_utf8(entry, path)
+    return(invisible(entry))
+  } else {
+    return(entry)
+  }
+}
+
+docker_entry_install <- function(packages, cmd, flags = NULL, collapse = TRUE, write = FALSE, open = write){
   entry <- stringr::str_c("RUN", cmd, flags, "\\\ ", sep = " ")
   if(length(packages) == 1L){
     entry <- c(entry, stringr::str_c("  ", packages))
@@ -101,5 +107,5 @@ docker_entry_install <- function(packages, cmd, flags = NULL, collapse = TRUE){
                stringr::str_c("  ", packages[length(packages)]))
   }
   if(collapse)entry <- stringr::str_c(entry, collapse = "\n")
-  entry
+  docker_entry(entry, "Dockerfile", write, open)
 }

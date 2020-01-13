@@ -4,7 +4,13 @@
 \alias{use_docker_packages}
 \title{Add dependencies to Dockerfile}
 \usage{
-use_docker_packages(packages, github = NULL, strict = TRUE, open = TRUE)
+use_docker_packages(
+  packages,
+  github = NULL,
+  strict = TRUE,
+  write = TRUE,
+  open = write
+)
 }
 \arguments{
 \item{packages}{Which packages to add.}
@@ -13,7 +19,9 @@ use_docker_packages(packages, github = NULL, strict = TRUE, open = TRUE)
 
 \item{strict}{Defaults to TRUE, force a specific version for github packages.}
 
-\item{open}{Should the \code{Dockerfile} be opened?}
+\item{write}{Should the file be written to disk?}
+
+\item{open}{Should the file be opened?}
 }
 \description{
 Adds package dependencies as a new RUN statement to Dockerfile.

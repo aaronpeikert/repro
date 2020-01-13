@@ -43,4 +43,5 @@ Suggests:
     covr,
     curl,
     git2r,
-    withr
+    withr,
+    rlang

@@ -10,7 +10,7 @@ test_that("onload sets options to na", {
 })
 
 test_that("onAttach sends a message", {
-  expect_output(.onAttach())
+  expect_message(.onAttach())
 })
 
 test_that("silent_command is silent", {
