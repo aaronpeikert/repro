@@ -9,6 +9,9 @@
 status](https://travis-ci.org/aaronpeikert/repro.svg?branch=master)](https://travis-ci.org/aaronpeikert/repro)
 [![Codecov test
 coverage](https://codecov.io/gh/aaronpeikert/repro/branch/master/graph/badge.svg)](https://codecov.io/gh/aaronpeikert/repro?branch=master)
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
 The goal of repro is to make the setup of a reproducible workflow with
