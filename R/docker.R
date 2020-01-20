@@ -72,32 +72,37 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, write = 
     github_entry <- docker_entry_install(on_github, "installGithub.r")
     to_write <- c(to_write, github_entry)
   }
-  docker_entry(to_write, "Dockerfile", write, open)
+  docker_entry(to_write, "Dockerfile", write, open, append = TRUE)
 }
 
-docker_entry <- function(entry, file, write, open){
-  if(write){
-    save_as <- "Dockerfile"
-    if(!fs::file_exists(save_as)){
-      usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))
-      usethis::ui_todo(glue::glue("Run {usethis::ui_code('use_docker()')} to create {usethis::ui_path(save_as)}."))
-      return(invisible(NULL))
-    }
-    # read dockerfile
-    path <- usethis::proj_path("Dockerfile")
-    dockerfile <- xfun::read_utf8(path)
-    usethis::ui_done("Adding {usethis::ui_value(entry)} to {usethis::ui_path('Dockerfile')}")
-    if(open){
+docker_entry <- function(entry, file, write, open, append) {
+  save_as <- "Dockerfile"
+  if (!fs::file_exists(save_as)) {
+    usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))
+    usethis::ui_todo(
+      glue::glue(
+        "Run {usethis::ui_code('use_docker()')} to create {usethis::ui_path(save_as)}."
+      )
+    )
+    return(invisible(NULL))
+  }
+  # read dockerfile
+  path <- usethis::proj_path("Dockerfile")
+  dockerfile <- xfun::read_utf8(path)
+  usethis::ui_done("Adding {usethis::ui_value(entry)} to {usethis::ui_path('Dockerfile')}")
+  entry <- c(dockerfile, entry)
+  if (write) {
+    xfun::write_utf8(entry, path)
+    if (open) {
       usethis::edit_file(path)
     }
-    xfun::write_utf8(entry, path)
     return(invisible(entry))
   } else {
     return(entry)
   }
 }
 
-docker_entry_install <- function(packages, cmd, flags = NULL, collapse = TRUE, write = FALSE, open = write){
+docker_entry_install <- function(packages, cmd, flags = NULL){
   entry <- stringr::str_c("RUN", cmd, flags, "\\\ ", sep = " ")
   if(length(packages) == 1L){
     entry <- c(entry, stringr::str_c("  ", packages))
@@ -106,6 +111,5 @@ docker_entry_install <- function(packages, cmd, flags = NULL, collapse = TRUE, w
                stringr::str_c("  ", packages[-length(packages)], " \\\ "),
                stringr::str_c("  ", packages[length(packages)]))
   }
-  if(collapse)entry <- stringr::str_c(entry, collapse = "\n")
-  docker_entry(entry, "Dockerfile", write, open)
+  entry
 }

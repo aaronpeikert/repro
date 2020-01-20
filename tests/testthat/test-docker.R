@@ -38,24 +38,18 @@ test_that("use_docker_packages warns about github packages",{
 
 test_that("docker_entry_install returns only characters", {
   expect_length(docker_entry_install("test",
-                                     "installGithub.r",
-                                     collapse = FALSE), 2L)
+                                     "installGithub.r"), 2L)
 
   expect_length(docker_entry_install(c("test", "another_test"),
-                                     "installGithub.r",
-                                     collapse = FALSE), 3L)
+                                     "installGithub.r"), 3L)
 
-  expect_length(docker_entry_install(c("test", "another_test"),
-                                     "installGithub.r",
-                                     collapse = TRUE), 1L)
-  expect_match(docker_entry_install(c("test", "another_test"),
-                                     "installGithub.r",
-                                     collapse = TRUE),
-                "test")
-  expect_match(docker_entry_install(c("test", "another_test"),
-                                    "installGithub.r",
-                                    collapse = TRUE),
-               "another_test")
+  expect_identical(docker_entry_install("test",
+                                        "installGithub.r"),
+                   c("RUN installGithub.r \\ ", "  test"))
+
+  expect_identical(docker_entry_install(c("test", "another_test"),
+                                     "installGithub.r"),
+                c("RUN installGithub.r \\ ", "  test \\ ", "  another_test"))
 })
 
 test_that("use_docker_packages actually adds them to the Dockerfile", {
@@ -65,4 +59,17 @@ test_that("use_docker_packages actually adds them to the Dockerfile", {
   dockerfile <- readLines("Dockerfile")
   expect_match(dockerfile, "test1", all = FALSE)
   expect_match(dockerfile, "test2", all = FALSE)
+})
+
+test_that("docker entry only appends stuff", {
+  scoped_temporary_package()
+  use_docker()
+  dockerfile1 <- readLines("Dockerfile")
+  docker_entry("test", write = TRUE, open = TRUE)
+  dockerfile2 <- readLines("Dockerfile")
+  expect_identical(dockerfile1, dockerfile2[-length(dockerfile2)])
+  expect_identical(dockerfile2[length(dockerfile2)], "test")
+
+  dockerfile3 <- docker_entry("test", write = FALSE, open = TRUE)
+  expect_identical(dockerfile3, c(dockerfile2, "test"))
 })
