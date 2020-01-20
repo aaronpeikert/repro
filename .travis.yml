@@ -2,7 +2,8 @@
 language: r
 cache: packages
 warnings_are_errors: false
-
+r_github_packages:
+  - r-lib/usethis
 # environment variables set for all builds
 env:
   global:
