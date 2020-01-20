@@ -80,7 +80,7 @@ docker_entry <- function(entry, file, write, open){
     save_as <- "Dockerfile"
     if(!fs::file_exists(save_as)){
       usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))
-      usethis::ui_todo(glue::glue("Run {ui_code('use_docker()')} to create {usethis::ui_path(save_as)}."))
+      usethis::ui_todo(glue::glue("Run {usethis::ui_code('use_docker()')} to create {usethis::ui_path(save_as)}."))
       return(invisible(NULL))
     }
     # read dockerfile
