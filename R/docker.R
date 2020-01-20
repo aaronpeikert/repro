@@ -63,7 +63,7 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, write = 
   # and write them appended to Dockerfile
   to_write <- character()
   if(length(on_cran) > 0){
-    cran_entry <- docker_entry_install(on_github,
+    cran_entry <- docker_entry_install(on_cran,
                                        "install2.r",
                                        "--error --skipinstalled")
     to_write <- c(to_write, cran_entry)

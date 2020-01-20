@@ -57,3 +57,12 @@ test_that("docker_entry_install returns only characters", {
                                     collapse = TRUE),
                "another_test")
 })
+
+test_that("use_docker_packages actually adds them to the Dockerfile", {
+  scoped_temporary_package()
+  use_docker()
+  use_docker_packages(c("test1", "test2"))
+  dockerfile <- readLines("Dockerfile")
+  expect_match(dockerfile, "test1", all = FALSE)
+  expect_match(dockerfile, "test2", all = FALSE)
+})
