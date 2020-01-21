@@ -7,8 +7,19 @@ read_yaml <- function(path, ...){
   yaml <- yaml::read_yaml(text = stripped, ...)
   return(yaml)
 }
-repro_yaml <- function(path, ...){
+
+yaml_repro <- function(path, ...){
   yaml <- read_yaml(path, ...)
-  if(!("repro" %in% names(yaml)))stop("This is not a repro-yaml.")
-  yaml$repro
+  if(!("repro" %in% names(yaml)))return(NULL)
+  else return(yaml$repro)
+}
+
+yamls_packages <- function(path = ".", ...){
+  rmds <- fs::dir_ls(path, recurse = TRUE, glob = "*.Rmd")
+  ymls <- lapply(rmds, yaml_repro, ...)
+  packages_list <- lapply(ymls, function(x)x$packages)
+  package_lengths <- vapply(packages_list, function(x)length(x), FUN.VALUE = vector("integer", 1L))
+  packages <- unlist(packages_list[order(package_lengths, decreasing = TRUE)])
+  if(!is.character(packages))usethis::ui_oops("Something seems to be wrong with the package specification in one of the RMarkdowns.")
+  return(packages)
 }

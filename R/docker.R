@@ -5,17 +5,17 @@
 #' @param rver which r version to use, defaults to current version.
 #' @param stack which stack to use, possible values are `c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")`.
 #' @param date which date should be used for package instalation, defaults to today.
+#' @param file which file to save to
 #' @param open Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.
 #' @export
 
-use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date(), open = TRUE){
+use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date(), file = "Dockerfile", open = TRUE){
   if (is.null(rver)) {
     rver <- glue::glue(R.version$major, ".", R.version$minor)
   }
-  save_as <- "Dockerfile"
   usethis::use_template(
     "Dockerfile",
-    save_as,
+    file,
     data = list(rver = rver,
                 stack = stack,
                 date = date),
@@ -75,13 +75,12 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, write = 
   docker_entry(to_write, "Dockerfile", write, open, append = TRUE)
 }
 
-docker_entry <- function(entry, file, write, open, append) {
-  save_as <- "Dockerfile"
-  if (!fs::file_exists(save_as)) {
-    usethis::ui_oops(glue::glue("There is no {usethis::ui_path(save_as)}!"))
+docker_entry <- function(entry, file = "Dockerfile", write, open, append) {
+  if (!fs::file_exists(file)) {
+    usethis::ui_oops(glue::glue("There is no {usethis::ui_path(file)}!"))
     usethis::ui_todo(
       glue::glue(
-        "Run {usethis::ui_code('use_docker()')} to create {usethis::ui_path(save_as)}."
+        "Run {usethis::ui_code('use_docker()')} to create {usethis::ui_path(file)}."
       )
     )
     return(invisible(NULL))
@@ -112,4 +111,37 @@ docker_entry_install <- function(packages, cmd, flags = NULL){
                stringr::str_c("  ", packages[length(packages)]))
   }
   entry
+}
+
+docker_get_install <- function(dockerfile){
+  starts <- stringr::str_detect(dockerfile, "^(RUN install)(.*)(\\.)[Rr](.*)$")
+  possible_range <- c(rep(which(starts), each = 2L)[-1], length(dockerfile))
+  possible_list <- apply(matrix(possible_range, ncol = 2L), 1, function(x)list(x))
+  possible_pos <- lapply(possible_list, function(x)seq(x[[1]][1], x[[1]][2]))
+  possible <- lapply(possible_pos, function(x)dockerfile[x])
+  pos_raw <- lapply(possible, function(x)which(stringr::str_detect(x, "^(  )")))
+  out <- vector("list", length(pos_raw))
+  for(i in seq_along(pos_raw)){
+    out[[i]] <- c(possible[[i]][1], possible[[i]][pos_raw[[i]]])
+  }
+  return(out)
+}
+
+docker_get_packages <- function(file = "Dockerfile"){
+  if (!fs::file_exists(file)) {
+    usethis::ui_oops(glue::glue("There is no {usethis::ui_path(file)}!"))
+    usethis::ui_todo(
+      glue::glue(
+        "Run {usethis::ui_code('use_docker()')} to create {usethis::ui_path(file)}."
+      )
+    )
+    return(invisible(NULL))
+  }else{
+    dockerfile <- readLines(file)
+  }
+  entry <- docker_get_install(dockerfile)
+  packages_raw <- lapply(entry, function(x)x[stringr::str_detect(x, "^(  )")])
+  packages <- lapply(packages_raw, function(x)stringr::str_extract(x, "[a-zA-z]+"))
+  packages_sorted <- sort(unique(unlist(packages)))
+  return(packages_sorted)
 }
