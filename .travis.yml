@@ -19,7 +19,6 @@ r_check_args: --no-build-vignettes --no-manual --timings
 # for codecov
 r_packages:
   - covr
-
 jobs:
   include:
   - r: release
@@ -27,12 +26,11 @@ jobs:
   - r: devel
     r_github_packages: r-lib/usethis
   - r: release
+    env: ALLOW=true
   - r: devel
+    env: ALLOW=true
   allow_failures:
-  - r: release
-    r_github_packages:
-  - r: devel
-    r_github_packages:
+  - env: ALLOW=true
 
 # only report coverage for the release version
 after_success:
