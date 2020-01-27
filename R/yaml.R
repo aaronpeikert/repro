@@ -31,14 +31,21 @@ yamls_packages <- function(path = ".", ...){
   return(packages)
 }
 
-yaml_repro_current <- function(){
-  if(exists("params"))yml <- params
-  else {
-    if(requireNamespace("rstudioapi", quietly = TRUE)){
-      yml <- read_yaml(rstudioapi::getSourceEditorContext()$path)
-    } else {
-      usethis::ui_warn("Can not find out where you currently are. Please install {usethis::ui_code('rstudioapi')}.")
-      return(NULL)
+yaml_repro_current <- function() {
+  if (length(yaml_repro(rmarkdown::metadata)) > 0L) {
+    return(yaml_repro(rmarkdown::metadata))
+  } else{
+    if (exists("params"))
+      yml <- params
+    else {
+      if (requireNamespace("rstudioapi", quietly = TRUE)) {
+        yml <- read_yaml(rstudioapi::getSourceEditorContext()$path)
+      } else {
+        usethis::ui_warn(
+          "Can not find out where you currently are. Please install {usethis::ui_code('rstudioapi')}."
+        )
+        return(NULL)
+      }
     }
   }
   yaml_repro(yml)
