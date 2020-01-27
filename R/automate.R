@@ -29,7 +29,6 @@ automate_docker <- function(path = "."){
 }
 
 automate_docker_bundle <- function(file = "Dockerfile"){
-
   dockerfiles <- c(
     dockerfile_base = paste0(
       getOption("repro.dir"),
@@ -76,9 +75,19 @@ automate_load_packages <- function(){
   return(invisible(NULL))
 }
 
-automate_read_scripts <- function(){
+automate_load_scripts <- function(){
   paths <- lapply(yaml_repro_current()$scripts, usethis::proj_path)
   scripts <- lapply(paths, xfun::read_utf8)
   lapply(scripts, function(x)knitr::read_chunk(lines = x))
   return(invisible(NULL))
+}
+
+automate_load_data <- function(data, func, ..., assign = TRUE){
+  which <- deparse(substitute(data))
+  path <- usethis::proj_path(yaml_repro_current()$data[[which]])
+  data <- do.call(func, list(path, ...))
+  if(assign){
+    assign(which, data, envir = .GlobalEnv)
+    return(invisible(data))
+  } else return(data)
 }
