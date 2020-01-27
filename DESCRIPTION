@@ -47,4 +47,5 @@ Suggests:
     withr,
     rlang,
     rstudioapi,
-    rmarkdown
+    rmarkdown,
+    knitr

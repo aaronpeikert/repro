@@ -82,12 +82,12 @@ automate_load_scripts <- function(){
   return(invisible(NULL))
 }
 
-automate_load_data <- function(data, func, ..., assign = TRUE){
+automate_load_data <- function(data, func, ...){
   which <- deparse(substitute(data))
   path <- usethis::proj_path(yaml_repro_current()$data[[which]])
   data <- do.call(func, list(path, ...))
   if(assign){
-    assign(which, data, envir = .GlobalEnv)
+    assign(which, data, envir = 1)
     return(invisible(data))
   } else return(data)
 }

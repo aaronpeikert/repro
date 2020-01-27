@@ -36,7 +36,7 @@ yaml_repro_current <- function() {
     return(yaml_repro(rmarkdown::metadata))
   } else{
     if (exists("params"))
-      yml <- params
+      yml <- get("params")
     else {
       if (requireNamespace("rstudioapi", quietly = TRUE)) {
         yml <- read_yaml(rstudioapi::getSourceEditorContext()$path)
