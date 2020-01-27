@@ -13,13 +13,13 @@ use_docker(
 )
 }
 \arguments{
-\item{rver}{which r version to use, defaults to current version.}
+\item{rver}{Which r version to use, defaults to current version.}
 
-\item{stack}{which stack to use, possible values are \code{c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")}.}
+\item{stack}{Which stack to use, possible values are \code{c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")}.}
 
-\item{date}{which date should be used for package instalation, defaults to today.}
+\item{date}{Which date should be used for package instalation, defaults to today.}
 
-\item{file}{which file to save to}
+\item{file}{Which file to save to}
 
 \item{open}{Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.}
 }

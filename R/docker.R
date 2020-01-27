@@ -2,10 +2,10 @@
 #'
 #' Add or modify the Dockerfile in the current project.
 #'
-#' @param rver which r version to use, defaults to current version.
-#' @param stack which stack to use, possible values are `c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")`.
-#' @param date which date should be used for package instalation, defaults to today.
-#' @param file which file to save to
+#' @param rver Which r version to use, defaults to current version.
+#' @param stack Which stack to use, possible values are `c("r-ver", "rstudio", "tidyverse", "verse", "geospatial")`.
+#' @param date Which date should be used for package instalation, defaults to today.
+#' @param file Which file to save to
 #' @param open Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.
 #' @export
 
@@ -33,11 +33,13 @@ use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date(), file = "
 #' @param packages Which packages to add.
 #' @param github Are there github packages?
 #' @param strict Defaults to TRUE, force a specific version for github packages.
-#' @param write Should the file be written to disk?
+#' @param file Where is the 'Dockerfile'?
+#' @param write Should the 'Dockerfile' be modified?
 #' @param open Should the file be opened?
+#' @param append Should the return value be appended to the 'Dockerfile'?
 #' @export
 
-use_docker_packages <- function(packages, github = NULL, strict = TRUE, write = TRUE, open = write){
+use_docker_packages <- function(packages, github = NULL, strict = TRUE, file = "Dockerfile", write = TRUE, open = write, append = TRUE){
   # github stuff has these symbols
   on_github <- packages[stringr::str_detect(packages, "[/|@]")]
   # everything else is assumed to be on cran
@@ -72,7 +74,7 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, write = 
     github_entry <- docker_entry_install(on_github, "installGithub.r")
     to_write <- c(to_write, github_entry)
   }
-  docker_entry(to_write, "Dockerfile", write, open, append = TRUE)
+  docker_entry(to_write, file, write, open, append)
 }
 
 docker_entry <- function(entry, file = "Dockerfile", write, open, append) {
@@ -86,10 +88,10 @@ docker_entry <- function(entry, file = "Dockerfile", write, open, append) {
     return(invisible(NULL))
   }
   # read dockerfile
-  path <- usethis::proj_path("Dockerfile")
+  path <- usethis::proj_path(file)
   dockerfile <- xfun::read_utf8(path)
-  usethis::ui_done("Adding {usethis::ui_value(entry)} to {usethis::ui_path('Dockerfile')}")
-  entry <- c(dockerfile, entry)
+  usethis::ui_done("Adding {usethis::ui_value(entry)} to {usethis::ui_path(file)}")
+  if(append)entry <- c(dockerfile, entry)
   if (write) {
     xfun::write_utf8(entry, path)
     if (open) {

@@ -65,12 +65,12 @@ test_that("docker entry only appends stuff", {
   scoped_temporary_package()
   use_docker()
   dockerfile1 <- readLines("Dockerfile")
-  docker_entry("test", write = TRUE, open = TRUE)
+  docker_entry("test", write = TRUE, open = TRUE, append = TRUE)
   dockerfile2 <- readLines("Dockerfile")
   expect_identical(dockerfile1, dockerfile2[-length(dockerfile2)])
   expect_identical(dockerfile2[length(dockerfile2)], "test")
 
-  dockerfile3 <- docker_entry("test", write = FALSE, open = TRUE)
+  dockerfile3 <- docker_entry("test", write = FALSE, open = TRUE, append = TRUE)
   expect_identical(dockerfile3, c(dockerfile2, "test"))
 })
 dockerfile <- "FROM rocker/verse:3.6.1
