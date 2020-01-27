@@ -45,4 +45,5 @@ Suggests:
     curl,
     git2r,
     withr,
-    rlang
+    rlang,
+    rstudioapi

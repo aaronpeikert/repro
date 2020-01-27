@@ -8,7 +8,7 @@ read_yaml <- function(path, ...){
   return(yaml)
 }
 
-yaml_repro <- function(yaml, ...){
+yaml_repro <- function(yaml){
   if("repro" %in% names(yaml)){
     return(yaml$repro)
   } else {
@@ -29,4 +29,17 @@ yamls_packages <- function(path = ".", ...){
   packages <- unlist(packages_list[order(package_lengths, decreasing = TRUE)])
   if(!is.character(packages))usethis::ui_oops("Something seems to be wrong with the package specification in one of the RMarkdowns.")
   return(packages)
+}
+
+yaml_repro_current <- function(){
+  if(exists("params"))yml <- params
+  else {
+    if(requireNamespace("rstudioapi", quietly = TRUE)){
+      yml <- read_yaml(rstudioapi::getSourceEditorContext()$path)
+    } else {
+      usethis::ui_warn("Can not find out where you currently are. Please install {usethis::ui_code('rstudioapi')}.")
+      return(NULL)
+    }
+  }
+  yaml_repro(yml)
 }

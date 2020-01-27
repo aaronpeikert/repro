@@ -69,3 +69,16 @@ automate_dir <- function(dir, warn = FALSE, create = !warn){
   }
   return(exists)
 }
+
+automate_load_packages <- function(){
+  packages <- yaml_repro_current()$packages
+  lapply(packages, library, character.only = TRUE, quietly = TRUE)
+  return(invisible(NULL))
+}
+
+automate_read_scripts <- function(){
+  paths <- lapply(yaml_repro_current()$scripts, usethis::proj_path)
+  scripts <- lapply(paths, xfun::read_utf8)
+  lapply(scripts, function(x)knitr::read_chunk(lines = x))
+  return(invisible(NULL))
+}
