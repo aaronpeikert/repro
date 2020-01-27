@@ -5,7 +5,7 @@ test_that("yaml is corectly read", {
   cat(test_rmd1, file = "test.Rmd")
   expect_identical(names(read_yaml("test.Rmd")),
                    c("title", "author", "date", "output", "repro"))
-  expect_identical(names(yaml_repro("test.Rmd")),
+  expect_identical(names(yaml_repro(read_yaml("test.Rmd"))),
                    c("packages", "data", "scripts"))
 })
 

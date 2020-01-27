@@ -8,15 +8,22 @@ read_yaml <- function(path, ...){
   return(yaml)
 }
 
-yaml_repro <- function(path, ...){
-  yaml <- read_yaml(path, ...)
-  if(!("repro" %in% names(yaml)))return(NULL)
-  else return(yaml$repro)
+yaml_repro <- function(yaml, ...){
+  if("repro" %in% names(yaml)){
+    return(yaml$repro)
+  } else {
+    if("repro" %in% names(yaml$params)){
+      return(yaml$params$repro)
+    } else{
+      return(NULL)
+    }
+  }
 }
 
 yamls_packages <- function(path = ".", ...){
   rmds <- fs::dir_ls(path, recurse = TRUE, glob = "*.Rmd")
-  ymls <- lapply(rmds, yaml_repro, ...)
+  ymls <- lapply(rmds, read_yaml, ...)
+  ymls <- lapply(ymls, yaml_repro)
   packages_list <- lapply(ymls, function(x)x$packages)
   package_lengths <- vapply(packages_list, function(x)length(x), FUN.VALUE = vector("integer", 1L))
   packages <- unlist(packages_list[order(package_lengths, decreasing = TRUE)])
