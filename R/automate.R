@@ -1,3 +1,29 @@
+#' Automate the use of Docker & Make
+#'
+#' `automate()` & friends use yaml metadata from RMarkdowns to create
+#' `Dockerfile`'s and `Makefile`'s. It should be clear which is created by
+#' `automate_docker()` & which by `automate_make()`.
+#' @param path Where should we look for RMarkdowns?
+#' @seealso [automate_load_packages()], [automate_load_data()], [automate_load_scripts()]
+#' @name automate
+NULL
+
+#' @rdname automate
+#' @export
+automate <- function(path = "."){
+  automate_docker()
+  automate_make()
+  return(invisible(NULL))
+}
+
+#' @rdname automate
+#' @export
+automate_make <- function(path = "."){
+  usethis::ui_oops("Sorry {usethis::ui_code('automate_make')} not implemented, yet.")
+}
+
+#' @rdname automate
+#' @export
 automate_docker <- function(path = "."){
   if(automate_dir()){
     dockerfile_base <- paste0(getOption("repro.dir"),
@@ -69,12 +95,31 @@ automate_dir <- function(dir, warn = FALSE, create = !warn){
   return(exists)
 }
 
+#' Access repro YAML Metadata from within the document
+#'
+#' * `automate_load_packages()` loads all packages listed in YAML via `library()`
+#' * `automate_load_scripts()` registeres external scripts via `knitr::read_chunk()`
+#' * `automate_load_data()` reads in the data from the yaml with abitrary functions
+#'
+#' @param data How is the entry in the YAML called? It will be the name of the object.
+#' @param func Which function should be used to read in the data? Its first argument must be the path to the file.
+#' @param ... Further arguments supplied to `func`.
+#' @param assign Should the read in object actually be created?
+#' @return The read in data is (invisibly) returned.
+#'
+#' @name automate_load
+NULL
+
+#' @rdname automate_load
+#' @export
 automate_load_packages <- function(){
   packages <- yaml_repro_current()$packages
   lapply(packages, library, character.only = TRUE, quietly = TRUE)
   return(invisible(NULL))
 }
 
+#' @rdname automate_load
+#' @export
 automate_load_scripts <- function(){
   paths <- lapply(yaml_repro_current()$scripts, usethis::proj_path)
   scripts <- lapply(paths, xfun::read_utf8)
@@ -82,12 +127,14 @@ automate_load_scripts <- function(){
   return(invisible(NULL))
 }
 
-automate_load_data <- function(data, func, ...){
+#' @rdname automate_load
+#' @export
+automate_load_data <- function(data, func, ..., assign = TRUE){
   which <- deparse(substitute(data))
   path <- usethis::proj_path(yaml_repro_current()$data[[which]])
   data <- do.call(func, list(path, ...))
   if(assign){
-    assign(which, data, envir = 1)
+    assign(which, data, pos = 1)
     return(invisible(data))
   } else return(data)
 }
