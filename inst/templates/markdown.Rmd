@@ -13,7 +13,7 @@ repro:
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(repro)
@@ -36,13 +36,12 @@ check_make()
 check_docker()
 ```
 
-
 ## Analysis
 
 ```{r clean}
 # see R/clean.R
 # this chunk (as long as it is empty, comments don't count) runs external
-# code from external scripts listed in the YAML
+# code from scripts listed in the YAML
 # see also https://yihui.org/knitr/demo/externalization/
 ```
 

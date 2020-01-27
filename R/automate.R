@@ -104,8 +104,7 @@ automate_dir <- function(dir, warn = FALSE, create = !warn){
 #' @param data How is the entry in the YAML called? It will be the name of the object.
 #' @param func Which function should be used to read in the data? Its first argument must be the path to the file.
 #' @param ... Further arguments supplied to `func`.
-#' @param assign Should the read in object actually be created?
-#' @return The read in data is (invisibly) returned.
+#' @return `automate_load_packages()` & `automate_load_scripts()` do not return anything. `automate_load_data()` returns the data.
 #'
 #' @name automate_load
 NULL
@@ -129,12 +128,9 @@ automate_load_scripts <- function(){
 
 #' @rdname automate_load
 #' @export
-automate_load_data <- function(data, func, ..., assign = TRUE){
+automate_load_data <- function(data, func, ...){
   which <- deparse(substitute(data))
   path <- usethis::proj_path(yaml_repro_current()$data[[which]])
   data <- do.call(func, list(path, ...))
-  if(assign){
-    assign(which, data, pos = 1)
-    return(invisible(data))
-  } else return(data)
+  return(data)
 }

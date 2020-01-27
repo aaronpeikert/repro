@@ -11,7 +11,7 @@ automate_load_packages()
 
 automate_load_scripts()
 
-automate_load_data(data, func, ..., assign = TRUE)
+automate_load_data(data, func, ...)
 }
 \arguments{
 \item{data}{How is the entry in the YAML called? It will be the name of the object.}
@@ -19,11 +19,9 @@ automate_load_data(data, func, ..., assign = TRUE)
 \item{func}{Which function should be used to read in the data? Its first argument must be the path to the file.}
 
 \item{...}{Further arguments supplied to \code{func}.}
-
-\item{assign}{Should the read in object actually be created?}
 }
 \value{
-The read in data is (invisibly) returned.
+\code{automate_load_packages()} & \code{automate_load_scripts()} do not return anything. \code{automate_load_data()} returns the data.
 }
 \description{
 \itemize{
