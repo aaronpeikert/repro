@@ -1,6 +1,10 @@
 .onLoad <- function(...){
   op <- options()
   op.repro <- list(
+    repro.dir = ".repro",
+    repro.dockerfile.base = "Dockerfile_base",
+    repro.dockerfile.packages = "Dockerfile_packages",
+    repro.dockerfile.manual = "Dockerfile_manual",
     repro.docker = NA,
     repro.make = NA,
     repro.git = NA,
