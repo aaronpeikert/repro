@@ -52,3 +52,16 @@ knitr::opts_chunk$set(echo = TRUE)
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 '
+dockerfile <- "FROM rocker/verse:3.6.1
+ARG BUILD_DATE=2020-01-20
+WORKDIR /home/rstudio
+RUN install2.r --error --skipinstalled \
+  anytime \
+  dplyr \
+  usethis
+RUN install2.r --error --skipinstalled \
+  anytime \
+  lubridate \
+  readr \
+  usethis
+"

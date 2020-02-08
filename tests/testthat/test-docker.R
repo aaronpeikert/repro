@@ -73,19 +73,7 @@ test_that("docker entry only appends stuff", {
   dockerfile3 <- docker_entry("test", write = FALSE, open = TRUE, append = TRUE)
   expect_identical(dockerfile3, c(dockerfile2, "test"))
 })
-dockerfile <- "FROM rocker/verse:3.6.1
-ARG BUILD_DATE=2020-01-20
-WORKDIR /home/rstudio
-RUN install2.r --error --skipinstalled \
-  anytime \
-  dplyr \
-  usethis
-RUN install2.r --error --skipinstalled \
-  anytime \
-  lubridate \
-  readr \
-  usethis
-"
+
 test_that("docker_get extracts correct lines", {
   scoped_temporary_project()
   cat(dockerfile, file = "Dockerfile")
