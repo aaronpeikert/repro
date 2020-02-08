@@ -60,7 +60,7 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
 #' @rdname make
 #' @export
 use_make_docker <- function(use_docker = TRUE, dockerignore = TRUE, open = FALSE){
-  if(!fs::file_exists("Dockerfile") & use_docker)use_docker()
+  if(use_docker)use_docker()
   usethis::use_template(
     "Makefile_Docker",
     "Makefile_Docker",
