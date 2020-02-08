@@ -11,8 +11,8 @@ NULL
 #' @rdname automate
 #' @export
 automate <- function(path = "."){
-  automate_docker()
-  automate_make()
+  automate_docker(path)
+  automate_make(path)
   return(invisible(NULL))
 }
 
