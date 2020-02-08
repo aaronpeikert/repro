@@ -9,7 +9,7 @@
 # No -> Update!!! Both!
 # Not sure -> Update. Both.
 # Yes -> Updating is still a good idea.
-# I don't use RStudio -> Not sure what to say...
+# I don't use RStudio -> I am not sure what to say ... you're on your own.
 # Links for your convinience:
 # https://cran.r-project.org
 # https://rstudio.com/products/rstudio/download/#download
@@ -40,8 +40,8 @@ repro::check_docker()
 use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")
 
 #### SSH Keys ####
-# We'll set up the connection between your computer/Git in the workshop.
-# But if you have ten minutes, skim over (or go ahead eager beaver do it):
+# We'll connect your computer/Git and GitHub in the workshop.
+# If you have a moment, skim over (or go ahead eager beaver try it yourself):
 # https://happygitwithr.com/ssh-keys.html
 
 #### Wifi ####
@@ -50,13 +50,13 @@ use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")
 # If you're not 100% sure you'll have internet, come early, we'll figure it out.
 
 #### This doesn't work ####
-# If you hate any of the following:
+# If you right nor hate any of the following:
 # * me
 # * your computer
 # * yourself
 # * the world
 # Or it simply doesn't work:
-# It' okay, we all have been there. Keep calm, do these three things:
+# It's okay, we all have been there. Keep calm, do these three things:
 # 1. raise an isse: https://github.com/aaronpeikert/repro/issues/new
 # 2. Come early to the workshop:
 #   * We figure it out together.
