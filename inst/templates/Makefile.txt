@@ -13,7 +13,7 @@ RUN2 = $(QRUN2)
 {{#docker}}
 ### Docker ###
 # this is a workaround for windows users
-# please set WINDOWS=TRUE and adapt WINPATh if you are a windows user
+# please set WINDOWS=TRUE and adapt WINPATH if you are a windows user
 # note the unusual way to specify the path
 WINPATH = {{winpath}}
 include Makefile_Docker
