@@ -56,19 +56,16 @@ automate_docker <- function(path = "."){
 
 automate_docker_bundle <- function(file = "Dockerfile"){
   dockerfiles <- c(
-    dockerfile_base = paste0(
+    dockerfile_base = usethis::proj_path(
       getOption("repro.dir"),
-      "/",
       getOption("repro.dockerfile.base")
     ),
-    dockerfile_manual = paste0(
+    dockerfile_manual = usethis::proj_path(
       getOption("repro.dir"),
-      "/",
       getOption("repro.dockerfile.manual")
     ),
-    dockerfile_packages = paste0(
+    dockerfile_packages = usethis::proj_path(
       getOption("repro.dir"),
-      "/",
       getOption("repro.dockerfile.packages")
     )
   )
