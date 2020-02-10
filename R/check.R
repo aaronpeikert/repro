@@ -143,7 +143,7 @@ check_choco <- function(install = TRUE){
   } else {
     usethis::ui_oops("Chocolately is not installed.")
     if(install){
-      usethis::ui_todo("To install it, follow directions on: {usethis::ui_value('https://chocolatey.org/install')}")
+      usethis::ui_todo("To install it, follow directions on: {usethis::ui_value('https://chocolatey.org/docs/installation')}")
       usethis::ui_info("Use an administrator terminal to install chocolately.")
       usethis::ui_todo("Restart your computer.")
     }
