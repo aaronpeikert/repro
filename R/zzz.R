@@ -44,5 +44,5 @@ get_os <- function(){
 }
 
 silent_command <- function(...){
-  suppressMessages(suppressWarnings(system2(...)))
+  suppressMessages(suppressWarnings(system2(..., stdout = tempfile(), stderr = tempfile())))
 }
