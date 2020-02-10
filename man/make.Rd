@@ -9,18 +9,20 @@
 \usage{
 use_make(docker = FALSE, singularity = FALSE, torque = FALSE, open = TRUE)
 
-use_make_docker(use_docker = TRUE, dockerignore = TRUE, open = FALSE)
+use_make_docker(file, use_docker = TRUE, dockerignore = TRUE, open = FALSE)
 
-use_make_singularity(use_singularity = TRUE, open = FALSE)
+use_make_singularity(file, use_singularity = TRUE, open = FALSE)
 }
 \arguments{
-\item{docker}{If true a setup is created that can partially send make commands to a Docker container}
+\item{docker}{If true or a path a setup is created that can partially send make commands to a Docker container.}
 
-\item{singularity}{If true a setup is created that can partially send make commands to a Singularity container (which requires the Dockerimage)}
+\item{singularity}{If true or a path a setup is created that can partially send make commands to a Singularity container (which requires the Dockerimage)}
 
-\item{torque}{If true a setup is created that can partially send make comands to a TORQUE job scheduler. Especially usefull in combination with a Singularity container.}
+\item{torque}{If true a or a path setup is created that can partially send make comands to a TORQUE job scheduler. Especially usefull in combination with a Singularity container.}
 
 \item{open}{Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.}
+
+\item{file}{Path to the file that is to be created.}
 
 \item{use_docker}{If true \code{use_docker()} is called.}
 

@@ -20,6 +20,13 @@ test_that("use_make creates a Makefile_Singularity", {
   expect_proj_file("Makefile_Singularity")
 })
 
+test_that("use_make creates a custome Makefiles", {
+  scoped_temporary_project()
+  use_make(docker = "mydocker", singularity = "mysingularity", open = TRUE)
+  expect_proj_file("mydocker")
+  expect_proj_file("mysingularity")
+})
+
 test_that("use_make fails for Singularity without Docker", {
   scoped_temporary_project()
   expect_error(use_make(docker = FALSE, singularity = TRUE, open = TRUE),
@@ -36,15 +43,36 @@ test_that("use_make works for Singularity with pre-existing Docker", {
 })
 
 test_that("use_make_docker creates all files it should", {
+  opts <- options()
+
   scoped_temporary_project()
   use_make_docker()
   expect_proj_file("Makefile_Docker")
   expect_proj_file("Dockerfile")
   expect_proj_file(".dockerignore")
+
+  scoped_temporary_project()
+  options(repro.makefile.docker = "mydocker")
+
+  use_make_docker()
+  expect_proj_file("mydocker")
+  expect_proj_file("Dockerfile")
+  expect_proj_file(".dockerignore")
+
+  options(opts)
 })
 
 test_that("use_make_singularity creates all files it should", {
+  opts <- options()
+
   scoped_temporary_project()
   use_make_singularity()
   expect_proj_file("Makefile_Singularity")
+
+  scoped_temporary_project()
+  options(repro.makefile.singularity = "mysingularity")
+  use_make_singularity()
+  expect_proj_file("mysingularity")
+
+  options(opts)
 })
