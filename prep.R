@@ -29,7 +29,7 @@ if(!requireNamespace("devtools"))install.packages("devtools")
 if(!requireNamespace("repro"))devtools::install_github("aaronpeikert/repro")
 
 #### Git/Make/Docker ####
-# follow instructions, rerun, if you are told to not worry, do not worry.
+# follow instructions, rerun till you are told to not worry, then do not worry.
 repro::check_git()
 repro::check_make()
 repro::check_docker()
