@@ -25,19 +25,18 @@ check_docker <- function(install = TRUE){
         usethis::ui_info("We recommend Chocolately for Windows users.")
         check_choco()
         usethis::ui_todo("Run {usethis::ui_code('choco install -y docker-desktop')} in an admin terminal to install docker.")
-        usethis::ui_todo("Consider restarting your computer.")
       } else if(get_os() == "osx"){
         usethis::ui_info("We recommend Homebrew for OS X users.")
         check_brew()
-        usethis::ui_todo("Run {usethis::ui_code('brew cask docker')} in an admin terminal to install docker.")
-        usethis::ui_todo("Consider restarting your computer.")
+        usethis::ui_todo("Run {usethis::ui_code('brew cask install docker')} in an admin terminal to install docker.")
       } else if(get_os() == "linux"){
         usethis::ui_info("Adapt to your native package manager (deb, rpm, brew, csw, eopkg).")
         usethis::ui_info("You may need admin-rights, use {usethis::ui_code('sudo apt install docker')} in this case.")
         usethis::ui_todo("Run {usethis::ui_code('apt install docker')} in a terminal to install docker.")
         usethis::ui_todo("Add your user to the docker user group. Follow instructions on:\n{usethis::ui_value('https://docs.docker.com/install/linux/linux-postinstall/')}")
-        usethis::ui_todo("Consider restarting your computer.")
       }
+      usethis::ui_todo("Consider restarting your computer.")
+      usethis::ui_todo("For more infos visit: {usethis::ui_value('https://docs.docker.com/install/')}")
     }
   }
   invisible(getOption("repro.docker"))

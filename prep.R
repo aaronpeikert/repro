@@ -1,5 +1,6 @@
 #### Instructions ####
 # Unfortunately you cannot run this script mindlessly and be fine.
+# It may take a moment or two, so make sure you have some time for this.
 # Read it carefully, execute line by line and see how your computer responds.
 # Any line that does not start with '#' is meant to run in R.
 # Be kind, most computers are pretty sensitive.
