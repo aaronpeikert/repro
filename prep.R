@@ -1,5 +1,5 @@
 #### Instructions ####
-# Unfortunatly you cannot run this script mindlessly and be fine.
+# Unfortunately you cannot run this script mindlessly and be fine.
 # Read it carefully, execute line by line and see how your computer responds.
 # Any line that does not start with '#' is meant to run in R.
 # Be kind, most computers are pretty sensitive.
@@ -10,13 +10,13 @@
 # Not sure -> Update. Both.
 # Yes -> Updating is still a good idea.
 # I don't use RStudio -> I am not sure what to say ... you're on your own.
-# Links for your convinience:
+# Links for your convenience:
 # https://cran.r-project.org
 # https://rstudio.com/products/rstudio/download/#download
 
 #### GitHub ####
 # Do you have a GitHub Account?
-# Yes -> Make sure you remember passwort and username.
+# Yes -> Make sure you remember password and username.
 # No -> Visit https://github.com/join
 
 # Have you requested a researcher/student discount?
@@ -29,7 +29,7 @@ if(!requireNamespace("devtools"))install.packages("devtools")
 if(!requireNamespace("repro"))devtools::install_github("aaronpeikert/repro")
 
 #### Git/Make/Docker ####
-# follow instructions, rerun, if your told to not worry, do not worry.
+# follow instructions, rerun, if you are told to not worry, do not worry.
 repro::check_git()
 repro::check_make()
 repro::check_docker()
@@ -57,10 +57,10 @@ use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")
 # * the world
 # Or it simply doesn't work:
 # It's okay, we all have been there. Keep calm, do these three things:
-# 1. raise an isse: https://github.com/aaronpeikert/repro/issues/new
+# 1. raise an issue: https://github.com/aaronpeikert/repro/issues/new
 # 2. Come early to the workshop:
 #   * We figure it out together.
 #   * I'll usually be there about an hour early.
 # 3. Watch cute video on youtube: https://www.youtube.com/watch?v=GdP44iBIvck
 
-#### Looking forward to see you! ####
+#### Looking forward to seeing you! ####
