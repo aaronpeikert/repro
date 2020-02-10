@@ -37,7 +37,7 @@ repro::check_docker()
 #### Git Setup ####
 # Introduce yourself to Git. It's the polite thing to do.
 # Edit name and email.
-use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")
+usethis::use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")
 
 #### SSH Keys ####
 # We'll connect your computer/Git and GitHub in the workshop.
