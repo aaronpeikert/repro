@@ -9,7 +9,7 @@
 # No -> Update!!! Both!
 # Not sure -> Update. Both.
 # Yes -> Updating is still a good idea.
-# I don't use RStudio -> I am not sure what to say ... you're on your own.
+# I don't use RStudio -> Though not mandatory, it will make your life easier!
 # Links for your convenience:
 # https://cran.r-project.org
 # https://rstudio.com/products/rstudio/download/#download
