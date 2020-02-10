@@ -50,7 +50,7 @@ use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")
 # If you're not 100% sure you'll have internet, come early, we'll figure it out.
 
 #### This doesn't work ####
-# If you right nor hate any of the following:
+# If you right now hate any of the following:
 # * me
 # * your computer
 # * yourself
