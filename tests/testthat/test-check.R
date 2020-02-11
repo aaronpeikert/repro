@@ -87,19 +87,19 @@ test_that("the correct instalation hint for OS X is given.", {
     repro.os = "osx"
   )
   testthat::expect_message(check_docker(), "os x", ignore.case = TRUE)
-  testthat::expect_message(check_docker(), "brew cask", ignore.case = TRUE)
   testthat::expect_message(check_docker(), "brew", ignore.case = TRUE)
+  testthat::expect_message(check_docker(), "install", ignore.case = TRUE)
   testthat::expect_message(check_docker(), "docker", ignore.case = TRUE)
 
 
   testthat::expect_message(check_git(), "os x", ignore.case = TRUE)
-  testthat::expect_message(check_git(), "brew cask", ignore.case = TRUE)
   testthat::expect_message(check_git(), "brew", ignore.case = TRUE)
+  testthat::expect_message(check_git(), "install", ignore.case = TRUE)
   testthat::expect_message(check_git(), "git", ignore.case = TRUE)
 
   testthat::expect_message(check_make(), "os x", ignore.case = TRUE)
-  testthat::expect_message(check_make(), "brew cask", ignore.case = TRUE)
   testthat::expect_message(check_make(), "brew", ignore.case = TRUE)
+  testthat::expect_message(check_make(), "install", ignore.case = TRUE)
   testthat::expect_message(check_make(), "make", ignore.case = TRUE)
 
   testthat::expect_message(check_brew(), "brew", ignore.case = TRUE)

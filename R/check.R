@@ -29,6 +29,7 @@ check_docker <- function(install = TRUE){
         usethis::ui_info("We recommend Homebrew for OS X users.")
         check_brew()
         usethis::ui_todo("Run {usethis::ui_code('brew cask install docker')} in an admin terminal to install docker.")
+        usethis::ui_todo("Open 'Docker'/'Docker Desktop for Mac' once to make it available.")
       } else if(get_os() == "linux"){
         usethis::ui_info("Adapt to your native package manager (deb, rpm, brew, csw, eopkg).")
         usethis::ui_info("You may need admin-rights, use {usethis::ui_code('sudo apt install docker')} in this case.")
@@ -63,7 +64,7 @@ check_make <- function(install = TRUE){
       } else if(get_os() == "osx"){
         usethis::ui_info("We recommend Homebrew for OS X users.")
         check_brew()
-        usethis::ui_todo("Run {usethis::ui_code('brew cask make')} in an admin terminal to install make.")
+        usethis::ui_todo("Run {usethis::ui_code('brew install make')} in an admin terminal to install make.")
         usethis::ui_todo("Consider restarting your computer.")
       } else if(get_os() == "linux"){
         usethis::ui_todo("Run {usethis::ui_code('apt install make')} in a terminal to install make.")
@@ -97,7 +98,7 @@ check_git <- function(install = TRUE){
       } else if(get_os() == "osx"){
         usethis::ui_info("We recommend Homebrew for OS X users.")
         check_brew()
-        usethis::ui_todo("Run {usethis::ui_code('brew cask git')} in an admin terminal to install git")
+        usethis::ui_todo("Run {usethis::ui_code('brew install git')} in an admin terminal to install git")
         usethis::ui_todo("Consider restarting your computer.")
       } else if(get_os() == "linux"){
         usethis::ui_todo("Run {usethis::ui_code('apt install git')} in a terminal to install git")
