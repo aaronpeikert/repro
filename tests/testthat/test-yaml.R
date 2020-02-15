@@ -6,7 +6,7 @@ test_that("yaml is corectly read", {
   expect_identical(names(read_yaml("test.Rmd")),
                    c("title", "author", "date", "output", "repro"))
   expect_identical(names(yaml_repro(read_yaml("test.Rmd"))),
-                   c("packages", "data", "scripts"))
+                   c("packages", "data", "scripts", "output"))
 })
 
 test_that("packages are recognized", {

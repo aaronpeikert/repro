@@ -19,7 +19,27 @@ automate <- function(path = "."){
 #' @rdname automate
 #' @export
 automate_make <- function(path = "."){
+  if(automate_dir()){
+    yamls <- get_yamls(path)
+
+  }
   usethis::ui_oops("Sorry {usethis::ui_code('automate_make')} not implemented, yet.")
+}
+
+get_output_file <- function(file, output){
+  get_fun <- function(x) {
+    # from https://stackoverflow.com/a/38984214/7682760
+    if(grepl("::", x)) {
+      parts<-strsplit(x, "::")[[1]]
+    } else {
+      parts <- c("rmarkdown", x)
+    }
+    getExportedValue(parts[1], parts[2])
+  }
+  render_func <- do.call(get_fun(output), list())
+  do.call(utils::getFromNamespace("pandoc_output_file", "rmarkdown"),
+          list(input = file,
+               pandoc_options = render_func$pandoc))
 }
 
 #' @rdname automate
