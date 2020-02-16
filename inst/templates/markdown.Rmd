@@ -6,6 +6,7 @@ repro:
   packages:
     - usethis
     - fs
+    - aaronpeikert/repro@855b527
   scripts:
     - R/clean.R
   data:

@@ -18,12 +18,15 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
   # start out with the simplist Makefile possible
   template_data <- list(wrapper = FALSE,
                         docker = FALSE,
-                        makefile.docker = getOption("repro.makefile.docker"),
-                        makefile.singularity = getOption("repro.makefile.singularity"),
-                        makefile.torque = getOption("repro.makefile.torque"),
                         winpath = NULL,
                         singularity = FALSE,
-                        torque = FALSE)
+                        torque = FALSE,
+                        rmds = FALSE,
+                        makefile_docker = getOption("repro.makefile.docker"),
+                        makefile_singularity = getOption("repro.makefile.singularity"),
+                        makefile_torque = getOption("repro.makefile.torque"),
+                        makefile_rmds = getOption("repro.makefile.rmds")
+                        )
   # add Docker & Wrapper to template
   if(isTRUE(docker) | is.character(docker)){
     do.call(use_make_docker, list(file = docker))
@@ -36,6 +39,9 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
     template_data$winpath <- docker_windows_path(
       "C:/Users/someuser/Documents/myproject/"
       )
+  }
+  if(fs::file_exists(getOption("repro.makefile.rmds"))){
+    template_data$rmds <- TRUE
   }
   # add Singularity (and implicitly Docker)
   if(isTRUE(singularity) | is.character(singularity)){

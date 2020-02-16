@@ -1,4 +1,4 @@
-projekt := $(notdir $(CURDIR))
+PROJECT := $(notdir $(CURDIR))
 # list below your targets and their recipies
 all:
 
@@ -10,18 +10,23 @@ RUN1 = $(QRUN1) $(SRUN) $(DRUN)
 RUN2 = $(QRUN2)
 
 {{/wrapper}}
+{{#rmds}}
+### Rmd's ###
+include {{makefile_rmds}}
+
+{{/rmds}}
 {{#docker}}
 ### Docker ###
 # this is a workaround for windows users
 # please set WINDOWS=TRUE and adapt WINPATH if you are a windows user
 # note the unusual way to specify the path
 WINPATH = {{winpath}}
-include {{makefile.docker}}
+include {{makefile_docker}}
 
 {{/docker}}
 {{#singularity}}
 ### Singularity ###
-include {{makefile.singularity}}
+include {{makefile_singularity}}
 
 {{/singularity}}
 {{#inspect}}

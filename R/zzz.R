@@ -8,6 +8,7 @@
     repro.makefile.docker = "Makefile_Docker",
     repro.makefile.singularity = "Makefile_Singularity",
     repro.makefile.torque = "Makefile_TORQUE",
+    repro.makefile.rmds = "Makefile_Rmds",
     repro.docker = NA,
     repro.make = NA,
     repro.git = NA,
@@ -52,4 +53,10 @@ get_os <- function(){
 
 silent_command <- function(...){
   suppressMessages(suppressWarnings(system2(..., stdout = FALSE, stderr = FALSE)))
+}
+
+dir_name <- function(path){
+  out <- dirname(path)
+  if(out == ".")return("")
+  else stringr::str_c(out, "/")
 }
