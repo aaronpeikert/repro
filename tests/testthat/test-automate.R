@@ -12,6 +12,12 @@ test_that("docker automate works", {
   expect_proj_file("Dockerfile")
 })
 
+test_that("the inference of the resulting file of an Rmd works", {
+  expect_equal(get_output_file("test.Rmd", "html_document"), "test.html")
+  expect_equal(get_output_file("test.Rmd", "pdf_document"), "test.pdf")
+  expect_equal(get_output_file("test.Rmd", "slidy_presentation"), "test.html")
+})
+
 test_that("automate respects options", {
   opts <- options()
   scoped_temporary_project()
