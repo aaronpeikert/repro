@@ -22,7 +22,7 @@ automate_load_packages()
 # include external scripts
 automate_load_scripts()
 # load data 'mycars' (ok it is mtcars...)
-automate_load_data(mycars, read.csv, stringsAsFactors = FALSE)
+mycars <- automate_load_data(mycars, read.csv, stringsAsFactors = FALSE)
 ```
 
 ## Repro Package
