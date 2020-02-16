@@ -19,7 +19,8 @@ yaml_repro <- function(yaml){
     }
   }
   if("output" %in% names(yaml)){
-    out$output <- yaml$output
+    if(is.character(yaml$output))out$output <- yaml$output
+    if(is.list(yaml$output))out$output <- names(yaml$output)
   }
   return(out)
 }
@@ -28,6 +29,7 @@ get_yamls <- function(path = ".", ...){
   rmds <- fs::dir_ls(path, recurse = TRUE, glob = "*.Rmd")
   ymls <- lapply(rmds, read_yaml, ...)
   ymls <- lapply(ymls, yaml_repro)
+  ymls <- lapply(names(ymls), function(x)c(list(file = x), ymls[[x]]))
   ymls
 }
 
