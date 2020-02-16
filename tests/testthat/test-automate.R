@@ -5,7 +5,7 @@ test_that("docker automate works", {
   cat(test_rmd1, file = "test.Rmd")
   fs::dir_create("test")
   cat(test_rmd2, file = "test/test2.Rmd")
-  automate_docker()
+  automate()
   expect_proj_dir(".repro")
   expect_proj_file(".repro", "Dockerfile_base")
   expect_proj_file(".repro", "Dockerfile_packages")
