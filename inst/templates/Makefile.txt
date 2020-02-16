@@ -16,12 +16,12 @@ RUN2 = $(QRUN2)
 # please set WINDOWS=TRUE and adapt WINPATH if you are a windows user
 # note the unusual way to specify the path
 WINPATH = {{winpath}}
-include Makefile_Docker
+include {{makefile.docker}}
 
 {{/docker}}
 {{#singularity}}
 ### Singularity ###
-include Makefile_Singularity
+include {{makefile.singularity}}
 
 {{/singularity}}
 {{#inspect}}

@@ -1,13 +1,13 @@
 context("Test Makefile related functions.")
 test_that("use_make creates a Makefile", {
   scoped_temporary_project()
-  use_make(open = TRUE)
+  repro::use_make(open = TRUE)
   expect_proj_file("Makefile")
 })
 
 test_that("use_make creates a Makefile_Docker", {
   scoped_temporary_project()
-  use_make(docker = TRUE, open = TRUE)
+  repro::use_make(docker = TRUE, open = TRUE)
   expect_proj_file("Makefile")
   expect_proj_file("Dockerfile")
   expect_proj_file("Makefile_Docker")
@@ -15,31 +15,38 @@ test_that("use_make creates a Makefile_Docker", {
 
 test_that("use_make creates a Makefile_Singularity", {
   scoped_temporary_project()
-  use_make(docker = TRUE, singularity = TRUE, open = TRUE)
+  repro::use_make(docker = TRUE, singularity = TRUE, open = TRUE)
   expect_proj_file("Makefile")
   expect_proj_file("Makefile_Singularity")
 })
 
 test_that("use_make creates a custome Makefiles", {
   scoped_temporary_project()
-  use_make(docker = "mydocker", singularity = "mysingularity", open = TRUE)
+  repro::use_make(docker = "mydocker", singularity = "mysingularity", open = TRUE)
   expect_proj_file("mydocker")
   expect_proj_file("mysingularity")
 })
 
 test_that("use_make fails for Singularity without Docker", {
   scoped_temporary_project()
-  expect_error(use_make(docker = FALSE, singularity = TRUE, open = TRUE),
+  expect_error(repro::use_make(docker = FALSE, singularity = TRUE, open = TRUE),
                "docker = TRUE",
                class = "usethis_error")
 })
 
 test_that("use_make works for Singularity with pre-existing Docker", {
   scoped_temporary_project()
-  use_make(docker = TRUE)
-  use_make(docker = FALSE, singularity = TRUE, open = TRUE)
+  repro::use_make(docker = TRUE)
+  repro::use_make(docker = FALSE, singularity = TRUE, open = TRUE)
   expect_proj_file("Makefile")
   expect_proj_file("Makefile_Singularity")
+})
+
+test_that("use_make creates a Makefile_Docker if there is a Dockerfile", {
+  scoped_temporary_project()
+  use_docker()
+  repro::use_make()
+  expect_proj_file("Makefile_Docker")
 })
 
 test_that("use_make_docker creates all files it should", {

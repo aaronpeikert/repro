@@ -18,14 +18,19 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
   # start out with the simplist Makefile possible
   template_data <- list(wrapper = FALSE,
                         docker = FALSE,
+                        makefile.docker = getOption("repro.makefile.docker"),
+                        makefile.singularity = getOption("repro.makefile.singularity"),
+                        makefile.torque = getOption("repro.makefile.torque"),
                         winpath = NULL,
                         singularity = FALSE,
                         torque = FALSE)
   # add Docker & Wrapper to template
   if(isTRUE(docker) | is.character(docker)){
     do.call(use_make_docker, list(file = docker))
+  } else if(fs::file_exists("Dockerfile")){
+    use_make_docker(use_docker = FALSE)
   }
-  if(fs::file_exists("Makefile_Docker")){
+  if(fs::file_exists(getOption("repro.makefile.docker"))){
     template_data$wrapper <- TRUE
     template_data$docker <- TRUE
     template_data$winpath <- docker_windows_path(
@@ -36,7 +41,7 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
   if(isTRUE(singularity) | is.character(singularity)){
       do.call(use_make_singularity, list(file = singularity))
     }
-  if(fs::file_exists("Makefile_Singularity")){
+  if(fs::file_exists(getOption("repro.makefile.singularity"))){
     if(!fs::file_exists("Dockerfile"))usethis::ui_stop("Singularity depends in this setup on Docker.\nSet {usethis::ui_code('docker = TRUE')} & {usethis::ui_code('singularity = TRUE')}")
     template_data$singularity <- TRUE
   }

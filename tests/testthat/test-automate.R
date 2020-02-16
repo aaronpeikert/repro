@@ -1,5 +1,6 @@
 context("Test automate stuff")
 test_that("docker automate works", {
+  op <- options()
   scoped_temporary_project()
   cat(test_rmd1, file = "test.Rmd")
   fs::dir_create("test")
@@ -9,7 +10,10 @@ test_that("docker automate works", {
   expect_proj_file(".repro", "Dockerfile_base")
   expect_proj_file(".repro", "Dockerfile_packages")
   expect_proj_file(".repro", "Dockerfile_manual")
+  expect_proj_file(".repro", "Makefile_Docker")
   expect_proj_file("Dockerfile")
+  expect_proj_file("Makefile")
+  options(op)
 })
 
 test_that("the inference of the resulting file of an Rmd works", {
@@ -37,7 +41,9 @@ test_that("automate respects options", {
 })
 
 test_that("automate dir works", {
+  op <- options()
   scoped_temporary_project()
   automate_dir()
   expect_proj_dir(".repro")
+  options(op)
 })
