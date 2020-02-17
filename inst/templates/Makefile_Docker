@@ -12,7 +12,7 @@ ifeq ($(WINDOWS),TRUE)
 ifndef WINDIR
 $(error WINDIR is not set)
 endif
-	DDIR := WINDIR
+	DDIR := $(WINDIR)
 	# is meant to be empty
 	UID :=
 	DUSER :=
@@ -26,6 +26,7 @@ endif
 
 ifeq ($(DOCKER),TRUE)
 	DRUN := docker $(DCMD) $(DFLAGS)
+	WORKDIR := $(DHOME)
 endif
 
 ### Docker Image ###

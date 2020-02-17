@@ -1,4 +1,6 @@
 PROJECT := $(notdir $(CURDIR))
+WORKDIR := $(CURDIR)
+
 # list below your targets and their recipies
 all:
 
