@@ -1,0 +1,58 @@
+---
+title: {{{title}}}
+author: {{{author}}}
+date: {{date}}
+repro:
+  packages:
+    - usethis
+    - fs
+    - aaronpeikert/repro@d09def75df
+  scripts:
+    - R/clean.R
+  data:
+    mycars: data/mtcars.csv
+output: html_document
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(repro)
+# load packages from yaml header
+automate_load_packages()
+# include external scripts
+automate_load_scripts()
+# load data 'mycars' (ok it is mtcars...)
+mycars <- automate_load_data(mycars, read.csv, stringsAsFactors = FALSE)
+```
+
+## Repro Package
+
+May I suggest running `repro::automate()`? This will create a `Dockerfile` & `Makefile` based on every RMarkdown in this folder and the special yamls in them.
+
+If you are unsure weather or not you have `git` `make` & `docker`.
+
+```{r, eval=FALSE}
+check_git()
+check_make()
+check_docker()
+```
+
+## Analysis
+
+```{r clean}
+# see R/clean.R
+# this chunk (as long as it is empty, comments don't count) runs external
+# code from scripts listed in the YAML
+# see also https://yihui.org/knitr/demo/externalization/
+```
+
+```{r mpg}
+summary(mycars$mpg)
+```
+
+## Including Plots
+
+```{r plot, echo=FALSE}
+with(mycars, plot(mpg, hp))
+```

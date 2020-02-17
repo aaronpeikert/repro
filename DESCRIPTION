@@ -35,7 +35,10 @@ Imports:
     xfun,
     fs,
     glue,
-    stringr
+    stringr,
+    yaml,
+    rstudioapi,
+    rmarkdown
 URL: https://github.com/aaronpeikert/repro
 BugReports: https://github.com/aaronpeikert/repro/issues
 Suggests: 
@@ -44,4 +47,5 @@ Suggests:
     curl,
     git2r,
     withr,
-    rlang
+    rlang,
+    knitr

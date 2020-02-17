@@ -4,7 +4,7 @@
 # the last argument is the name of the container which is the project name
 DFLAGS = --rm $(DUSER) -v $(DDIR):$(DHOME) $(PROJECT)
 DCMD = run
-DHOME = /home/rstudio
+DHOME = /home/rstudio/
 
 # docker for windows needs a pretty unusual path specification
 # which needs to be specified *manually*
@@ -12,7 +12,7 @@ ifeq ($(WINDOWS),TRUE)
 ifndef WINDIR
 $(error WINDIR is not set)
 endif
-	DDIR := WINDIR
+	DDIR := $(WINDIR)
 	# is meant to be empty
 	UID :=
 	DUSER :=
@@ -26,13 +26,14 @@ endif
 
 ifeq ($(DOCKER),TRUE)
 	DRUN := docker $(DCMD) $(DFLAGS)
+	WORKDIR := $(DHOME)
 endif
 
 ### Docker Image ###
 
 docker: build
 build: Dockerfile
-	docker build -t $(projekt) .
-save-docker: $(projekt).tar.gz
-$(projekt).tar.gz:
-	docker save $(projekt):latest | gzip > $@
+	docker build -t $(PROJECT) .
+save-docker: $(PROJECT).tar.gz
+$(PROJECT).tar.gz:
+	docker save $(PROJECT):latest | gzip > $@

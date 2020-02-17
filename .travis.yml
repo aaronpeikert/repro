@@ -19,6 +19,18 @@ r_check_args: --no-build-vignettes --no-manual --timings
 # for codecov
 r_packages:
   - covr
+jobs:
+  include:
+  - r: release
+    r_github_packages: r-lib/usethis
+  - r: devel
+    r_github_packages: r-lib/usethis
+  - r: release
+    env: ALLOW=true
+  - r: devel
+    env: ALLOW=true
+  allow_failures:
+  - env: ALLOW=true
 
 jobs:
   include:

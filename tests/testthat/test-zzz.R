@@ -1,5 +1,4 @@
 test_that("onload sets options to na", {
-  expect_equal(2 * 2, 4)
   expect_invisible(.onLoad())
   expect_true(is.na(getOption("repro.docker")))
   expect_true(is.na(getOption("repro.make")))

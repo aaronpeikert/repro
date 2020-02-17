@@ -1,0 +1,15 @@
+Binding: repro_template
+Title: Example Repro Template
+OpenFiles: markdown.Rmd
+
+Parameter: title
+Widget: TextInput
+Label: Title
+Default: An example
+Position: left
+
+Parameter: author
+Widget: TextInput
+Label: Author
+Default: Jane Doe
+Position: right

@@ -8,8 +8,10 @@ use_docker_packages(
   packages,
   github = NULL,
   strict = TRUE,
+  file = "Dockerfile",
   write = TRUE,
-  open = write
+  open = write,
+  append = TRUE
 )
 }
 \arguments{
@@ -19,9 +21,13 @@ use_docker_packages(
 
 \item{strict}{Defaults to TRUE, force a specific version for github packages.}
 
-\item{write}{Should the file be written to disk?}
+\item{file}{Where is the 'Dockerfile'?}
+
+\item{write}{Should the 'Dockerfile' be modified?}
 
 \item{open}{Should the file be opened?}
+
+\item{append}{Should the return value be appended to the 'Dockerfile'?}
 }
 \description{
 Adds package dependencies as a new RUN statement to Dockerfile.
