@@ -29,6 +29,7 @@ get_yamls <- function(path = ".", ...){
   rmds <- fs::dir_ls(path, recurse = TRUE, glob = "*.Rmd")
   ymls <- lapply(rmds, read_yaml, ...)
   ymls <- lapply(ymls, yaml_repro)
+  ymls[sapply(ymls, is.null)] <- NULL
   ymls <- lapply(names(ymls), function(x)c(list(file = x), ymls[[x]]))
   ymls
 }
