@@ -30,9 +30,10 @@ mycars <- automate_load_data(mycars, read.csv, stringsAsFactors = FALSE)
 
 May I suggest running `repro::automate()`? This will create a `Dockerfile` & `Makefile` based on every RMarkdown in this folder and the special yamls in them.
 
-If you are unsure weather or not you have `make` & `docker`.
+If you are unsure weather or not you have `git` `make` & `docker`.
 
-```{r}
+```{r, eval=FALSE}
+check_git()
 check_make()
 check_docker()
 ```
