@@ -74,10 +74,10 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, file = "
     github_entry <- docker_entry_install(on_github, "installGithub.r")
     to_write <- c(to_write, github_entry)
   }
-  docker_entry(to_write, file, write, open, append, silence = TRUE)
+  docker_entry(to_write, file, write, open, append, quiet = TRUE)
 }
 
-docker_entry <- function(entry, file = "Dockerfile", write, open, append, silence = FALSE) {
+docker_entry <- function(entry, file = "Dockerfile", write, open, append, quiet = FALSE) {
   if (!fs::file_exists(file)) {
     usethis::ui_oops(glue::glue("There is no {usethis::ui_path(file)}!"))
     usethis::ui_todo(
@@ -90,7 +90,7 @@ docker_entry <- function(entry, file = "Dockerfile", write, open, append, silenc
   # read dockerfile
   path <- usethis::proj_path(file)
   dockerfile <- xfun::read_utf8(path)
-  if(!silence){
+  if(!quiet){
     usethis::ui_done("Adding {usethis::ui_value(entry)} to {usethis::ui_path(file)}")
   }
   if(append)entry <- c(dockerfile, entry)
