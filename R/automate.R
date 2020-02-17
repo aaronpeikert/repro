@@ -46,7 +46,7 @@ yaml_to_make <- function(file, output, data, scripts, ...){
   output_file <- get_output_files(file, output)
   deps <- stringr::str_c(c(file, data, scripts), collapse = " ")
   stringr::str_c(output_file, ": ", deps, "\n\t",
-                 "$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\")' $(RUN2)")
+                 "$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
 }
 
 get_output_files <- function(file, output, ...){
