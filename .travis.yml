@@ -32,20 +32,6 @@ jobs:
   allow_failures:
   - env: ALLOW=true
 
-jobs:
-  include:
-  - r: release
-    r_github_packages: r-lib/usethis
-  - r: devel
-    r_github_packages: r-lib/usethis
-  - r: release
-  - r: devel
-  allow_failures:
-  - r: release
-    r_github_packages:
-  - r: devel
-    r_github_packages:
-
 # only report coverage for the release version
 after_success:
   - test $TRAVIS_R_VERSION_STRING = 'release' && Rscript -e 'covr::codecov()'
