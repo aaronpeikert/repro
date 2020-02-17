@@ -25,7 +25,7 @@ automate_make <- function(path = "."){
     entries <- sort(unlist(entries))
     entries <- stringr::str_c(entries, "\n", collapse = "\n")
     xfun::write_utf8(entries, getOption("repro.makefile.rmds"))
-    usethis::ui_done("Writing {usethis::ui_path(getOption('repro.makefile.rmds')}")
+    usethis::ui_done("Writing {usethis::ui_path(getOption('repro.makefile.rmds'))}")
     if(!fs::file_exists("Makefile")){
       use_make(open = FALSE)
     }
@@ -43,7 +43,7 @@ automate_make <- function(path = "."){
 }
 
 yaml_to_make <- function(file, output, data, scripts, ...){
-  output_file <- get_output_files(file, output)
+  output_file <- stringr::str_c(get_output_files(file, output), collapse = " ")
   deps <- stringr::str_c(c(file, data, scripts), collapse = " ")
   stringr::str_c(output_file, ": ", deps, "\n\t",
                  "$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
@@ -97,7 +97,7 @@ automate_docker <- function(path = "."){
     # handle manual
     if(!fs::file_exists(dockerfile_manual)){
       fs::file_create(dockerfile_manual)
-      usethis::ui_done("Writing {usethis::ui_path(getOption('repro.dockerfile.manual')}")
+      usethis::ui_done("Writing {usethis::ui_path(getOption('repro.dockerfile.manual'))}")
     }
 
     # bundle dockerfiles
