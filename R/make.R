@@ -37,7 +37,8 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
     template_data$wrapper <- TRUE
     template_data$docker <- TRUE
     template_data$winpath <- docker_windows_path(
-      "C:/Users/someuser/Documents/myproject/"
+      "C:/Users/someuser/Documents/myproject/",
+      todo = FALSE
       )
   }
   if(fs::file_exists(getOption("repro.makefile.rmds"))){
@@ -59,14 +60,6 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
     open = open,
     package = "repro"
   )
-  # check if there are some Rmds, if so recomend recommend to add it
-  rmds <- fs::path_rel(fs::dir_ls(usethis::proj_path(), glob = "*.Rmd", recurse = TRUE),
-                       usethis::proj_path())
-  if (length(rmds) > 0L) {
-    usethis::ui_info(
-      "You probably want to add:\n{usethis::ui_value(rmds)}\nto the {usethis::ui_value('Makefile')}.\nHint: {usethis::ui_code('repro::use_make_rmd()')}"
-    )
-  }
 }
 
 #' @rdname make
