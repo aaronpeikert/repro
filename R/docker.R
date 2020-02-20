@@ -149,3 +149,13 @@ docker_get_packages <- function(file = "Dockerfile"){
   packages_sorted <- sort(unique(unlist(packages)))
   return(packages_sorted)
 }
+
+dir2imagename <- function(dir){
+  dir <- basename(dir)
+  stopifnot(length(dir) == 1L)
+  dir <- stringr::str_extract_all(dir, "[A-z0-9]")[[1]]
+  dir <- stringr::str_c(dir, collapse = "")
+  dir <- stringr::str_to_lower(dir)
+  dir <- stringr::str_remove(dir, "^[0-9]")
+  dir
+}

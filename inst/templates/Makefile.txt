@@ -1,4 +1,4 @@
-PROJECT := $(notdir $(CURDIR))
+PROJECT := {{project}}
 WORKDIR := $(CURDIR)
 
 # list below your targets and their recipies

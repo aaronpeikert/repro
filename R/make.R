@@ -16,17 +16,19 @@ NULL
 #' @export
 use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open = TRUE){
   # start out with the simplist Makefile possible
-  template_data <- list(wrapper = FALSE,
-                        docker = FALSE,
-                        winpath = NULL,
-                        singularity = FALSE,
-                        torque = FALSE,
-                        rmds = FALSE,
-                        makefile_docker = getOption("repro.makefile.docker"),
-                        makefile_singularity = getOption("repro.makefile.singularity"),
-                        makefile_torque = getOption("repro.makefile.torque"),
-                        makefile_rmds = getOption("repro.makefile.rmds")
-                        )
+  template_data <- list(
+    project = dir2imagename(usethis::proj_path()),
+    wrapper = FALSE,
+    docker = FALSE,
+    winpath = NULL,
+    singularity = FALSE,
+    torque = FALSE,
+    rmds = FALSE,
+    makefile_docker = getOption("repro.makefile.docker"),
+    makefile_singularity = getOption("repro.makefile.singularity"),
+    makefile_torque = getOption("repro.makefile.torque"),
+    makefile_rmds = getOption("repro.makefile.rmds")
+  )
   # add Docker & Wrapper to template
   if(isTRUE(docker) | is.character(docker)){
     do.call(use_make_docker, list(file = docker))
