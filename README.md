@@ -14,11 +14,13 @@ has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
-The goal of repro is to make the setup of a reproducible workflow with
-RMarkdown, Git, Make & Docker as easy as possible. To that end it builds
-upon the great [`usethis`-package](https://github.com/r-lib/usethis).
-The reproducible workflow mirrors the one proposed by [Peikert &
-Brandmaier (2019)](https://psyarxiv.com/8xzqy/).
+The goal of `repro` is to make the setup of reproducible workflows as
+easy as possible. To that end it builds upon the great
+[`usethis`-package](https://github.com/r-lib/usethis). As `repro`
+curently undergoes major changes to support more workflows then just the
+one proposed by [Peikert & Brandmaier
+(2019)](https://psyarxiv.com/8xzqy/), you may want to take a look at
+[`worcs`](https://github.com/cjvanlissa/worcs).
 
 ## Installation
 
@@ -26,7 +28,7 @@ You can install the latest version of repro from
 [GitHub](https://github.com/aaronpeikert/repro) with:
 
 ``` r
-if(!require("remotes"))install.packages("remotes")
+if(!requireNamespace("remotes"))install.packages("remotes")
 remotes::install_github("aaronpeikert/repro")
 ```
 
