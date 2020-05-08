@@ -1,6 +1,6 @@
 Package: repro
 Type: Package
-Title: Automated Setup of a Reproducible Workflow
+Title: Automated Setup of Reproducible Workflows and their Dependencies
 Version: 0.1.0
 Authors@R: c(
     person(

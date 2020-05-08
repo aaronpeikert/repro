@@ -16,11 +16,13 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 The goal of `repro` is to make the setup of reproducible workflows as
 easy as possible. To that end it builds upon the great
-[`usethis`-package](https://github.com/r-lib/usethis). As `repro`
-curently undergoes major changes to support more workflows then just the
+[`usethis`-package](https://github.com/r-lib/usethis). `repro` currently
+undergoes significant changes to support more workflows than just the
 one proposed by [Peikert & Brandmaier
-(2019)](https://psyarxiv.com/8xzqy/), you may want to take a look at
-[`worcs`](https://github.com/cjvanlissa/worcs).
+(2019)](https://psyarxiv.com/8xzqy/). You may want to install the
+[`worcs`](https://github.com/cjvanlissa/worcs) package from CRAN for a
+user-friendly workflow that meets most requirements of reproducibility
+and open science.
 
 ## Installation
 
