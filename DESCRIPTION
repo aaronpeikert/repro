@@ -12,11 +12,17 @@ Authors@R: c(
       comment = c(ORCID = "0000-0001-7813-818X")
     ),
     person(
-      "Andreas",
+      c("Andreas", "M."),
       "Brandmaier",
-      ,
-      role = "aut",
+      role = "ctb",
       comment = c(ORCID = "0000-0001-8765-6982")
+    ),
+    person(
+      given = c("Caspar", "J."),
+      family = "van Lissa",
+      email = "c.j.vanlissa@uu.nl",
+      role = "ctb,
+      comment = c(ORCID = "0000-0002-0808-5024")
     )
   )
 Description: The goal of repro is to make the setup of a reproducible workflow
