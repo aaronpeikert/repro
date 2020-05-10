@@ -27,11 +27,11 @@ Authors@R: c(
   )
 Description: Set up components for reproducible workflows, quickly and painlessly.
   Apply best practises from
-  [Peikert & Brandmaier (2019)](https://psyarxiv.com/8xzqy/),
-  [Van Lissa et. al 2020](https://osf.io/zcvbs/) or
-  [The Turing Way Community](http://doi.org/10.5281/zenodo.3233986)
+  [Peikert & Brandmaier (2019)](<https://psyarxiv.com/8xzqy/>),
+  [Van Lissa et. al 2020](<https://osf.io/zcvbs/>) or
+  [The Turing Way Community](<doi.org:10.5281/zenodo.3233986>)
   easily in your own projects.
-  Based upon the great [`usethis`-package](https://github.com/r-lib/usethis).
+  Based upon the great [`usethis`-package](<https://github.com/r-lib/usethis>).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
