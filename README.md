@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# repro
+# repro <a href='https://github.com/aaronpeikert/repro'><img src='icon.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
