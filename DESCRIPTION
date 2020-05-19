@@ -14,14 +14,14 @@ Authors@R: c(
     person(
       c("Andreas", "M."),
       "Brandmaier",
-      role = "ctb",
+      role = "aut",
       comment = c(ORCID = "0000-0001-8765-6982")
     ),
     person(
       given = c("Caspar", "J."),
       family = "van Lissa",
       email = "c.j.vanlissa@uu.nl",
-      role = "ctb",
+      role = "aut",
       comment = c(ORCID = "0000-0002-0808-5024")
     )
   )
