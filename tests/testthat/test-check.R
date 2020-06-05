@@ -126,3 +126,8 @@ test_that("the correct instalation hint for linux is given.", {
   testthat::expect_message(check_make(), "make", ignore.case = TRUE)
   options(opts)
 })
+
+test_that("forbidden function raise an error", {
+  hello <- function()cat("Hello")
+  expect_usethis_error(call_dangerous(hello, getOption("repro.pkgtest")))
+})

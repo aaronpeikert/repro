@@ -4,150 +4,71 @@
 #' depending on the operating system. Most importantly it checks for
 #' `git`, `make` & `docker`. And just for convinience of the installation it
 #' checks on OS X for `Homebrew` and on Windows for `Chocolately`.
-#' @param install Should we give recommendations on the installation?
 #' @name check
+#' @family checkers
 NULL
 
 #' @rdname check
 #' @export
-check_docker <- function(install = TRUE){
-  if(is.na(getOption("repro.docker"))){
-    # ask for the docker version
-    options(repro.docker = silent_command("docker", "-v") == 0L)
+check_docker <- function(){
+  if(!has_docker(silent = FALSE)){
+    msg_install_with_choco("Docker", "choco install -y docker-desktop")
+    msg_install_with_brew("Docker", "brew cask install docker", {
+      usethis::ui_todo("Open 'Docker'/'Docker Desktop for Mac' once to make it available.")
+    })
+    msg_install_with_apt("Docker", "apt install docker", {
+      usethis::ui_todo("Add your user to the docker user group. Follow instructions on:\n{usethis::ui_value('https://docs.docker.com/install/linux/linux-postinstall/')}")
+      })
+    msg_restart()
+    usethis::ui_info("For more infos visit: {usethis::ui_value('https://docs.docker.com/install/')}")
   }
-  # a command that is succesfull returns 0
-  if(isTRUE(getOption("repro.docker"))){
-    usethis::ui_done("Docker is installed, don't worry.")
-  } else {
-    usethis::ui_oops("Docker is not installed.")
-    if(install){
-      if(get_os() == "windows"){
-        usethis::ui_info("We recommend Chocolately for Windows users.")
-        check_choco()
-        usethis::ui_todo("Run {usethis::ui_code('choco install -y docker-desktop')} in an admin terminal to install docker.")
-      } else if(get_os() == "osx"){
-        usethis::ui_info("We recommend Homebrew for OS X users.")
-        check_brew()
-        usethis::ui_todo("Run {usethis::ui_code('brew cask install docker')} in an admin terminal to install docker.")
-        usethis::ui_todo("Open 'Docker'/'Docker Desktop for Mac' once to make it available.")
-      } else if(get_os() == "linux"){
-        usethis::ui_info("Adapt to your native package manager (deb, rpm, brew, csw, eopkg).")
-        usethis::ui_info("You may need admin-rights, use {usethis::ui_code('sudo apt install docker')} in this case.")
-        usethis::ui_todo("Run {usethis::ui_code('apt install docker')} in a terminal to install docker.")
-        usethis::ui_todo("Add your user to the docker user group. Follow instructions on:\n{usethis::ui_value('https://docs.docker.com/install/linux/linux-postinstall/')}")
-      }
-      usethis::ui_todo("Consider restarting your computer.")
-      usethis::ui_todo("For more infos visit: {usethis::ui_value('https://docs.docker.com/install/')}")
-    }
-  }
-  invisible(getOption("repro.docker"))
+  invisible(has_docker())
 }
 
 #' @rdname check
 #' @export
-check_make <- function(install = TRUE){
-  if(is.na(getOption("repro.make"))){
-    # ask for the make version
-    # a command that is succesfull returns 0
-    options(repro.make = silent_command("make", "-v") == 0L)
+
+check_make <- function(){
+  if(!has_make(silent = FALSE)){
+    choco <- "Chocolately"
+    msg_install_with_choco(choco, "choco install -y make")
+    msg_install_with_brew(choco, "brew install make")
+    msg_install_with_apt(choco, "apt install make")
+    msg_restart()
   }
-  if(isTRUE(getOption("repro.make"))){
-    usethis::ui_done("Make is installed, don't worry.")
-  } else {
-    usethis::ui_oops("Make is not installed.")
-    if(install){
-      if(get_os() == "windows"){
-        usethis::ui_info("We recommend Chocolately for Windows users.")
-        check_choco()
-        usethis::ui_todo("Run {usethis::ui_code('choco install -y make')} in an admin terminal to install make.")
-        usethis::ui_todo("Consider restarting your computer.")
-      } else if(get_os() == "osx"){
-        usethis::ui_info("We recommend Homebrew for OS X users.")
-        check_brew()
-        usethis::ui_todo("Run {usethis::ui_code('brew install make')} in an admin terminal to install make.")
-        usethis::ui_todo("Consider restarting your computer.")
-      } else if(get_os() == "linux"){
-        usethis::ui_todo("Run {usethis::ui_code('apt install make')} in a terminal to install make.")
-        usethis::ui_info("Adapt to your native package manager (deb, rpm, brew, csw, eopkg).")
-        usethis::ui_info("You may need admin-rights, use {usethis::ui_code('sudo apt install make')} in this case.")
-        usethis::ui_todo("Consider restarting your computer.")
-      }
-    }
-  }
-  invisible(getOption("repro.make"))
+  invisible(has_make())
 }
 
 #' @rdname check
 #' @export
-check_git <- function(install = TRUE){
-  if(is.na(getOption("repro.git"))){
-    # ask for the make version
-    # a command that is succesfull returns 0
-    options(repro.git = silent_command("git", "--version") == 0L)
+check_git <- function(){
+  if(!has_git(silent = FALSE)) {
+    msg_install_with_choco("Git", "choco install -y git")
+    msg_install_with_brew("Git", "brew install git")
+    msg_install_with_apt("Git", "apt install git")
   }
-  if(isTRUE(getOption("repro.git"))){
-    usethis::ui_done("Git is installed, don't worry.")
-  } else {
-    usethis::ui_oops("Git is not installed.")
-    if(install){
-      if(get_os() == "windows"){
-        usethis::ui_info("We recommend Chocolately for Windows users.")
-        check_choco()
-        usethis::ui_todo("Run {usethis::ui_code('choco install -y git')} in an admin terminal to install Git.")
-        usethis::ui_todo("Consider restarting your computer.")
-      } else if(get_os() == "osx"){
-        usethis::ui_info("We recommend Homebrew for OS X users.")
-        check_brew()
-        usethis::ui_todo("Run {usethis::ui_code('brew install git')} in an admin terminal to install git")
-        usethis::ui_todo("Consider restarting your computer.")
-      } else if(get_os() == "linux"){
-        usethis::ui_todo("Run {usethis::ui_code('apt install git')} in a terminal to install git")
-        usethis::ui_info("Adapt to your native package manager (deb, rpm, brew, csw, eopkg).")
-        usethis::ui_info("You may need admin-rights, use {usethis::ui_code('sudo apt install git')} in this case.")
-        usethis::ui_todo("Consider restarting your computer.")
-      }
-    }
-  }
-  invisible(getOption("repro.git"))
+  invisible(has_git())
 }
 
 #' @rdname check
 #' @export
-check_brew <- function(install = TRUE){
-  if(is.na(getOption("repro.brew"))){
-    # ask for the make version
-    # a command that is succesfull returns 0
-    options(repro.brew = silent_command("brew", "--version") == 0L)
+check_brew <- function(){
+  if(!has_brew(silent = FALSE)){
+    usethis::ui_todo("To install it, follow directions on: {usethis::ui_value('https://docs.brew.sh/Installation')}")
+    usethis::ui_todo("Restart your computer.")
   }
-  if(isTRUE(getOption("repro.brew"))){
-    usethis::ui_done("Homebrew is installed.")
-  } else {
-    usethis::ui_oops("Homebrew is not installed.")
-    if(install){
-      usethis::ui_todo("To install it, follow directions on: {usethis::ui_value('https://docs.brew.sh/Installation')}")
-      usethis::ui_todo("Restart your computer.")
-    }
-  }
-  invisible(getOption("repro.brew"))
+  invisible(has_brew())
 }
 
 #' @rdname check
 #' @export
-check_choco <- function(install = TRUE){
-  if(is.na(getOption("repro.choco"))){
-    # ask for the make version
-    # a command that is succesfull returns 0
-    options(repro.choco = silent_command("choco", "-v") == 0L)
+check_choco <- function(){
+  if(!has_choco(silent = FALSE)){
+    usethis::ui_todo(
+      "To install it, follow directions on: {usethis::ui_value('https://chocolatey.org/docs/installation')}"
+    )
+    usethis::ui_info("Use an administrator terminal to install chocolately.")
+    usethis::ui_todo("Restart your computer.")
   }
-  if(isTRUE(getOption("repro.choco"))){
-    usethis::ui_done("Chocolately is installed.")
-  } else {
-    usethis::ui_oops("Chocolately is not installed.")
-    if(install){
-      usethis::ui_todo("To install it, follow directions on: {usethis::ui_value('https://chocolatey.org/docs/installation')}")
-      usethis::ui_info("Use an administrator terminal to install chocolately.")
-      usethis::ui_todo("Restart your computer.")
-    }
-  }
-  invisible(getOption("repro.choco"))
+  invisible(has_choco())
 }

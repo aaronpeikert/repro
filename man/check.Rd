@@ -9,18 +9,15 @@
 \alias{check_choco}
 \title{Check System Dependencies}
 \usage{
-check_docker(install = TRUE)
+check_docker()
 
-check_make(install = TRUE)
+check_make()
 
-check_git(install = TRUE)
+check_git()
 
-check_brew(install = TRUE)
+check_brew()
 
-check_choco(install = TRUE)
-}
-\arguments{
-\item{install}{Should we give recommendations on the installation?}
+check_choco()
 }
 \description{
 Check if a dependency is installed and if not it recommends how to install it
@@ -28,3 +25,8 @@ depending on the operating system. Most importantly it checks for
 \code{git}, \code{make} & \code{docker}. And just for convinience of the installation it
 checks on OS X for \code{Homebrew} and on Windows for \code{Chocolately}.
 }
+\seealso{
+Other checkers: 
+\code{\link{has}}
+}
+\concept{checkers}

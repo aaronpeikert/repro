@@ -1,0 +1,1 @@
+options(repro.pkgtest = TRUE)
