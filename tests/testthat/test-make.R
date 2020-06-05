@@ -50,7 +50,6 @@ test_that("use_make creates a Makefile_Docker if there is a Dockerfile", {
 })
 
 test_that("use_make_docker creates all files it should", {
-  opts <- options()
 
   scoped_temporary_project()
   use_make_docker()
@@ -59,27 +58,26 @@ test_that("use_make_docker creates all files it should", {
   expect_proj_file(".dockerignore")
 
   scoped_temporary_project()
-  options(repro.makefile.docker = "mydocker")
-
-  use_make_docker()
-  expect_proj_file("mydocker")
-  expect_proj_file("Dockerfile")
-  expect_proj_file(".dockerignore")
-
-  options(opts)
+  withr::with_options(
+    list(repro.makefile.docker = "mydocker"),
+    {
+      use_make_docker()
+      expect_proj_file("mydocker")
+      expect_proj_file("Dockerfile")
+      expect_proj_file(".dockerignore")
+    })
 })
 
 test_that("use_make_singularity creates all files it should", {
-  opts <- options()
-
   scoped_temporary_project()
   use_make_singularity()
   expect_proj_file("Makefile_Singularity")
 
   scoped_temporary_project()
-  options(repro.makefile.singularity = "mysingularity")
-  use_make_singularity()
-  expect_proj_file("mysingularity")
-
-  options(opts)
+  withr::with_options(
+    list(repro.makefile.singularity = "mysingularity"),
+    {
+      use_make_singularity()
+      expect_proj_file("mysingularity")
+    })
 })
