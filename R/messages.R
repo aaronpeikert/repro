@@ -2,14 +2,37 @@ msg_restart <- function(consider = TRUE){
   if(consider)usethis::ui_todo("Consider restarting your computer.")
   else usethis::ui_todo("Restart your computer.")
 }
-msg_installed <- function(what, installed = TRUE){
-  if(isTRUE(installed)){
-    usethis::ui_done(stringr::str_c(what, ", is installed, don't worry."))
-    return(invisible(installed))
+
+msg_installed <- function(what, installed = TRUE) {
+  if (isTRUE(installed)) {
+    usethis::ui_done("{what} is installed, don't worry.")
+  } else if (isFALSE(installed)) {
+    usethis::ui_oops("{what} is not installed.")
   } else {
-    usethis::ui_oops(stringr::str_c(what, ", is not installed."))
-    return(invisible(installed))
+    usethis::ui_oops("Something is wrong with {what}.")
   }
+  return(invisible(installed))
+}
+
+msg_ssh_keys <- function(what, installed){
+  if (isTRUE(installed))usethis::ui_done("You have SSH-keys, don't worry.")
+  else usethis::ui_oops("You have no SSH-keys.")
+}
+
+msg_github_token <- function(what, installed){
+  if (isTRUE(installed))usethis::ui_done("You have a GitHub token, don't worry.")
+  else usethis::ui_oops("You have no GitHub token.")
+}
+
+msg_github_ssh <- function(what, installed){
+  if (isTRUE(installed))usethis::ui_done("You have SSH access to GitHub, don't worry.")
+  else if (isFALSE(installed))usethis::ui_oops("You have no access to GitHub.")
+  else usethis::ui_oops("You have currently no access to GitHub.")
+}
+
+msg_service <- function(what, installed){
+  if(isTRUE(installed))usethis::ui_done("You and {what} are on good terms, don't worry.")
+  else usethis::ui_oops("Your {what} configuration is slightly off.")
 }
 
 msg_install_with_choco <- function(what, how, todo, check = TRUE, windows_only = TRUE){
@@ -47,3 +70,8 @@ msg_install_with_apt <- function(what, how, todo, linux_only = TRUE){
   }
   return(invisible(NULL))
 }
+
+msg_rerun <- function(what, why = "."){
+  usethis::ui_todo("You may want to rerun {usethis::ui_code(what)}{why}")
+}
+

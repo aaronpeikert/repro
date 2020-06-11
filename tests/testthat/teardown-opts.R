@@ -1,1 +1,2 @@
-options(repro.pkgtest = FALSE)
+options(repro.pkgtest = FALSE,
+        repro.install = "ask")

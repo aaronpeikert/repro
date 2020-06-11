@@ -7,22 +7,34 @@
 \alias{has_docker}
 \alias{has_choco}
 \alias{has_brew}
+\alias{has_ssh}
+\alias{has_github_token}
+\alias{has_github_ssh}
+\alias{has_github}
 \title{Check System Dependencies}
 \usage{
-has_make(silent = TRUE, allow_na = FALSE)
+has_make(silent = TRUE, force_logical = TRUE)
 
-has_git(silent = TRUE, allow_na = FALSE)
+has_git(silent = TRUE, force_logical = TRUE)
 
-has_docker(silent = TRUE, allow_na = FALSE)
+has_docker(silent = TRUE, force_logical = TRUE)
 
-has_choco(silent = TRUE, allow_na = FALSE)
+has_choco(silent = TRUE, force_logical = TRUE)
 
-has_brew(silent = TRUE, allow_na = FALSE)
+has_brew(silent = TRUE, force_logical = TRUE)
+
+has_ssh(silent = TRUE, force_logical = TRUE)
+
+has_github_token(silent = TRUE, force_logical = TRUE)
+
+has_github_ssh(silent = TRUE, force_logical = TRUE)
+
+has_github(silent = TRUE, force_logical = TRUE)
 }
 \arguments{
 \item{silent}{Should a message be printed that informs the user?}
 
-\item{allow_na}{Is \code{NA} a valid return value? If \code{NA} is not allowed, FALSE is returned instead.}
+\item{force_logical}{Should the return value be passed through \href{base}{\code{isTRUE}}?}
 }
 \description{
 Corresponding functions to \code{\link{check}}, but intended for programatic use.

@@ -15,3 +15,7 @@ test_that("onAttach sends a message", {
 test_that("silent_command is silent", {
   expect_output(silent_command("ls"), NA)
 })
+
+test_that("get_os() fails while testing.",{
+  expect_error(get_os(), regexp = "testing")
+})

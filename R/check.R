@@ -4,6 +4,7 @@
 #' depending on the operating system. Most importantly it checks for
 #' `git`, `make` & `docker`. And just for convinience of the installation it
 #' checks on OS X for `Homebrew` and on Windows for `Chocolately`.
+#' @param install Should something be installed? Defaults to "ask", but can be TRUE/FALSE.
 #' @name check
 #' @family checkers
 NULL
@@ -71,4 +72,74 @@ check_choco <- function(){
     usethis::ui_todo("Restart your computer.")
   }
   invisible(has_choco())
+}
+
+#' @rdname check
+#' @export
+check_ssh <- function(install = getOption("repro.install")) {
+  if (!has_ssh(silent = FALSE)) {
+    if (install == "ask")
+      install <- !usethis::ui_nope("Do you want to generate SSH keys?")
+    if (install) {
+      options(repro.ssh =
+                !inherits(try(do.call(dangerous(credentials::ssh_keygen,
+                                             getOption("repro.pkgtest")),
+                                      list()),
+                              silent = TRUE)
+                          , "try-error"))
+      msg_rerun("check_ssh()", " to verify the new ssh keys.")
+    }
+  }
+  invisible(has_ssh())
+}
+
+#' @rdname check
+#' @export
+check_github_token <- function(install = getOption("repro.install")){
+  if(!has_github_token(silent = FALSE)){
+    if(install == "ask")install <- usethis::ui_nope("Do you want to generate a GitHub token?")
+    if(install){
+      usethis::browse_github_token()
+      msg_rerun("check_github_token()", " to verify the new GitHub token.")
+    }
+  }
+  invisible(has_github_token())
+}
+
+#' @rdname check
+#' @export
+check_github_ssh <- function() {
+  if (!has_github_ssh(silent = FALSE)) {
+    if (has_github_ssh(force_logical = FALSE) == "recheck_authenticity") {
+      usethis::ui_todo(
+        "Run {usethis::ui_code('ssh -T git@github.com')} in a terminal. Answer yes if asked."
+      )
+      msg_rerun("check_github_ssh()")
+    } else if (!has_ssh()) {
+      check_ssh()
+    } else {
+      usethis::ui_todo("Read {usethis::ui_value('https://happygitwithr.com/ssh-keys.html')}.")
+    }
+  }
+  invisible(has_github_ssh())
+}
+
+#' @rdname check
+#' @export
+check_github <- function(){
+  if (!has_n_check(has_git, check_git)) {
+    msg_rerun("check_github()")
+    return(FALSE)
+  } else if (!has_n_check(has_ssh, check_ssh)) {
+    msg_rerun("check_github()")
+    return(FALSE)
+  } else if (!has_n_check(has_github_ssh, check_github_ssh)) {
+    msg_rerun("check_github()")
+    return(FALSE)
+  } else if (!has_n_check(has_github_token, check_github_token)) {
+    msg_rerun("check_github()")
+    return(FALSE)
+  } else {
+    invisible(has_github(silent = FALSE))
+  }
 }

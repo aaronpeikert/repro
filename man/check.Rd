@@ -7,6 +7,10 @@
 \alias{check_git}
 \alias{check_brew}
 \alias{check_choco}
+\alias{check_ssh}
+\alias{check_github_token}
+\alias{check_github_ssh}
+\alias{check_github}
 \title{Check System Dependencies}
 \usage{
 check_docker()
@@ -18,6 +22,17 @@ check_git()
 check_brew()
 
 check_choco()
+
+check_ssh(install = getOption("repro.install"))
+
+check_github_token(install = getOption("repro.install"))
+
+check_github_ssh()
+
+check_github()
+}
+\arguments{
+\item{install}{Should something be installed? Defaults to "ask", but can be TRUE/FALSE.}
 }
 \description{
 Check if a dependency is installed and if not it recommends how to install it

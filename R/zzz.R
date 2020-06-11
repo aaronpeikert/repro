@@ -14,7 +14,13 @@
     repro.git = NA,
     repro.choco = NA,
     repro.brew = NA,
-    repro.os = NA
+    repro.ssh = NA,
+    repro.os = NA,
+    repro.github = NA,
+    repro.github.ssh = NA,
+    repro.github.token = NA,
+    repro.pkgtest = FALSE,
+    repro.install = "ask"
     )
   toset <- !(names(op.repro) %in% names(op))
   if(any(toset)) options(op.repro[toset])
@@ -30,8 +36,9 @@
 }
 
 get_os <- function(){
-  sysinf <- Sys.info()
   if(is.na(getOption("repro.os"))){
+    sysinf <- Sys.info()
+    if(getOption("repro.pkgtest"))stop("Set a fake os while testing os dependend functions.", call. = FALSE)
     if (!is.null(sysinf)){
       os <- sysinf['sysname']
       if (os == 'Darwin')

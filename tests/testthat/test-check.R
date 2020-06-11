@@ -130,5 +130,45 @@ test_that("the correct instalation hint for linux is given.", {
 
 test_that("forbidden function raise an error", {
   hello <- function()cat("Hello")
-  expect_usethis_error(call_dangerous(hello, getOption("repro.pkgtest")))
+  dangerous_hello <- dangerous(hello, getOption("repro.pkgtest"))
+  expect_usethis_error(dangerous_hello())
+  expect_usethis_error(has_git())
+})
+
+test_that("github function recognize options set to FALSE", {
+  withr::with_options(list(
+    repro.git = FALSE,
+    repro.ssh = FALSE,
+    repro.github.ssh = FALSE,
+    repro.github.token = FALSE,
+    repro.os = "linux"), {
+      expect_false(check_ssh(install = FALSE))
+      expect_false(check_github_ssh())
+      expect_false(check_github_token(install = FALSE))
+      expect_false(check_github())
+
+      expect_oops(check_ssh(install = FALSE))
+      expect_oops(check_github_ssh())
+      expect_oops(check_github_token(install = FALSE))
+      expect_oops(check_github())
+      })
+})
+
+test_that("github function recognize options set to TRUE", {
+  withr::with_options(list(
+    repro.git = TRUE,
+    repro.ssh = TRUE,
+    repro.github.ssh = TRUE,
+    repro.github.token = TRUE,
+    repro.os = "linux"), {
+      expect_true(check_ssh())
+      expect_true(check_github_ssh())
+      expect_true(check_github_token())
+      expect_true(check_github())
+
+      expect_ok(check_ssh())
+      expect_ok(check_github_ssh())
+      expect_ok(check_github_token())
+      expect_ok(check_github())
+    })
 })
