@@ -172,3 +172,22 @@ test_that("github function recognize options set to TRUE", {
       expect_ok(check_github())
     })
 })
+
+test_that("check functions return invisibly", {
+  withr::with_options(
+    list(
+      repro.docker = TRUE,
+      repro.make = TRUE,
+      repro.git = TRUE,
+      repro.choco = TRUE,
+      repro.brew = TRUE,
+      repro.ssh = TRUE,
+      repro.github.ssh = TRUE,
+      repro.github.token = TRUE,
+      repro.os = "linux"
+    ),
+    {
+      check_funs <- stringr::str_subset(ls("package:repro"), "^check_")
+      lapply(check_funs, function(x)eval(bquote(expect_invisible(do.call(.(x), list())))))
+    })
+})
