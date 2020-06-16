@@ -40,3 +40,10 @@ I am more then happy if you want to contribute, but I ask you kindly to
 note that the ‘repro’ project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree
 to abide by its terms.
+
+A contribution is especially welcome if it follows these principles:
+
+1.  The `repro` package aids the user setup reproducibility tools.
+2.  The reproduction itself must not require the `repro` package.
+3.  Do not suprisingly rely on the system or project state or change
+    them.
