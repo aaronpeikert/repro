@@ -12,6 +12,10 @@ test_that("onAttach sends a message", {
   expect_message(.onAttach())
 })
 
+test_that("onAttach is returns invisibly", {
+  expect_invisible(.onAttach())
+})
+
 test_that("silent_command is silent", {
   expect_output(silent_command("ls"), NA)
 })
