@@ -21,7 +21,7 @@ check_docker <- function(){
       usethis::ui_todo("Add your user to the docker user group. Follow instructions on:\n{usethis::ui_value('https://docs.docker.com/install/linux/linux-postinstall/')}")
       })
     msg_restart()
-    usethis::ui_info("For more infos visit: {usethis::ui_value('https://docs.docker.com/install/')}")
+    usethis::ui_info("For more infos visit:\n{usethis::ui_value('https://docs.docker.com/install/')}")
   }
   invisible(has_docker())
 }
@@ -55,7 +55,7 @@ check_git <- function(){
 #' @export
 check_brew <- function(){
   if(!has_brew(silent = FALSE)){
-    usethis::ui_todo("To install it, follow directions on: {usethis::ui_value('https://docs.brew.sh/Installation')}")
+    usethis::ui_todo("To install it, follow directions on:\n{usethis::ui_value('https://docs.brew.sh/Installation')}")
     usethis::ui_todo("Restart your computer.")
   }
   invisible(has_brew())
