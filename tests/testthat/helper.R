@@ -12,8 +12,8 @@ expect_unicode_message <- function(object, match, label = NULL){
   invisible(act$cap)
 }
 expect_ok <- function(object){
-  expect_unicode_message(object, "^\\u2714")
+  expect_unicode_message(object, stringi::stri_escape_unicode(cli::symbol$tick))
 }
 expect_oops <- function(object){
-  expect_unicode_message(object, "^\\u2716")
+  expect_unicode_message(object, stringi::stri_escape_unicode(cli::symbol$cross))
 }

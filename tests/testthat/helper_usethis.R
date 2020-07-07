@@ -25,19 +25,19 @@ if (!is.null(session_temp_proj)) {
 ## suspending the nested project check during testing
 pattern <- "aaa"
 
-scoped_temporary_package <- function(dir = file_temp(pattern = pattern),
+scoped_temporary_package <- function(dir = fs::file_temp(pattern = pattern),
                                      env = parent.frame(),
                                      rstudio = FALSE) {
   scoped_temporary_thing(dir, env, rstudio, "package")
 }
 
-scoped_temporary_project <- function(dir = file_temp(pattern = pattern),
+scoped_temporary_project <- function(dir = fs::file_temp(pattern = pattern),
                                      env = parent.frame(),
                                      rstudio = FALSE) {
   scoped_temporary_thing(dir, env, rstudio, "project")
 }
 
-scoped_temporary_thing <- function(dir = file_temp(pattern = pattern),
+scoped_temporary_thing <- function(dir = fs::file_temp(pattern = pattern),
                                    env = parent.frame(),
                                    rstudio = FALSE,
                                    thing = c("package", "project")) {
@@ -71,11 +71,11 @@ scoped_temporary_thing <- function(dir = file_temp(pattern = pattern),
   withr::local_options(list(usethis.quiet = TRUE))
   switch(
     thing,
-    package = create_package(dir, rstudio = rstudio, open = FALSE,
+    package = usethis::create_package(dir, rstudio = rstudio, open = FALSE,
                              check_name = FALSE),
-    project = create_project(dir, rstudio = rstudio, open = FALSE)
+    project = usethis::create_project(dir, rstudio = rstudio, open = FALSE)
   )
-  proj_set(dir)
+  usethis::proj_set(dir)
   setwd(dir)
   invisible(dir)
 }
@@ -123,8 +123,8 @@ is_build_ignored <- function(pattern, ..., base_path = proj_get()) {
 
 test_file <- function(fname) testthat::test_path("ref", fname)
 
-expect_proj_file <- function(...) expect_true(file_exists(proj_path(...)))
-expect_proj_dir <- function(...) expect_true(dir_exists(proj_path(...)))
+expect_proj_file <- function(...) expect_true(fs::file_exists(usethis::proj_path(...)))
+expect_proj_dir <- function(...) expect_true(fs::dir_exists(usethis::proj_path(...)))
 
 ## use from testthat once > 2.0.0 is on CRAN
 skip_if_offline <- function(host = "r-project.org") {
