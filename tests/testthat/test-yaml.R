@@ -30,3 +30,25 @@ test_that("RMDs without yaml are skipped", {
   expect_true(all(c("dplyr", "usethis", "anytime", "lubridate", "readr") %in%
                     packages))
 })
+
+test_that("yaml boundaries with whitespace work", {
+  scoped_temporary_project()
+  test_rmd1_space <- strsplit(test_rmd1, "\n", fixed = TRUE)[[1]]
+  test_rmd1_space[2] <- "--- "
+  cat(test_rmd1_space, file = "test.Rmd", sep = "\n")
+  expected <-
+    list(
+      title = "Test",
+      author = "Aaron Peikert",
+      date = "1/13/2020",
+      output = "html_document",
+      repro = list(
+        packages = c("dplyr",
+                     "usethis", "anytime"),
+        data = "iris.csv",
+        scripts = c("load.R",
+                    "clean.R")
+      )
+    )
+  expect_identical(read_yaml("test.Rmd"), expected)
+})

@@ -1,6 +1,6 @@
 read_yaml <- function(path, ...){
   x <- readLines(path)
-  yaml_ind <- which(x == "---")
+  yaml_ind <- stringr::str_which(x, "^---[[:space:]]*")
   if(length(yaml_ind) == 0L)return(NULL)
   stopifnot(length(yaml_ind) == 2L)
   stripped <- stringr::str_c(x[seq(yaml_ind[[1]] + 1, yaml_ind[[2]] - 1)],
