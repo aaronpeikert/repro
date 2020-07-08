@@ -1,6 +1,7 @@
 read_yaml <- function(path, ...){
   x <- readLines(path)
   yaml_ind <- which(x == "---")
+  if(length(yaml_ind) == 0L)return(NULL)
   stopifnot(length(yaml_ind) == 2L)
   stripped <- stringr::str_c(x[seq(yaml_ind[[1]] + 1, yaml_ind[[2]] - 1)],
                       collapse = "\n")
@@ -29,7 +30,7 @@ get_yamls <- function(path = ".", ...){
   rmds <- fs::dir_ls(path, recurse = TRUE, glob = "*.Rmd")
   ymls <- lapply(rmds, read_yaml, ...)
   ymls <- lapply(ymls, yaml_repro)
-  ymls[sapply(ymls, is.null)] <- NULL
+  if(length(ymls) > 0)ymls[sapply(ymls, is.null)] <- NULL
   ymls <- lapply(names(ymls), function(x)c(list(file = x), ymls[[x]]))
   ymls
 }
@@ -42,6 +43,7 @@ get_yamls_thing <- function(path = ".", what, ...){
 
 yamls_packages <- function(path = ".", ...){
   packages_list <- get_yamls_thing(path, "packages", ...)
+  if(length(packages_list) == 0L)return(NULL)
   package_lengths <- vapply(packages_list, function(x)length(x), FUN.VALUE = vector("integer", 1L))
   packages <- unlist(packages_list[order(package_lengths, decreasing = TRUE)])
   if(!is.character(packages))usethis::ui_oops("Something seems to be wrong with the package specification in one of the RMarkdowns.")

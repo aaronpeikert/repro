@@ -18,3 +18,15 @@ test_that("packages are recognized", {
   expect_true(all(c("dplyr", "usethis", "anytime", "lubridate", "readr") %in%
                     packages))
 })
+
+test_that("RMDs without yaml are skipped", {
+  scoped_temporary_project()
+  cat(test_rmd1, file = "test.Rmd")
+  fs::dir_create("test")
+  cat(test_rmd2, file = "test/test2.Rmd")
+  cat("# Title\nTextText\n", file = "test/test3.Rmd")
+
+  packages <- yamls_packages()
+  expect_true(all(c("dplyr", "usethis", "anytime", "lubridate", "readr") %in%
+                    packages))
+})
