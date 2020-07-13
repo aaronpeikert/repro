@@ -19,12 +19,21 @@ automate <- function(path = "."){
 #' @rdname automate
 #' @export
 automate_make <- function(path = "."){
+  automate_make_rmd(path)
+  # automate_make_bookdown()
+  use_make(docker = FALSE, singularity = FALSE, torque = FALSE)
+}
+
+automate_make_rmd <- function(path){
   if(automate_dir()){
     yamls <- get_yamls(path)
     entries <- lapply(yamls, function(x)do.call(yaml_to_make, x))
     entries <- sort(unlist(entries))
-    entries <- stringr::str_c(entries, "\n", collapse = "\n")
-    xfun::write_utf8(entries, getOption("repro.makefile.rmds"))
+    if(is.null(entries))xfun::write_utf8("", getOption("repro.makefile.rmds"))
+    else {
+      entries <- stringr::str_c(entries, "\n", collapse = "\n")
+      xfun::write_utf8(entries, getOption("repro.makefile.rmds"))
+    }
     usethis::ui_done("Writing {usethis::ui_path(getOption('repro.makefile.rmds'))}")
     if(!fs::file_exists("Makefile")){
       use_make(open = FALSE)
@@ -43,6 +52,7 @@ automate_make <- function(path = "."){
 }
 
 yaml_to_make <- function(file, output, data, scripts, ...){
+  if(missing(file) || missing(output))return(NULL)
   output_file <- stringr::str_c(get_output_files(file, output), collapse = " ")
   deps <- stringr::str_c(c(file, data, scripts), collapse = " ")
   stringr::str_c(output_file, ": ", deps, "\n\t",
@@ -50,6 +60,7 @@ yaml_to_make <- function(file, output, data, scripts, ...){
 }
 
 get_output_files <- function(file, output, ...){
+  if(missing(output))return(NULL)
   unlist(lapply(output, function(x)get_output_file(file, x)))
 }
 

@@ -61,3 +61,22 @@ test_that("automate doesn't fail when there is no RMD", {
   expect_proj_file("Makefile")
   options(op)
 })
+
+test_that("automate doesn't fail when the RMD has no output", {
+  opts <- options()
+  scoped_temporary_project()
+  test_rmd1_no_out <- strsplit(test_rmd1, "\n", fixed = TRUE)[[1]]
+
+  test_rmd1_no_out <- test_rmd1_no_out[!grepl("output", test_rmd1_no_out)]
+  cat(test_rmd1_no_out, file = "test.Rmd", sep = "\n")
+  automate()
+  expect_proj_dir(".repro")
+  expect_proj_file(".repro", "Dockerfile_base")
+  expect_proj_file(".repro", "Dockerfile_packages")
+  expect_proj_file(".repro", "Dockerfile_manual")
+  expect_proj_file(".repro", "Makefile_Docker")
+  expect_proj_file(".repro", "Makefile_Rmds")
+  expect_proj_file("Dockerfile")
+  expect_proj_file("Makefile")
+  options(opts)
+})
