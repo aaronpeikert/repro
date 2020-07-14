@@ -53,6 +53,7 @@ has_make_ <- function(){
 }
 has_git_ <- function()silent_command("git", "--version") == 0L
 has_docker_ <- function()silent_command("docker", "-v") == 0L
+has_docker_running_ <- function()all(fs::file_exists("/.dockerenv"))
 has_choco_ <- function()silent_command("choco", "-v") == 0L
 has_brew_ <- function()silent_command("brew", "--version") == 0L
 has_ssh_ <- function(){
@@ -92,6 +93,13 @@ has_git <- has_factory("Git", "repro.git", dangerous(has_git_))
 #' @rdname has
 #' @export
 has_docker <- has_factory("Docker", "repro.docker", dangerous(has_docker_))
+
+#' @rdname has
+#' @export
+has_docker_running <- has_factory("Docker",
+                                  "repro.docker.running",
+                                  dangerous(has_docker_running_),
+                                  msg_docker_running)
 
 #' @rdname has
 #' @export

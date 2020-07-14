@@ -1,2 +1,3 @@
 options(repro.pkgtest = TRUE,
-        repro.install = FALSE)
+        repro.install = FALSE,
+        repro.docker.running = FALSE)

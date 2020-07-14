@@ -10,6 +10,7 @@
     repro.makefile.torque = "Makefile_TORQUE",
     repro.makefile.rmds = "Makefile_Rmds",
     repro.docker = NA,
+    repro.docker.running = NA,
     repro.make = NA,
     repro.git = NA,
     repro.choco = NA,

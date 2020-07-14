@@ -5,6 +5,7 @@
 \alias{has_make}
 \alias{has_git}
 \alias{has_docker}
+\alias{has_docker_running}
 \alias{has_choco}
 \alias{has_brew}
 \alias{has_ssh}
@@ -18,6 +19,8 @@ has_make(silent = TRUE, force_logical = TRUE)
 has_git(silent = TRUE, force_logical = TRUE)
 
 has_docker(silent = TRUE, force_logical = TRUE)
+
+has_docker_running(silent = TRUE, force_logical = TRUE)
 
 has_choco(silent = TRUE, force_logical = TRUE)
 

@@ -30,6 +30,11 @@ msg_github_ssh <- function(what, installed){
   else usethis::ui_oops("You have currently no access to GitHub.")
 }
 
+msg_docker_running <- function(what, installed){
+  if(isTRUE(installed))usethis::ui_done("You are inside a Docker containter!")
+  else usethis::ui_oops("You are *not* inside a Docker container!")
+}
+
 msg_service <- function(what, installed){
   if(isTRUE(installed))usethis::ui_done("You and {what} are on good terms, don't worry.")
   else usethis::ui_oops("Your {what} configuration is slightly off.")
