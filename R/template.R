@@ -1,4 +1,12 @@
+#' Create repro template
+#'
+#' Fills a newly created folder with examples of RMarkdown, scripts, and data, which work well with [repro::automate()].
+#'
+#' @param path character specifieng target folder. Will be created if it doesn't exist.
+#' @param ... Passed down to the markdown template.
+#' @export
 repro_template <- function(path, ...) {
+  stopifnot(length(path) == 1L)
   # ensure path exists
   fs::dir_create(path, recurse = TRUE)
   usethis::proj_set(path, force = TRUE)
