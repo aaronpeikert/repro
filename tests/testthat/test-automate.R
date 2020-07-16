@@ -82,7 +82,8 @@ test_that("automate doesn't fail when the RMD has no output", {
 })
 
 test_that("correct makefile is generated for non-repro rmds", {
-  scoped_temporary_project()
+  opts <- options()
+  dir <- scoped_temporary_project()
   cat(test_rmd3, file = "test.Rmd")
   automate()
   expect_proj_file(".repro", "Makefile_Rmds")
@@ -91,4 +92,5 @@ test_that("correct makefile is generated for non-repro rmds", {
                    "test.html: test.Rmd")
   expect_identical(makefile_rmds[[2]],
                    "\t$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
+  options(opts)
 })
