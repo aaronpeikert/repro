@@ -52,3 +52,11 @@ test_that("yaml boundaries with whitespace work", {
     )
   expect_identical(read_yaml("test.Rmd"), expected)
 })
+
+test_that("yaml needs to be at the top", {
+  scoped_temporary_project()
+  test_rmd1_top <- strsplit(test_rmd1, "\n", fixed = TRUE)[[1]]
+  test_rmd1_top <- c(LETTERS, test_rmd1_top)
+  cat(test_rmd1_top, file = "test.Rmd", sep = "\n")
+  expect_null(read_yaml("test.Rmd"))
+})
