@@ -67,7 +67,7 @@ check_brew <- function(){
 check_choco <- function(){
   if(!has_choco(silent = FALSE)){
     usethis::ui_todo(
-      "To install it, follow directions on: {usethis::ui_value('https://chocolatey.org/docs/installation')}"
+      "To install it, follow directions on: \n{usethis::ui_value('https://chocolatey.org/docs/installation')}"
     )
     usethis::ui_info("Use an administrator terminal to install chocolately.")
     usethis::ui_todo("Restart your computer.")
@@ -119,7 +119,7 @@ check_github_ssh <- function() {
     } else if (!has_ssh()) {
       check_ssh()
     } else {
-      usethis::ui_todo("Read {usethis::ui_value('https://happygitwithr.com/ssh-keys.html')}.")
+      usethis::ui_todo("Read:\n{usethis::ui_value('https://happygitwithr.com/ssh-keys.html')}.")
     }
   }
   invisible(has_github_ssh())
