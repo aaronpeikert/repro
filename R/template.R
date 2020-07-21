@@ -4,6 +4,10 @@
 #'
 #' @param path character specifieng target folder. Will be created if it doesn't exist.
 #' @param ... Passed down to the markdown template.
+#' @name template
+NULL
+
+#' @rdname template
 #' @export
 repro_template <- function(path, ...) {
   stopifnot(length(path) == 1L)
@@ -20,3 +24,7 @@ repro_template <- function(path, ...) {
                         "R/clean.R",
                         package = "repro")
 }
+
+#' @rdname template
+#' @export
+use_repro_template <- repro_template
