@@ -80,3 +80,7 @@ msg_rerun <- function(what, why = "."){
   usethis::ui_todo("You may want to rerun {usethis::ui_code(what)}{why}")
 }
 
+msg_reproduce <- function(command){
+  usethis::ui_todo("To reproduce this project, run the following code block in a terminal:")
+  usethis::ui_code_block(command)
+}

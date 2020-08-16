@@ -76,8 +76,7 @@ rerun_make <- function(path, cache = FALSE, silent = FALSE){
     if(file_is_somewhere("Makefile_Docker")){
       command <- stringr::str_c("make docker &&\n", command, "DOCKER=TRUE ")
     }
-    usethis::ui_todo("To reproduce this project you have to run the following code block in a terminal:")
-    usethis::ui_code_block(command)
+    msg_reproduce(command)
   }
   return(invisible(verify_rerun_candidates(path)))
 }

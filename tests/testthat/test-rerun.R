@@ -5,6 +5,7 @@ test_that("rerun recognizes a standard repro project", {
   automate()
   expect_message(rerun(cache = TRUE), regexp = "make docker")
   expect_message(rerun(cache = FALSE), regexp = "-B")
+  expect_true(rerun())
   options(opts)
 })
 
@@ -16,5 +17,6 @@ test_that("rerun recognizes a standard repro project", {
   file_delete(".repro/Makefile_Docker")
   expect_message(rerun(cache = TRUE), regexp = "make")
   expect_message(rerun(cache = FALSE), regexp = "-B")
+  expect_true(rerun())
   options(opts)
 })
