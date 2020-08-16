@@ -50,10 +50,10 @@ scoped_temporary_thing <- function(dir = fs::file_temp(pattern = pattern),
   ## Can't schedule a deferred project reset if calling this from the R
   ## console, which is useful when developing tests
   if (identical(env, globalenv())) {
-    ui_done("Switching to a temporary project!")
+    usethis::ui_done("Switching to a temporary project!")
     if (!is.null(old_project)) {
       command <- paste0('proj_set(\"', old_project, '\")')
-      ui_todo(
+      usethis::ui_todo(
         "Restore current project with: {ui_code(command)}"
       )
     }

@@ -1,16 +1,41 @@
+#' Find entrypoint for analysis and suggest how to rerun it.
+#'
+#' `rerun()` inspects the files of a project and suggest a way to reproduce the project.
+#'
+#' `rerun()` walks through a list of functions that check for a specific entrypoint.
+#' As soon as a function returns a possible entrypoint the search stops.
+#' If no function is supplied the standard list of [rerun_funs] is used.
+#'
+#' @param fun a function that inspects `dir` and advises on how to rerun the analysis. Defaults to [rerun_funs].
+#' @param ... more functions like `fun`.
+#' @param path Were should I look for entrypoints?
+#' @param cache Default is `FALSE`. Some entrypoints have a cache, which you probably do not want to use in a reproduction.
+#' @param silent Should a message be presented?
+#' @return Returns invisibly `TRUE` if an entrypoint was found and `FALSE` if not.
+#' @seealso rerun_funs
+#' @name rerun
 #' @export
-rerun <- function(fun, ..., cache = FALSE){
+rerun <- function(fun, ..., path = ".", cache = FALSE, silent = FALSE){
   dots <- list(...)
-  if(missing(fun) && length(dots) == 0L)funs <- repro::rerun_funs
-  else funs <- c(list(fun), list(...))
-  rerun_(funs, args = list(cache = cache))
+  if(missing(fun)) {
+    if(!is.na(getOption("repro.rerun.msg"))){
+      eval(getOption("repro.rerun.msg"))
+      return(invisible(TRUE))
+    }
+    funs <- getOption("repro.rerun.funs", repro::rerun_funs)
+  } else {
+    funs <- c(list(fun), list(...))
+  }
+  args <- rep(list(list(path = path, cache = cache)), length(funs))
+  walk_trough_funs(funs, args)
 }
 
-rerun_ <- function(funs, args){
+walk_trough_funs <- function(funs, args){
   if(missing(args)) {
     # no args case
     for(f in funs) {
-      if(isTRUE(do.call(f, list()))) break
+      condition <- isTRUE(do.call(f, list()))
+      if(condition) break
     }
   } else {
     # at least one arg
@@ -18,19 +43,21 @@ rerun_ <- function(funs, args){
       args <- rep(args, length(funs))
     }
     stopifnot(length(funs) == length(args))
+    stopifnot(do.call(all, lapply(funs, is.function)))
     for(i in seq_along(funs)){
-      if(isTRUE(do.call(funs[[i]], args[i]))) break
+      condition <- isTRUE(do.call(funs[[i]], args[[i]]))
+      if(condition) break
     }
   }
-  return(invisible(NULL))
+  return(invisible(condition))
 }
 
 dir_ls <- function(...){
   dots <- list(...)
   stopifnot(any(c("regexp", "glob") %in% names(dots)))
-  dots$all <- TRUE
-  dots$type <- "file"
-  dots$recurse <- TRUE
+  if(is.null(dots$all)) dots$all <- TRUE
+  if(is.null(dots$type)) dots$type <- "file"
+  if(is.null(dots$recurse)) dots$recurse <- TRUE
   do.call(fs::dir_ls, dots)
 }
 
@@ -39,27 +66,11 @@ file_is_somewhere <- function(file, ...){
   isTRUE(fs::file_exists(dir_ls(regexp = stringr::str_c(".*/", file, "$"))))
 }
 
-return_t <- function(...){
-  dots <- list(...)
-  message("return_t was called.")
-  if(length(dots) > 0)message("I got: ", names(list(...)))
-  return(TRUE)
-}
-
-return_f <- function(...){
-  dots <- list(...)
-  message("return_f was called.")
-  if(length(dots) > 0)message("I got: ", names(list(...)))
-  return(FALSE)
-}
-
+#' @rdname rerun
 #' @export
-rerun_funs <- list(return_f, return_f, return_t, return_f)
-
-#' @export
-rerun_make <- function(path, cache, silent = FALSE){
-  if(missing(path))path <- dir_ls(regexp = "^Makefile$")
-  if(verify_rerun_candidates(path, silent = silent)){
+rerun_make <- function(path, cache = FALSE, silent = FALSE){
+  candidates <- dir_ls(path = path, regexp = "^Makefile$")
+  if(verify_rerun_candidates(candidates, silent = silent)){
     command <- "make "
     if(isFALSE(cache))command <- stringr::str_c(command, "-B ")
     if(file_is_somewhere("Makefile_Docker")){
@@ -71,7 +82,6 @@ rerun_make <- function(path, cache, silent = FALSE){
   return(invisible(verify_rerun_candidates(path)))
 }
 
-#' @export
 verify_rerun_candidates <- function(path, silent = TRUE){
   n <- length(path)
   exist <- fs::file_exists(path)
@@ -83,3 +93,14 @@ verify_rerun_candidates <- function(path, silent = TRUE){
     return(FALSE)
   }
 }
+
+#' A list of functions to detect entrypoints.
+#'
+#' At the moment only rerun_make is available.
+#'
+#' @details `rerun_make` detects make as an entrypoint if there is a Makefile at top level.
+#' If it does also encounter a Makefile_Docker somewhere it recognizes the different make instructions.
+#' @name rerun_funs
+#' @seealso rerun
+#' @export
+rerun_funs <- list(rerun_make)
