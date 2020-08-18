@@ -1,3 +1,3 @@
 #----clean----
 # remove polluters
-mycars <- subset(mycars)
+mycars <- subset(mycars, mpg > 15)

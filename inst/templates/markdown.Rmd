@@ -4,9 +4,8 @@ author: {{{author}}}
 date: {{date}}
 repro:
   packages:
-    - usethis
-    - fs
-    - aaronpeikert/repro@d09def75df
+    - ggplot2
+    - aaronpeikert/repro@adb5fa569
   scripts:
     - R/clean.R
   data:
@@ -55,4 +54,13 @@ summary(mycars$mpg)
 
 ```{r plot, echo=FALSE}
 with(mycars, plot(mpg, hp))
+```
+
+## Including Fancy Plots
+
+```{r fany-plot, echo=FALSE}
+ggplot(mycars, aes(mpg, hp)) +
+  geom_point() +
+  theme_minimal() +
+  NULL
 ```
