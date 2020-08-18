@@ -43,10 +43,19 @@ get_yamls_thing <- function(path = ".", what, ...){
 
 yamls_packages <- function(path = ".", ...){
   packages_list <- get_yamls_thing(path, "packages", ...)
-  if(length(packages_list) == 0L)return(NULL)
+  if(length(unlist(packages_list)) == 0L)return(NULL)
   package_lengths <- vapply(packages_list, function(x)length(x), FUN.VALUE = vector("integer", 1L))
   packages <- unlist(packages_list[order(package_lengths, decreasing = TRUE)])
   if(!is.character(packages))usethis::ui_oops("Something seems to be wrong with the package specification in one of the RMarkdowns.")
+  return(packages)
+}
+
+yamls_apt <- function(path = ".", ...){
+  packages_list <- get_yamls_thing(path, "apt", ...)
+  if(length(unlist(packages_list)) == 0L)return(NULL)
+  package_lengths <- vapply(packages_list, function(x)length(x), FUN.VALUE = vector("integer", 1L))
+  packages <- unlist(packages_list[order(package_lengths, decreasing = TRUE)])
+  if(!is.character(packages))usethis::ui_oops("Something seems to be wrong with the apt specification in one of the RMarkdowns.")
   return(packages)
 }
 

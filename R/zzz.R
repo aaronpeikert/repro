@@ -4,6 +4,7 @@
     repro.dir = ".repro",
     repro.dockerfile.base = "Dockerfile_base",
     repro.dockerfile.packages = "Dockerfile_packages",
+    repro.dockerfile.apt = "Dockerfile_apt",
     repro.dockerfile.manual = "Dockerfile_manual",
     repro.makefile.docker = "Makefile_Docker",
     repro.makefile.singularity = "Makefile_Singularity",

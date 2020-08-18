@@ -77,6 +77,15 @@ use_docker_packages <- function(packages, github = NULL, strict = TRUE, file = "
   docker_entry(to_write, file, write, open, append, quiet = TRUE)
 }
 
+use_docker_apt <- function(apt, update = TRUE, file = "Dockerfile", write = TRUE, open = write, append = TRUE){
+  if(length(apt) == 0L)return(NULL)
+  to_write <- "RUN "
+  if(update)to_write <- stringr::str_c(to_write, "apt-get update -y && ")
+  to_write <- stringr::str_c(to_write, "apt-get install -y ")
+  to_write <- stringr::str_c(to_write, stringr::str_c(apt, collapse = " "))
+  docker_entry(to_write, file, write, open, append, quiet = TRUE)
+}
+
 docker_entry <- function(entry, file = "Dockerfile", write, open, append, quiet = FALSE) {
   if (!fs::file_exists(file)) {
     usethis::ui_oops(glue::glue("There is no {usethis::ui_path(file)}!"))
