@@ -78,13 +78,7 @@ use_make_docker <- function(file, use_docker = TRUE, dockerignore = TRUE, open =
     package = "repro"
   )
   if(dockerignore){
-    usethis::use_template(
-      "dockerignore",
-      ".dockerignore",
-      ignore = FALSE,
-      open = open,
-      package = "repro"
-    )
+    use_dockerignore()
   }
 }
 

@@ -13,6 +13,7 @@ test_that("docker automate works", {
   expect_proj_file(".repro", "Makefile_Docker")
   expect_proj_file("Dockerfile")
   expect_proj_file("Makefile")
+  expect_proj_file(".dockerignore")
   options(op)
 })
 

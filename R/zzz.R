@@ -6,6 +6,7 @@
     repro.dockerfile.packages = "Dockerfile_packages",
     repro.dockerfile.apt = "Dockerfile_apt",
     repro.dockerfile.manual = "Dockerfile_manual",
+    repro.dockerignore = ".dockerignore",
     repro.makefile.docker = "Makefile_Docker",
     repro.makefile.singularity = "Makefile_Singularity",
     repro.makefile.torque = "Makefile_TORQUE",

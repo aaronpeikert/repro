@@ -7,6 +7,7 @@
 #' @param date Which date should be used for package instalation, defaults to today.
 #' @param file Which file to save to
 #' @param open Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.
+#' @name docker
 #' @export
 
 use_docker <- function(rver = NULL, stack = "verse", date = Sys.Date(), file = "Dockerfile", open = TRUE){
@@ -167,4 +168,17 @@ dir2imagename <- function(dir){
   dir <- stringr::str_to_lower(dir)
   dir <- stringr::str_remove(dir, "^[0-9]")
   dir
+}
+
+#' @name docker
+#' @export
+use_dockerignore <- function(file, open = TRUE){
+  if(missing(file) || isTRUE(file))file <- getOption("repro.dockerignore")
+    usethis::use_template(
+      "dockerignore",
+      file,
+      ignore = FALSE,
+      open = open,
+      package = "repro"
+    )
 }
