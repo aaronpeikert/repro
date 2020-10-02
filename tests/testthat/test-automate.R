@@ -80,3 +80,24 @@ test_that("automate doesn't fail when the RMD has no output", {
   expect_proj_file("Makefile")
   options(opts)
 })
+
+test_that("automate doesn't require scripts or data or packages", {
+  opts <- options()
+  scoped_temporary_project()
+  test_rmd1_no_scr_data <- strsplit(test_rmd1, "\n", fixed = TRUE)[[1]]
+
+  test_rmd1_no_scr_data <- test_rmd1_no_scr_data[-seq(grep("repro", test_rmd1_no_scr_data), grep("---", test_rmd1_no_scr_data)[[2]]-1)]
+  cat(test_rmd1_no_scr_data, file = "test.Rmd", sep = "\n")
+  automate()
+  expect_proj_dir(".repro")
+  expect_proj_file(".repro", "Dockerfile_base")
+  expect_proj_file(".repro", "Dockerfile_packages")
+  expect_proj_file(".repro", "Dockerfile_manual")
+  expect_proj_file(".repro", "Makefile_Docker")
+  expect_proj_file(".repro", "Makefile_Rmds")
+  expect_proj_file("Dockerfile")
+  expect_proj_file("Makefile")
+  expect_equal(do.call(yaml_to_make, get_yamls(".")[[1]]),
+               "test.html: test.Rmd  \n\t$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
+  options(opts)
+})

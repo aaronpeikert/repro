@@ -10,20 +10,20 @@ read_yaml <- function(path, ...){
 }
 
 yaml_repro <- function(yaml){
+  out <- list()
   if("repro" %in% names(yaml)){
     out <- yaml$repro
   } else {
     if("repro" %in% names(yaml$params)){
       out <- yaml$params$repro
-    } else{
-      return(NULL)
     }
   }
   if("output" %in% names(yaml)){
     if(is.character(yaml$output))out$output <- yaml$output
     if(is.list(yaml$output))out$output <- names(yaml$output)
   }
-  return(out)
+  if(length(out) == 0L)return(NULL)
+  else return(out)
 }
 
 get_yamls <- function(path = ".", ...){
