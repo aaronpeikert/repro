@@ -3,6 +3,11 @@ msg_restart <- function(consider = TRUE){
   else usethis::ui_todo("Restart your computer.")
 }
 
+msg_restart_r <- function(consider = TRUE){
+  if(consider)usethis::ui_todo("Consider restarting R (command/ctrl + shift + F10).")
+  else usethis::ui_todo("Restart R (command/ctrl + shift + F10).")
+}
+
 msg_installed <- function(what, installed = TRUE) {
   if (isTRUE(installed)) {
     usethis::ui_done("{what} is installed, don't worry.")

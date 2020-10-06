@@ -2,7 +2,7 @@
 #'
 #' Check if a dependency is installed and if not it recommends how to install it
 #' depending on the operating system. Most importantly it checks for
-#' `git`, `make` & `docker`. And just for convinience of the installation it
+#' `git`, `make` & `docker`. And just for convenience of the installation it
 #' checks on OS X for `Homebrew` and on Windows for `Chocolately`.
 #' @param install Should something be installed? Defaults to "ask", but can be TRUE/FALSE.
 #' @name check
@@ -82,12 +82,7 @@ check_ssh <- function(install = getOption("repro.install")) {
     if (install == "ask")
       install <- !usethis::ui_nope("Do you want to generate SSH keys?")
     if (install) {
-      options(repro.ssh =
-                !inherits(try(do.call(dangerous(credentials::ssh_keygen,
-                                             getOption("repro.pkgtest")),
-                                      list()),
-                              silent = TRUE)
-                          , "try-error"))
+      options(repro.ssh = dangerous_succeeds(credentials::ssh_keygen)())
       msg_rerun("check_ssh()", " to verify the new ssh keys.")
     }
   }

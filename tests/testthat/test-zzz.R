@@ -6,6 +6,9 @@ test_that("onload sets options to na", {
   expect_true(is.na(getOption("repro.choco")))
   expect_true(is.na(getOption("repro.brew")))
   expect_true(is.na(getOption("repro.os")))
+  expect_true(is.na(getOption("repro.renv")))
+  expect_true(is.na(getOption("repro.worcs")))
+  expect_true(is.na(getOption("repro.targets")))
 })
 
 test_that("onAttach sends a message", {

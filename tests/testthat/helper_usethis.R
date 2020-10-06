@@ -4,7 +4,7 @@ library(usethis)
 library(fs)
 
 ## attempt to activate a project, which is nice during development
-tryCatch(proj_set("."), error = function(e) NULL)
+tryCatch(usethis::proj_set("."), error = function(e) NULL)
 
 ## If session temp directory appears to be, or be within, a project, there
 ## will be large scale, spurious test failures.
@@ -61,7 +61,7 @@ scoped_temporary_thing <- function(dir = fs::file_temp(pattern = pattern),
     withr::defer({
       withr::with_options(
         list(usethis.quiet = TRUE),
-        proj_set(old_project, force = TRUE)
+        usethis::proj_set(old_project, force = TRUE)
       )
       setwd(old_project)
       fs::dir_delete(dir)

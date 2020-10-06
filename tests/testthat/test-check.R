@@ -7,7 +7,10 @@ test_that("options set to TRUE are recognized.", {
       repro.make = TRUE,
       repro.git = TRUE,
       repro.choco = TRUE,
-      repro.brew = TRUE
+      repro.brew = TRUE,
+      repro.renv = TRUE,
+      repro.targets = TRUE,
+      repro.worcs = TRUE
     ),
     {
       expect_ok(check_docker())
@@ -15,12 +18,18 @@ test_that("options set to TRUE are recognized.", {
       expect_ok(check_git())
       expect_ok(check_choco())
       expect_ok(check_brew())
+      expect_ok(check_renv())
+      expect_ok(check_targets())
+      expect_ok(check_worcs())
 
       expect_true(check_docker())
       expect_true(check_make())
       expect_true(check_git())
       expect_true(check_choco())
       expect_true(check_brew())
+      expect_true(check_renv())
+      expect_true(check_targets())
+      expect_true(check_worcs())
     })
 })
 
@@ -32,6 +41,9 @@ test_that("options set to FALSE are recognized.", {
       repro.git = FALSE,
       repro.choco = FALSE,
       repro.brew = FALSE,
+      repro.renv = FALSE,
+      repro.targets = FALSE,
+      repro.worcs = FALSE,
       repro.os = "linux"
     ),
     {
@@ -40,12 +52,18 @@ test_that("options set to FALSE are recognized.", {
       expect_oops(check_git())
       expect_oops(check_choco())
       expect_oops(check_brew())
+      expect_oops(check_renv())
+      expect_oops(check_targets())
+      expect_oops(check_worcs())
 
       expect_false(check_docker())
       expect_false(check_make())
       expect_false(check_git())
       expect_false(check_choco())
       expect_false(check_brew())
+      expect_false(check_renv())
+      expect_false(check_targets())
+      expect_false(check_worcs())
     })
 })
 
@@ -184,10 +202,14 @@ test_that("check functions return invisibly", {
       repro.ssh = TRUE,
       repro.github.ssh = TRUE,
       repro.github.token = TRUE,
-      repro.os = "linux"
+      repro.os = "linux",
+      repro.renv = TRUE,
+      repro.targets = TRUE,
+      repro.worcs = TRUE
     ),
     {
       check_funs <- stringr::str_subset(ls("package:repro"), "^check_")
+      check_funs <- check_funs[!stringr::str_detect(check_funs, "^check_package")]
       lapply(check_funs, function(x)eval(bquote(expect_invisible(do.call(.(x), list())))))
     })
 })
