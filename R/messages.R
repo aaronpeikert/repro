@@ -36,7 +36,7 @@ msg_github_ssh <- function(what, installed){
 }
 
 msg_docker_running <- function(what, installed){
-  if(isTRUE(installed))usethis::ui_done("You are inside a Docker containter!")
+  if(isTRUE(installed))usethis::ui_done("You are inside a Docker container!")
   else usethis::ui_oops("You are *not* inside a Docker container!")
 }
 

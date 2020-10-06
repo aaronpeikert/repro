@@ -43,7 +43,7 @@ scoped_temporary_thing <- function(dir = fs::file_temp(pattern = pattern),
                                    thing = c("package", "project")) {
   thing <- match.arg(thing)
   if (fs::dir_exists(dir)) {
-    ui_stop("Target {ui_code('dir')} {ui_path(dir)} already exists.")
+    ui_stop("Target {usethis::ui_code('dir')} {usethis::ui_path(dir)} already exists.")
   }
 
   old_project <- usethis:::proj$cur
@@ -54,7 +54,7 @@ scoped_temporary_thing <- function(dir = fs::file_temp(pattern = pattern),
     if (!is.null(old_project)) {
       command <- paste0('proj_set(\"', old_project, '\")')
       usethis::ui_todo(
-        "Restore current project with: {ui_code(command)}"
+        "Restore current project with: {usethis::ui_code(command)}"
       )
     }
   } else {

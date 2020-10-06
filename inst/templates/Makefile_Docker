@@ -34,6 +34,8 @@ endif
 docker: build
 build: Dockerfile
 	docker build -t $(PROJECT) .
+rebuild:
+	docker build --no-cache -t $(PROJECT) .
 save-docker: $(PROJECT).tar.gz
 $(PROJECT).tar.gz:
 	docker save $(PROJECT):latest | gzip > $@

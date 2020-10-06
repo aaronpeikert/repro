@@ -2,6 +2,7 @@ read_yaml <- function(path, ...){
   x <- readLines(path)
   yaml_ind <- stringr::str_which(x, "^---[[:space:]]*")
   if(length(yaml_ind) == 0L)return(NULL)
+  if(yaml_ind[[1]] > 2)return(NULL)
   stopifnot(length(yaml_ind) == 2L)
   stripped <- stringr::str_c(x[seq(yaml_ind[[1]] + 1, yaml_ind[[2]] - 1)],
                       collapse = "\n")
@@ -9,18 +10,24 @@ read_yaml <- function(path, ...){
   return(yaml)
 }
 
-yaml_repro <- function(yaml){
-  out <- list()
-  if("repro" %in% names(yaml)){
+yaml_repro <- function(yaml) {
+  if ("repro" %in% names(yaml)) {
     out <- yaml$repro
-  } else {
-    if("repro" %in% names(yaml$params)){
-      out <- yaml$params$repro
-    }
+  } else if ("repro" %in% names(yaml$params)) {
+    out <- yaml$params$repro
+  } else{
+    out <- list()
   }
-  if("output" %in% names(yaml)){
-    if(is.character(yaml$output))out$output <- yaml$output
-    if(is.list(yaml$output))out$output <- names(yaml$output)
+  if ("output" %in% names(yaml)) {
+    if (is.character(yaml$output)){
+      out$output <- yaml$output
+    } else if (is.list(yaml$output)){
+      out$output <- names(yaml$output)
+    } else {
+      usethis::ui_stop("Output in one of the yamls is neither a list nor a character!")}
+  }
+  if (length(out) == 0L){
+    out <- NULL
   }
   if(length(out) == 0L)return(NULL)
   else return(out)
