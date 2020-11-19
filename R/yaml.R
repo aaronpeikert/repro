@@ -3,7 +3,6 @@ read_yaml <- function(path, ...){
   yaml_ind <- stringr::str_which(x, "^---[[:space:]]*")
   if(length(yaml_ind) == 0L)return(NULL)
   if(yaml_ind[[1]] > 2)return(NULL)
-  stopifnot(length(yaml_ind) == 2L)
   stripped <- stringr::str_c(x[seq(yaml_ind[[1]] + 1, yaml_ind[[2]] - 1)],
                       collapse = "\n")
   yaml <- yaml::read_yaml(text = stripped, ...)
