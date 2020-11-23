@@ -2,7 +2,7 @@
 # --user indicates which user to emulate
 # -v which directory on the host should be accessable in the container
 # the last argument is the name of the container which is the project name
-DFLAGS = --rm $(DUSER) -v $(DDIR):$(DHOME) $(PROJECT)
+DFLAGS = --rm $(DUSER) -v "$(DDIR)":"$(DHOME)" $(PROJECT)
 DCMD = run
 DHOME = /home/rstudio/
 
