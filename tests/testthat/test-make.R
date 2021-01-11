@@ -37,8 +37,9 @@ test_that("use_make fails for Singularity without Docker", {
 test_that("use_make works for Singularity with pre-existing Docker", {
   scoped_temporary_project()
   repro::use_make(docker = TRUE)
-  repro::use_make(docker = FALSE, singularity = TRUE, open = TRUE)
   expect_proj_file("Makefile")
+  fs::file_delete("Makefile")
+  repro::use_make(docker = FALSE, singularity = TRUE, open = TRUE)
   expect_proj_file("Makefile_Singularity")
 })
 
@@ -80,4 +81,11 @@ test_that("use_make_singularity creates all files it should", {
       use_make_singularity()
       expect_proj_file("mysingularity")
     })
+})
+
+test_that("Existing Makefile remains untouched.", {
+  scoped_temporary_project()
+  cat("all: test.txt", file = "Makefile")
+  expect_ok(repro::use_make())
+  expect_message(repro::use_make(), "exists")
 })
