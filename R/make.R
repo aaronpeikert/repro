@@ -15,6 +15,10 @@ NULL
 #' @rdname make
 #' @export
 use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open = TRUE){
+  if(fs::file_exists("Makefile")){
+    usethis::ui_done("{usethis::ui_code('Makefile')} allready exists, skip creating it.")
+    return(invisible())
+  }
   # start out with the simplist Makefile possible
   template_data <- list(
     project = dir2imagename(usethis::proj_path()),
