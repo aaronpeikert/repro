@@ -93,10 +93,10 @@ check_ssh <- function(install = getOption("repro.install")) {
 #' @export
 check_github_token <- function(install = getOption("repro.install")){
   if(!has_github_token(silent = FALSE)){
-    if(install == "ask")install <- usethis::ui_nope("Do you want to generate a GitHub token?")
+    if(install == "ask")install <- !usethis::ui_nope("Do you want to generate a GitHub token?")
     if(install){
-      usethis::browse_github_token()
-      msg_rerun("check_github_token()", " to verify the new GitHub token.")
+      usethis::create_github_token()
+      msg_rerun("check_github_token()", " to verify the new GitHub token.\nIf the problem persists, try {usethis::ui_code('usethis::gh_token_help()')}.")
     }
   }
   invisible(has_github_token())

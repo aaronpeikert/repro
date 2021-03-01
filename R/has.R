@@ -76,7 +76,7 @@ has_ssh_ <- function(){
                                ,
                                "try-error")
 }
-has_github_token_ <- function()usethis::github_token() != ""
+has_github_token_ <- function()gh::gh_token() != ""
 has_github_ssh_ <- function(){
   temp <- tempfile()
   system2("ssh", "-T git@github.com", stdout = temp, stderr = temp)
