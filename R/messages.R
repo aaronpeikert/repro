@@ -82,6 +82,7 @@ msg_install_with_apt <- function(what, how, todo, linux_only = TRUE){
 }
 
 msg_rerun <- function(what, why = "."){
+  why <- glue::glue(why)
   usethis::ui_todo("You may want to rerun {usethis::ui_code(what)}{why}")
 }
 
