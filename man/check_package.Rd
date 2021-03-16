@@ -8,6 +8,11 @@ check_package(pkg, install = getOption("repro.install"), github)
 }
 \arguments{
 \item{pkg}{Which package are we talking about?}
+
+\item{install}{Should we install the package in case its missing?}
+
+\item{github}{A github username/package from which the package is installed.
+If NULL (the default) CRAN (or whatever repo) you have set is used.}
 }
 \description{
 Check if package exists

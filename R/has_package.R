@@ -2,7 +2,7 @@
 #'
 #'
 #' @param pkg Which package are we talking about?
-#' @inheritParams has_make
+#' @inheritParams has
 #' @family checkers
 #' @export
 has_package <- function(pkg, silent = TRUE, force_logical = TRUE){

@@ -1,7 +1,9 @@
 #' Check if package exists
 #'
 #' @param pkg Which package are we talking about?
-#' @inheritParams has_renv
+#' @param install Should we install the package in case its missing?
+#' @param github A github username/package from which the package is installed.
+#' If NULL (the default) CRAN (or whatever repo) you have set is used.
 #' @family checkers
 #' @export
 
