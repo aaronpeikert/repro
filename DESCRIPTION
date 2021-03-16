@@ -47,16 +47,17 @@ Imports:
     yaml,
     rstudioapi,
     rmarkdown,
-    credentials
+    credentials,
+    gh
 URL: https://github.com/aaronpeikert/repro
 BugReports: https://github.com/aaronpeikert/repro/issues
 Suggests: 
     testthat (>= 2.1.0),
     covr,
     curl,
-    git2r,
     withr,
     rlang,
     knitr,
     cli,
-    stringi
+    stringi,
+    remotes
