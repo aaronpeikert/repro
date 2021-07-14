@@ -26,3 +26,7 @@ has_targets <- has_factory_package("targets")
 #' @rdname has
 #' @export
 has_worcs <- has_factory_package("worcs")
+
+#' @rdname has
+#' @export
+has_gert <- has_factory_package("gert")

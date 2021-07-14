@@ -14,6 +14,8 @@
 \alias{has_github}
 \alias{has_renv}
 \alias{has_targets}
+\alias{has_worcs}
+\alias{has_gert}
 \title{Check System Dependencies}
 \usage{
 has_make(silent = TRUE, force_logical = TRUE)
@@ -40,7 +42,9 @@ has_renv(silent = TRUE, force_logical = TRUE)
 
 has_targets(silent = TRUE, force_logical = TRUE)
 
-has_targets(silent = TRUE, force_logical = TRUE)
+has_worcs(silent = TRUE, force_logical = TRUE)
+
+has_gert(silent = TRUE, force_logical = TRUE)
 }
 \arguments{
 \item{silent}{Should a message be printed that informs the user?}
