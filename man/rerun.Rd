@@ -4,21 +4,10 @@
 \alias{rerun}
 \title{Find entrypoint for analysis and suggest how to reproduce it.}
 \usage{
-rerun(fun, ..., path = ".", cache = FALSE, silent = FALSE)
+rerun(...)
 }
 \arguments{
-\item{fun}{a function that inspects \code{dir} and advises on how to reproduce the analysis. Defaults to \link{reproduce_funs}.}
-
-\item{...}{more functions like \code{fun}.}
-
-\item{path}{Were should I look for entrypoints?}
-
-\item{cache}{Default is \code{FALSE}. Some entrypoints have a cache, which you probably do not want to use in a reproduction.}
-
-\item{silent}{Should a message be presented?}
-}
-\value{
-Returns invisibly \code{TRUE} if an entrypoint was found and \code{FALSE} if not.
+\item{...}{passed to \code{\link[=reproduce]{reproduce()}}.}
 }
 \description{
 \code{rerun()} was renamed to \code{\link[=reproduce]{reproduce()}}. \code{rerun()} is deprecated.
