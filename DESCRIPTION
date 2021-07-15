@@ -60,4 +60,5 @@ Suggests:
     knitr,
     cli,
     stringi,
-    remotes
+    remotes,
+    gert
