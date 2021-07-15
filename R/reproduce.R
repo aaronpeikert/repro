@@ -11,7 +11,7 @@
 #' @param path Were should I look for entrypoints?
 #' @param cache Default is `FALSE`. Some entrypoints have a cache, which you probably do not want to use in a reproduction.
 #' @param silent Should a message be presented?
-#' @return Returns invisibly `TRUE` if an entrypoint was found and `FALSE` if not.
+#' @return Returns invisibly the command users should use to reproduce.
 #' @seealso reproduce_funs
 #' @name reproduce
 #' @export
@@ -45,11 +45,12 @@ walk_trough_funs <- function(funs, args){
     stopifnot(length(funs) == length(args))
     stopifnot(do.call(all, lapply(funs, is.function)))
     for(i in seq_along(funs)){
-      condition <- isTRUE(do.call(funs[[i]], args[[i]]))
-      if(condition) break
+      condition <- do.call(funs[[i]], args[[i]])
+      if(isTRUE(condition)) break
     }
   }
-  return(invisible(condition))
+  out <- attr(condition, "command")
+  return(invisible(out))
 }
 
 dir_ls <- function(...){
@@ -70,6 +71,7 @@ file_is_somewhere <- function(file, ...){
 #' @export
 reproduce_make <- function(path, cache = FALSE, silent = FALSE){
   candidates <- dir_ls(path = path, regexp = "^Makefile$")
+  command <- ""
   if(verify_reproduce_candidates(candidates, silent = silent)){
     command <- "make "
     if(isFALSE(cache))command <- stringr::str_c(command, "-B ")
@@ -78,7 +80,9 @@ reproduce_make <- function(path, cache = FALSE, silent = FALSE){
     }
     msg_reproduce(command)
   }
-  return(invisible(verify_reproduce_candidates(path)))
+  out <- verify_reproduce_candidates(path)
+  attr(out, "command") <- command
+  return(invisible(out))
 }
 
 verify_reproduce_candidates <- function(path, silent = TRUE){

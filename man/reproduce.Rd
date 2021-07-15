@@ -21,7 +21,7 @@ reproduce_make(path, cache = FALSE, silent = FALSE)
 \item{silent}{Should a message be presented?}
 }
 \value{
-Returns invisibly \code{TRUE} if an entrypoint was found and \code{FALSE} if not.
+Returns invisibly the command users should use to reproduce.
 }
 \description{
 \code{reproduce()} inspects the files of a project and suggest a way to reproduce the project.

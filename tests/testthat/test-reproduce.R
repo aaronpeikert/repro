@@ -5,7 +5,7 @@ test_that("reproduce recognizes a standard repro project", {
   automate()
   expect_message(reproduce(cache = TRUE), regexp = "make docker")
   expect_message(reproduce(cache = FALSE), regexp = "-B")
-  expect_true(reproduce())
+  expect_equal(reproduce(cache = FALSE), "make docker &&\nmake -B DOCKER=TRUE ")
   options(opts)
 })
 
@@ -17,6 +17,5 @@ test_that("reproduce recognizes a standard repro project", {
   file_delete(".repro/Makefile_Docker")
   expect_message(reproduce(cache = TRUE), regexp = "make")
   expect_message(reproduce(cache = FALSE), regexp = "-B")
-  expect_true(reproduce())
   options(opts)
 })
