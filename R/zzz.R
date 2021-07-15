@@ -27,8 +27,8 @@
     repro.github.token = NA,
     repro.pkgtest = FALSE,
     repro.install = "ask",
-    repro.rerun.funs = rerun_funs,
-    repro.rerun.msg = NA
+    repro.reproduce.funs = reproduce_funs,
+    repro.reproduce.msg = NA
     )
   toset <- !(names(op.repro) %in% names(op))
   if(any(toset)) options(op.repro[toset])

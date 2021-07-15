@@ -1,0 +1,22 @@
+test_that("reproduce recognizes a standard repro project", {
+  opts <- options()
+  scoped_temporary_project()
+  repro_template(".")
+  automate()
+  expect_message(reproduce(cache = TRUE), regexp = "make docker")
+  expect_message(reproduce(cache = FALSE), regexp = "-B")
+  expect_true(reproduce())
+  options(opts)
+})
+
+test_that("reproduce recognizes a standard repro project", {
+  opts <- options()
+  scoped_temporary_project()
+  repro_template(".")
+  automate()
+  file_delete(".repro/Makefile_Docker")
+  expect_message(reproduce(cache = TRUE), regexp = "make")
+  expect_message(reproduce(cache = FALSE), regexp = "-B")
+  expect_true(reproduce())
+  options(opts)
+})
