@@ -6,6 +6,7 @@
 #' @param length The length to which the hash is cut.
 #' @param backend Can be either of `NULL`, "gert", or "git". If `NULL` Git is
 #'   used with preference and `gert` as a fallback.
+#' @export
 
 current_hash <- function(length = 7L, backend = NULL) {
   if (is.null(backend)) {
