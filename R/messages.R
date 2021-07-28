@@ -32,7 +32,7 @@ msg_github_token <- function(what, installed){
 msg_github_ssh <- function(what, installed){
   if (isTRUE(installed))usethis::ui_done("You have SSH access to GitHub, don't worry.")
   else if (isFALSE(installed))usethis::ui_oops("You have no access to GitHub.")
-  else usethis::ui_oops("You have currently no access to GitHub.")
+  else usethis::ui_oops("You currently have no access to GitHub.")
 }
 
 msg_docker_running <- function(what, installed){
@@ -73,7 +73,7 @@ msg_install_with_apt <- function(what, how, todo, linux_only = TRUE){
   if(get_os() == "linux" || !linux_only){
     if(!missing(how)){
       usethis::ui_info("Adapt to your native package manager (deb, rpm, brew, csw, eopkg).")
-      usethis::ui_info("You may need admin-rights, use {usethis::ui_code('sudo')} in this case.")
+      usethis::ui_info("You may need admin rights, use {usethis::ui_code('sudo')} in this case.")
       usethis::ui_todo("Run {usethis::ui_code(how)} in a terminal to install {what}.")
     }
     if(!missing(todo))eval(todo)
