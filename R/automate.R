@@ -51,12 +51,10 @@ automate_make_rmd <- function(path){
   }
 }
 
-yaml_to_make <- function(file, output, data, scripts, ...){
+yaml_to_make <- function(file, output, data = NULL, scripts = NULL, bibliography = NULL, images = NULL, files = NULL, ...){
   if(missing(file) || missing(output))return(NULL)
   output_file <- stringr::str_c(get_output_files(file, output), collapse = " ")
-  if(missing(data)) data <- NULL
-  if(missing(scripts))scripts <- NULL
-  deps <- stringr::str_c(c(file, data, scripts), collapse = " ")
+  deps <- stringr::str_c(c(file, data, scripts, bibliography, images, files), collapse = " ")
   stringr::str_c(output_file, ": ", deps, "\n\t",
                  "$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
 }

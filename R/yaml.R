@@ -25,6 +25,9 @@ yaml_repro <- function(yaml) {
     } else {
       usethis::ui_stop("Output in one of the yamls is neither a list nor a character!")}
   }
+  if ("bibliography" %in% names(yaml)) {
+    out$bibliography <- yaml$params$bibliography
+  }
   if (length(out) == 0L){
     out <- NULL
   }
