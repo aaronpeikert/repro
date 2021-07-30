@@ -112,10 +112,10 @@ test_that("automate identifies other dependencies like bibliography etc.", {
   cat(test_rmd4, file = "test.Rmd")
   automate()
   expect_equal(do.call(yaml_to_make, get_yamls(".")[[1]]),
-               "test.html: test.Rmd mtcars.csv analyze.R plots.R images/test.jpg test.zip\n\t$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
+               "test.html: test.Rmd mtcars.csv analyze.R plots.R temp.bib images/test.jpg test.zip\n\t$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
   makefile_rmds <- readLines(".repro/Makefile_Rmds")
   expect_identical(makefile_rmds[[1]],
-                   "test.html: test.Rmd mtcars.csv analyze.R plots.R images/test.jpg test.zip")
+                   "test.html: test.Rmd mtcars.csv analyze.R plots.R temp.bib images/test.jpg test.zip")
   expect_identical(makefile_rmds[[2]],
                    "\t$(RUN1) Rscript -e 'rmarkdown::render(\"$(WORKDIR)/$<\", \"all\")' $(RUN2)")
   options(opts)
