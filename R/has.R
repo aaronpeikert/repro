@@ -32,7 +32,7 @@ dangerous_succeeds <-  function(func, condition = getOption("repro.pkgtest"), ..
 }
 
 has_n_check <- function(has, check){
-  # this function is usefull if you wan't to verify that everything is ok
+  # this function is useful if you want to verify that everything is ok
   # but only notify the user on failure
   if(!do.call(has, list()))do.call(check, list())
   do.call(has, list())
