@@ -7,7 +7,7 @@
 #' @family checkers
 #' @export
 
-check_package <- function(pkg, install = getOption("repro.install"), github){
+check_package <- function(pkg, install = getOption("repro.install"), github = NULL){
   check_package_factory(pkg, github)(install = install)
 }
 
