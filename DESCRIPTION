@@ -48,7 +48,7 @@ Imports:
     rstudioapi,
     rmarkdown,
     credentials,
-    gh
+    gh (>= 1.2.1)
 URL: https://github.com/aaronpeikert/repro
 BugReports: https://github.com/aaronpeikert/repro/issues
 Suggests: 
