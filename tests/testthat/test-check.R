@@ -191,6 +191,44 @@ test_that("github function recognize options set to TRUE", {
     })
 })
 
+test_that("github function works token only", {
+  withr::with_options(list(
+    repro.git = TRUE,
+    repro.ssh = FALSE,
+    repro.github.ssh = FALSE,
+    repro.github.token = TRUE,
+    repro.os = "linux"), {
+      expect_false(check_ssh())
+      expect_false(check_github_ssh())
+      expect_true(check_github_token())
+      expect_true(check_github())
+
+      expect_oops(check_ssh())
+      expect_oops(check_github_ssh())
+      expect_ok(check_github_token())
+      expect_ok(check_github())
+    })
+})
+
+test_that("github function works ssh only", {
+  withr::with_options(list(
+    repro.git = TRUE,
+    repro.ssh = TRUE,
+    repro.github.ssh = TRUE,
+    repro.github.token = FALSE,
+    repro.os = "linux"), {
+      expect_true(check_ssh())
+      expect_true(check_github_ssh())
+      expect_false(check_github_token())
+      expect_true(check_github(auth_method = "ssh"))
+
+      expect_ok(check_ssh())
+      expect_ok(check_github_ssh())
+      expect_oops(check_github_token())
+      expect_ok(check_github(auth_method = "ssh"))
+    })
+})
+
 test_that("check functions return invisibly", {
   withr::with_options(
     list(

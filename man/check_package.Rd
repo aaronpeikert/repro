@@ -4,7 +4,7 @@
 \alias{check_package}
 \title{Check if package exists}
 \usage{
-check_package(pkg, install = getOption("repro.install"), github)
+check_package(pkg, install = getOption("repro.install"), github = NULL)
 }
 \arguments{
 \item{pkg}{Which package are we talking about?}

@@ -32,7 +32,7 @@ check_github_token(install = getOption("repro.install"))
 
 check_github_ssh()
 
-check_github()
+check_github(auth_method = "token")
 
 check_renv(install = getOption("repro.install"))
 
@@ -42,6 +42,8 @@ check_worcs(install = getOption("repro.install"))
 }
 \arguments{
 \item{install}{Should something be installed? Defaults to "ask", but can be TRUE/FALSE.}
+
+\item{auth_method}{How do you want to authenticate with GitHub? Either "token" (default) or "ssh".}
 }
 \description{
 Check if a dependency is installed and if not it recommends how to install it

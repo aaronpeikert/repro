@@ -5,6 +5,7 @@
 #' `git`, `make` & `docker`. And just for convenience of the installation it
 #' checks on OS X for `Homebrew` and on Windows for `Chocolately`.
 #' @param install Should something be installed? Defaults to "ask", but can be TRUE/FALSE.
+#' @param auth_method How do you want to authenticate with GitHub? Either "token" (default) or "ssh".
 #' @name check
 #' @family checkers
 NULL
@@ -122,17 +123,18 @@ check_github_ssh <- function() {
 
 #' @rdname check
 #' @export
-check_github <- function(){
+check_github <- function(auth_method = "token"){
+  stopifnot(auth_method %in% c("token", "ssh"))
   if (!has_n_check(has_git, check_git)) {
     msg_rerun("check_github()")
     return(FALSE)
-  } else if (!has_n_check(has_ssh, check_ssh)) {
+  } else if (!has_n_check(has_ssh, check_ssh) && auth_method == "ssh") {
     msg_rerun("check_github()")
     return(FALSE)
-  } else if (!has_n_check(has_github_ssh, check_github_ssh)) {
+  } else if (!has_n_check(has_github_ssh, check_github_ssh) && auth_method == "ssh") {
     msg_rerun("check_github()")
     return(FALSE)
-  } else if (!has_n_check(has_github_token, check_github_token)) {
+  } else if (!has_n_check(has_github_token, check_github_token) && auth_method == "token") {
     msg_rerun("check_github()")
     return(FALSE)
   } else {
