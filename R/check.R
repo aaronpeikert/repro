@@ -128,13 +128,13 @@ check_github <- function(auth_method = "token"){
   if (!has_n_check(has_git, check_git)) {
     msg_rerun("check_github()")
     return(FALSE)
-  } else if (!has_n_check(has_ssh, check_ssh) && auth_method == "ssh") {
+  } else if (auth_method == "ssh" && !has_n_check(has_ssh, check_ssh)) {
     msg_rerun("check_github()")
     return(FALSE)
-  } else if (!has_n_check(has_github_ssh, check_github_ssh) && auth_method == "ssh") {
+  } else if (auth_method == "ssh" && !has_n_check(has_github_ssh, check_github_ssh)) {
     msg_rerun("check_github()")
     return(FALSE)
-  } else if (!has_n_check(has_github_token, check_github_token) && auth_method == "token") {
+  } else if (auth_method == "token" && !has_n_check(has_github_token, check_github_token)) {
     msg_rerun("check_github()")
     return(FALSE)
   } else {
