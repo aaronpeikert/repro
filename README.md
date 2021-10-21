@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/aaronpeikert/repro.svg?branch=master)](https://travis-ci.org/aaronpeikert/repro)
+[![R-CMD-check](https://github.com/aaronpeikert/repro/workflows/R-CMD-check/badge.svg)](https://github.com/aaronpeikert/repro/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/aaronpeikert/repro/branch/master/graph/badge.svg)](https://codecov.io/gh/aaronpeikert/repro?branch=master)
 [![Project Status: WIP – Initial development is in progress, but there

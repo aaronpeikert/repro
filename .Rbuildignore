@@ -7,3 +7,4 @@
 ^codecov\.yml$
 ^prep.R$
 ^Makefile$
+^\.github$
