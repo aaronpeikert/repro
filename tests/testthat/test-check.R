@@ -111,6 +111,8 @@ test_that("the correct instalation hint for OS X is given.", {
       testthat::expect_message(check_docker(), "brew", ignore.case = TRUE)
       testthat::expect_message(check_docker(), "install", ignore.case = TRUE)
       testthat::expect_message(check_docker(), "docker", ignore.case = TRUE)
+      testthat::expect_message(check_docker(), "--cask", ignore.case = TRUE)
+
 
 
       testthat::expect_message(check_git(), "os x", ignore.case = TRUE)

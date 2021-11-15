@@ -16,7 +16,7 @@ check_docker <- function(){
   if(has_docker_running())has_docker_running(silent = FALSE)
   else if(!has_docker(silent = FALSE)){
     msg_install_with_choco("Docker", "choco install -y docker-desktop")
-    msg_install_with_brew("Docker", "brew cask install docker", {
+    msg_install_with_brew("Docker", "brew install --cask docker", {
       usethis::ui_todo("Open 'Docker'/'Docker Desktop for Mac' once to make it available.")
     })
     msg_install_with_apt("Docker", "apt install docker", {
