@@ -27,9 +27,10 @@ mycars <- automate_load_data(mycars, read.csv, stringsAsFactors = FALSE)
 
 ## Repro Package
 
-May I suggest running `repro::automate()`? This will create a `Dockerfile` & `Makefile` based on every RMarkdown in this folder and the special yamls in them.
+May I suggest to run `repro::automate()` now? This will create a `Dockerfile` & `Makefile` based on every RMarkdown file in this folder.
+The meta information that are provided in each RMarkdown (remember there are special yaml headers for repro) will be evaluted and adjustments will be made accordingly.
 
-If you are unsure weather or not you have `git` `make` & `docker`.
+If you are unsure whether or not you have `git` `make` & `docker` on your system, try running this in your R console:
 
 ```{r, eval=FALSE}
 check_git()
