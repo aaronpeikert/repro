@@ -161,10 +161,12 @@ test_that("github function recognize options set to FALSE", {
     repro.ssh = FALSE,
     repro.github.ssh = FALSE,
     repro.github.token = FALSE,
+    repro.github.token.access = FALSE,
     repro.os = "linux"), {
       expect_false(check_ssh(install = FALSE))
       expect_false(check_github_ssh())
       expect_false(check_github_token(install = FALSE))
+      expect_false(check_github_token_access())
       expect_false(check_github())
 
       expect_oops(check_ssh(install = FALSE))
@@ -180,10 +182,12 @@ test_that("github function recognize options set to TRUE", {
     repro.ssh = TRUE,
     repro.github.ssh = TRUE,
     repro.github.token = TRUE,
+    repro.github.token.access = TRUE,
     repro.os = "linux"), {
       expect_true(check_ssh())
       expect_true(check_github_ssh())
       expect_true(check_github_token())
+      expect_true(check_github_token_access())
       expect_true(check_github())
 
       expect_ok(check_ssh())
@@ -199,6 +203,7 @@ test_that("github function works token only", {
     repro.ssh = FALSE,
     repro.github.ssh = FALSE,
     repro.github.token = TRUE,
+    repro.github.token.access = TRUE,
     repro.os = "linux"), {
       expect_false(check_ssh())
       expect_false(check_github_ssh())
@@ -218,6 +223,7 @@ test_that("github function works ssh only", {
     repro.ssh = TRUE,
     repro.github.ssh = TRUE,
     repro.github.token = FALSE,
+    repro.github.token.access = FALSE,
     repro.os = "linux"), {
       expect_true(check_ssh())
       expect_true(check_github_ssh())
@@ -242,6 +248,7 @@ test_that("check functions return invisibly", {
       repro.ssh = TRUE,
       repro.github.ssh = TRUE,
       repro.github.token = TRUE,
+      repro.github.token.access = TRUE,
       repro.os = "linux",
       repro.renv = TRUE,
       repro.targets = TRUE,

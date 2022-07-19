@@ -25,6 +25,7 @@
     repro.github = NA,
     repro.github.ssh = NA,
     repro.github.token = NA,
+    repro.github.token.access = NA,
     repro.pkgtest = FALSE,
     repro.install = "ask",
     repro.reproduce.funs = reproduce_funs,

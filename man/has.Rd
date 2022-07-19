@@ -10,6 +10,7 @@
 \alias{has_brew}
 \alias{has_ssh}
 \alias{has_github_token}
+\alias{has_github_token_access}
 \alias{has_github_ssh}
 \alias{has_github}
 \alias{has_renv}
@@ -33,6 +34,8 @@ has_brew(silent = TRUE, force_logical = TRUE)
 has_ssh(silent = TRUE, force_logical = TRUE)
 
 has_github_token(silent = TRUE, force_logical = TRUE)
+
+has_github_token_access(silent = TRUE, force_logical = TRUE)
 
 has_github_ssh(silent = TRUE, force_logical = TRUE)
 

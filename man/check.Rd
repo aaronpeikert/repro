@@ -9,6 +9,7 @@
 \alias{check_choco}
 \alias{check_ssh}
 \alias{check_github_token}
+\alias{check_github_token_access}
 \alias{check_github_ssh}
 \alias{check_github}
 \alias{check_renv}
@@ -29,6 +30,8 @@ check_choco()
 check_ssh(install = getOption("repro.install"))
 
 check_github_token(install = getOption("repro.install"))
+
+check_github_token_access()
 
 check_github_ssh()
 

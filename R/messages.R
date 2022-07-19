@@ -29,6 +29,13 @@ msg_github_token <- function(what, installed){
   else usethis::ui_oops("You have no GitHub token.")
 }
 
+msg_github_token_access <- function(what, installed){
+  if (isTRUE(installed))usethis::ui_done("Your GitHub token grants access, don't worry.")
+  else if(installed == "bad_credentials")usethis::ui_oops("Your GitHub token is not valid (anymore).")
+  else if(installed == "bad_format")usethis::ui_oops("Your GitHub token has the wrong format.")
+  else usethis::ui_oops("You currently have no access to GitHub.")
+}
+
 msg_github_ssh <- function(what, installed){
   if (isTRUE(installed))usethis::ui_done("You have SSH access to GitHub, don't worry.")
   else if (isFALSE(installed))usethis::ui_oops("You have no access to GitHub.")

@@ -105,6 +105,15 @@ check_github_token <- function(install = getOption("repro.install")){
 
 #' @rdname check
 #' @export
+check_github_token_access <- function(){
+  if(!has_github_token_access(silent = FALSE)){
+    usethis::ui_todo("Generate a new GitHub token with {usethis::ui_code('usethis::create_github_token()')}.")
+  }
+  invisible(has_github_token_access())
+}
+
+#' @rdname check
+#' @export
 check_github_ssh <- function() {
   if (!has_github_ssh(silent = FALSE)) {
     if (has_github_ssh(force_logical = FALSE) == "recheck_authenticity") {
@@ -137,6 +146,8 @@ check_github <- function(auth_method = "token"){
   } else if (auth_method == "token" && !has_n_check(has_github_token, check_github_token)) {
     msg_rerun("check_github()")
     return(FALSE)
+  } else if (auth_method == "token" && !has_n_check(has_github_token_access, check_github_token_access)) {
+    msg_rerun("check_github()")
   } else {
     invisible(has_github(silent = FALSE))
   }
