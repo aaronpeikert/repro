@@ -1,4 +1,4 @@
-test_that("uses works", {
+test_that("github action is created", {
   op <- options()
   scoped_temporary_project()
   use_github_action_docker()
