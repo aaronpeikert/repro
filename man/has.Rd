@@ -61,6 +61,7 @@ Corresponding functions to \code{\link{check}}, but intended for programatic use
 Other checkers: 
 \code{\link{check_package}()},
 \code{\link{check}},
-\code{\link{has_package}()}
+\code{\link{has_package}()},
+\code{\link{uses}}
 }
 \concept{checkers}
