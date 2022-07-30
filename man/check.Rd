@@ -58,6 +58,7 @@ checks on OS X for \code{Homebrew} and on Windows for \code{Chocolately}.
 Other checkers: 
 \code{\link{check_package}()},
 \code{\link{has_package}()},
-\code{\link{has}}
+\code{\link{has}},
+\code{\link{uses}}
 }
 \concept{checkers}

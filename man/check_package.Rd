@@ -21,6 +21,7 @@ Check if package exists
 Other checkers: 
 \code{\link{check}},
 \code{\link{has_package}()},
-\code{\link{has}}
+\code{\link{has}},
+\code{\link{uses}}
 }
 \concept{checkers}

@@ -1,0 +1,10 @@
+test_that("uses works", {
+  op <- options()
+  scoped_temporary_project()
+  cat(test_rmd1, file = "test.Rmd")
+  expect_oops(uses_docker())
+  expect_oops(uses_make())
+  automate()
+  expect_ok(uses_docker())
+  expect_ok(uses_make())
+})

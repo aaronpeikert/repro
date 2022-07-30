@@ -35,7 +35,7 @@ automate_make_rmd <- function(path){
       xfun::write_utf8(entries, getOption("repro.makefile.rmds"))
     }
     usethis::ui_done("Writing {usethis::ui_path(getOption('repro.makefile.rmds'))}")
-    if(!fs::file_exists("Makefile")){
+    if(!uses_make()){
       use_make(open = FALSE)
     }
   }

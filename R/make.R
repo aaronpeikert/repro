@@ -15,9 +15,8 @@ NULL
 #' @rdname make
 #' @export
 use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open = TRUE){
-  if(fs::file_exists("Makefile")){
-    usethis::ui_done("{usethis::ui_code('Makefile')} allready exists, skip creating it.")
-    return(invisible())
+  if(uses_make(silent = TRUE)){
+    return(uses_make())
   }
   # start out with the simplist Makefile possible
   template_data <- list(
@@ -36,7 +35,7 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
   # add Docker & Wrapper to template
   if(isTRUE(docker) | is.character(docker)){
     do.call(use_make_docker, list(file = docker))
-  } else if(fs::file_exists("Dockerfile")){
+  } else if(uses_docker(silent = TRUE)){
     use_make_docker(use_docker = FALSE)
   }
   if(fs::file_exists(getOption("repro.makefile.docker"))){
@@ -55,7 +54,7 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
       do.call(use_make_singularity, list(file = singularity))
     }
   if(fs::file_exists(getOption("repro.makefile.singularity"))){
-    if(!fs::file_exists("Dockerfile"))usethis::ui_stop("Singularity depends in this setup on Docker.\nSet {usethis::ui_code('docker = TRUE')} & {usethis::ui_code('singularity = TRUE')}")
+    if(!uses_docker(silent = TRUE))usethis::ui_stop("Singularity depends in this setup on Docker.\nSet {usethis::ui_code('docker = TRUE')} & {usethis::ui_code('singularity = TRUE')}")
     template_data$singularity <- TRUE
   }
   usethis::use_template(
