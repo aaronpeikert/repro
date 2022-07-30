@@ -1,7 +1,6 @@
 test_that("github action is created only when Dockerfile exists", {
   op <- options()
   scoped_temporary_project()
-  scoped_temporary_project()
   cat(test_rmd1, file = "test.Rmd")
   expect_oops(use_github_action_docker())
   automate()
