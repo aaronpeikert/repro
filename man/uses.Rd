@@ -11,7 +11,7 @@ uses_make(silent = FALSE)
 uses_docker(silent = FALSE)
 }
 \arguments{
-\item{silent}{Should a message be printed that informs the user?}
+\item{silent}{Defaults to \code{false}. Should a message be printed that informs the user?}
 }
 \description{
 Check if a project uses certain things, e.g. Make or Docker.

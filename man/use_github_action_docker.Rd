@@ -4,7 +4,10 @@
 \alias{use_github_action_docker}
 \title{Use GitHub Action to Build Dockerimage}
 \usage{
-use_github_action_docker(file = ".github/workflows/push-container.yml")
+use_github_action_docker(
+  file = ".github/workflows/push-container.yml",
+  open = TRUE
+)
 }
 \arguments{
 \item{file}{Which file to save to.}
