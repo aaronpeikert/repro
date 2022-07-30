@@ -77,6 +77,13 @@ has_ssh_ <- function(){
                                "try-error")
 }
 has_github_token_ <- function()gh::gh_token() != ""
+has_gitub_token_access_ <- function(){
+  result <- tryCatch(gh::gh("/user"), error = function(e)e)
+  if(inherits(result, "gh_response"))return(TRUE)
+  if(inherits(result, "http_error_401"))return("bad_credentials")
+  if(inherits(result, "rlib_error") && grepl("one of these forms", result$message))return("bad_format")
+  else return(FALSE)
+}
 has_github_ssh_ <- function(){
   temp <- tempfile()
   system2("ssh", "-T git@github.com", stdout = temp, stderr = temp)
@@ -85,7 +92,7 @@ has_github_ssh_ <- function(){
   if(any(grepl("success", output)))return(TRUE)
   else return(FALSE)
 }
-has_github_ <- function()has_git() && has_github_ssh() && has_github_token()
+has_github_ <- function()has_git() && has_github_ssh() && has_github_token() && has_github_token_access()
 
 #' Check System Dependencies
 #'
@@ -131,6 +138,10 @@ has_ssh <- has_factory("SSH", "repro.ssh", dangerous(has_ssh_), msg_ssh_keys)
 #' @rdname has
 #' @export
 has_github_token <- has_factory("GitHub token", "repro.github.token", dangerous(has_github_token_), msg_github_token)
+
+#' @rdname has
+#' @export
+has_github_token_access <- has_factory("GitHub token access", "repro.github.token.access", dangerous(has_github_token_access_), msg_github_token_access)
 
 #' @rdname has
 #' @export
