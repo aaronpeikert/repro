@@ -87,5 +87,5 @@ test_that("Existing Makefile remains untouched.", {
   scoped_temporary_project()
   cat("all: test.txt", file = "Makefile")
   expect_ok(repro::use_make())
-  expect_message(repro::use_make(), "exists")
+  expect_message(repro::use_make(), "already use Make")
 })

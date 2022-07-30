@@ -12,8 +12,6 @@ uses_docker(silent = FALSE)
 }
 \arguments{
 \item{silent}{Should a message be printed that informs the user?}
-
-\item{force_logical}{Should the return value be passed through \href{base}{\code{isTRUE}}?}
 }
 \description{
 Check if a project uses certain things, e.g. Make or Docker.

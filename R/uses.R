@@ -3,7 +3,6 @@
 #' Check if a project uses certain things, e.g. Make or Docker.
 #'
 #' @param silent Should a message be printed that informs the user?
-#' @param force_logical Should the return value be passed through [`isTRUE`](base)?
 #' @param
 #' @name uses
 #' @family checkers
