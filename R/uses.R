@@ -2,8 +2,7 @@
 #'
 #' Check if a project uses certain things, e.g. Make or Docker.
 #'
-#' @param silent Should a message be printed that informs the user?
-#' @param
+#' @param silent Defaults to `false`. Should a message be printed that informs the user?
 #' @name uses
 #' @family checkers
 NULL
