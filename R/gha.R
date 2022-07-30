@@ -7,7 +7,7 @@
 #' @param open Open the newly created file for editing? Happens in RStudio, if applicable, or via utils::file.edit() otherwise.
 #' @export
 
-use_github_action_docker <- function(file = ".github/workflows/push-container.yml"){
+use_github_action_docker <- function(file = ".github/workflows/push-container.yml", open = TRUE){
   if(uses_docker()){
     fs::dir_create(fs::path_dir(file))
     usethis::use_template(
