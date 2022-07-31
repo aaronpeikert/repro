@@ -62,6 +62,7 @@ use_gha_publish <- function(file = getOption("repro.gha.publish"), open = TRUE){
       open = open,
       package = "repro"
     )
+    automate_make_rmd_check(path = ".", target = "publish")
   } else {
     invisible()
   }

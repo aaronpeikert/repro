@@ -22,6 +22,7 @@ automate_make <- function(path = "."){
   automate_make_rmd(path)
   # automate_make_bookdown()
   use_make(docker = FALSE, singularity = FALSE, torque = FALSE)
+  automate_make_rmd_check(path, target ="all")
 }
 
 automate_make_rmd <- function(path){
@@ -39,14 +40,18 @@ automate_make_rmd <- function(path){
       use_make(open = FALSE)
     }
   }
+}
+
+automate_make_rmd_check <- function(path, target = "all"){
+  yamls <- get_yamls(path)
   output_files <- lapply(yamls, function(x)do.call(get_output_files, x))
   output_files <- unlist(output_files)
   makefile <- xfun::read_utf8("Makefile")
-  all <- makefile[stringr::str_detect(makefile, "^all:")]
+  all <- makefile[stringr::str_detect(makefile, stringr::str_c("^", target, ":"))]
   which_missing <- lapply(output_files, function(x)!stringr::str_detect(all, x))
   missing <- output_files[unlist(which_missing)]
   if(length(missing) > 0){
-    usethis::ui_todo("You probably want to add:\n{usethis::ui_value(missing)}\nto the {usethis::ui_value('Makefile')}-target {usethis::ui_value('all')}.")
+    usethis::ui_todo("You maybe want to add:\n{usethis::ui_value(missing)}\nto the {usethis::ui_value('Makefile')}-target {usethis::ui_value(target)}.")
     usethis::edit_file("Makefile")
   }
 }
