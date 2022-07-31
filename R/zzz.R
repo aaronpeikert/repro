@@ -26,6 +26,8 @@
     repro.github.ssh = NA,
     repro.github.token = NA,
     repro.github.token.access = NA,
+    repro.gha.docker = ".github/workflows/push-container.yml",
+    repro.gha.publish = ".github/workflows/publish.yml",
     repro.pkgtest = FALSE,
     repro.install = "ask",
     repro.reproduce.funs = reproduce_funs,

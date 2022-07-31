@@ -1,0 +1,33 @@
+on:
+  push:
+    branches: main
+  registry_package:
+    types: [published, updated]
+  workflow_dispatch:
+
+name: Render and publish PDF
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    container: ghcr.io/aaronpeikert/bayes-prereg:main
+    steps:
+      -
+        name: Checkout repository
+        uses: actions/checkout@v3
+      -
+        name: Render PDF
+        run: |
+          make publish/
+      -
+        name: Publish 🚀
+        # only publish when push to main
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # The branch the action should deploy to.
+          branch: gh-pages
+          # The folder the action should deploy. Adapt if you changed in Quarto config
+          folder: publish/
+          # Organizations require token of the bearer!
+          token: $[[ secrets.GITHUB_TOKEN ]]

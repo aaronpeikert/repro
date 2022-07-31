@@ -4,11 +4,17 @@
 \alias{uses}
 \alias{uses_make}
 \alias{uses_docker}
+\alias{uses_gha_docker}
+\alias{uses_gha_publish}
 \title{Check Project Configuration}
 \usage{
 uses_make(silent = FALSE)
 
 uses_docker(silent = FALSE)
+
+uses_gha_docker(silent = FALSE)
+
+uses_gha_publish(silent = FALSE)
 }
 \arguments{
 \item{silent}{Defaults to \code{false}. Should a message be printed that informs the user?}
