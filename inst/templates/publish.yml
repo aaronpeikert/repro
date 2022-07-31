@@ -5,7 +5,7 @@ on:
     types: [published, updated]
   workflow_dispatch:
 
-name: Render and publish PDF
+name: Render and publish
 
 jobs:
   docker:
