@@ -47,13 +47,25 @@ automate_make_rmd_check <- function(path, target = "all"){
   output_files <- lapply(yamls, function(x)do.call(get_output_files, x))
   output_files <- unlist(output_files)
   makefile <- xfun::read_utf8("Makefile")
-  all <- makefile[stringr::str_detect(makefile, stringr::str_c("^", target, ":"))]
-  which_missing <- lapply(output_files, function(x)!stringr::str_detect(all, x))
+  target_line <- makefile[stringr::str_detect(makefile, stringr::str_c("^", target, ":"))]
+  which_missing <- lapply(output_files, function(x)!stringr::str_detect(target_line, x))
   missing <- output_files[unlist(which_missing)]
-  if(length(missing) > 0){
-    usethis::ui_todo("You maybe want to add:\n{usethis::ui_value(missing)}\nto the {usethis::ui_value('Makefile')}-target {usethis::ui_value(target)}.")
-    usethis::edit_file("Makefile")
+  if (length(target_line) > 1L) {
+    usethis::ui_oops(
+      "Ther are multiple {usethis::ui_value('Makefile')}-targets {usethis::ui_value(target)}. This is confusing, so consider joining them into one."
+    )
   }
+  else if (length(target_line) == 0L) {
+    usethis::ui_todo(
+      "There is no {usethis::ui_value('Makefile')}-target {usethis::ui_value(target)}. Create one with one or more dependencies:\n{usethis::ui_value(output_files)}"
+    )
+  }
+  else if (length(missing) > 0){
+    usethis::ui_todo(
+      "Maybe you want to add:\n{usethis::ui_value(missing)}\nto the {usethis::ui_value('Makefile')}-target {usethis::ui_value(target)}."
+    )
+  }
+  usethis::edit_file("Makefile")
 }
 
 yaml_to_make <- function(file, output, data = NULL, scripts = NULL, bibliography = NULL, images = NULL, files = NULL, ...){
