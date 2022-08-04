@@ -99,3 +99,17 @@ use_make_singularity <- function(file, use_singularity = TRUE, open = FALSE){
     package = "repro"
   )
 }
+
+#' @rdname make
+#' @export
+use_make_publish <- function(file, open = FALSE){
+  if(missing(file))file <- getOption("repro.makefile.publish")
+  if(isTRUE(file))file <- getOption("repro.makefile.publish")
+  usethis::use_template(
+    "Makefile_publish",
+    file,
+    ignore = FALSE,
+    open = FALSE,
+    package = "repro"
+  )
+}

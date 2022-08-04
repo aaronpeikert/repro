@@ -194,7 +194,8 @@ automate_dir <- function(dir, warn = FALSE, create = !warn){
       "repro.makefile.docker",
       "repro.makefile.singularity",
       "repro.makefile.torque",
-      "repro.makefile.rmds"
+      "repro.makefile.rmds",
+      "repro.makefile.publish"
     )
     allready_changed <- function(x){
       stringr::str_detect(op[[x]], stringr::str_c("^", op[["repro.dir"]]))
