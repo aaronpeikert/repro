@@ -11,10 +11,13 @@
 #' @param open [`usethis::use_template()`]
 #' @param package [`usethis::use_template()`]
 use_template_template <- function(template, save_as = template, escape = c(`\\[\\[` = "{{", `\\]\\]` = "}}"), data = list(), ignore = FALSE, open = FALSE, package = "repro"){
-  usethis::use_template(template, save_as, data, ignore, open, package)
-  intermediate <- xfun::read_utf8(save_as)
+  usethis::use_template(template = template, save_as = save_as, data = data, ignore = ignore, open = FALSE, package = package)
+  location <- usethis::proj_path(save_as)
+  intermediate <- xfun::read_utf8(location)
   out <- stringr::str_replace_all(intermediate, escape)
-  xfun::write_utf8(out, save_as)
+  xfun::write_utf8(out, location)
+  if(open)usethis::edit_file(location)
+  invisible()
 }
 
 #' Use GitHub Action to Build Dockerimage
