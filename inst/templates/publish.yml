@@ -16,7 +16,7 @@ jobs:
         name: Checkout repository
         uses: actions/checkout@v3
       -
-        name: Render PDF
+        name: Make things to be published.
         run: |
           make publish/
       -
@@ -27,7 +27,7 @@ jobs:
         with:
           # The branch the action should deploy to.
           branch: gh-pages
-          # The folder the action should deploy. Adapt if you changed in Quarto config
+          # The folder the action should deploy.
           folder: publish/
           # Organizations require token of the bearer!
           token: $[[ secrets.GITHUB_TOKEN ]]
