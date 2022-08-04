@@ -12,6 +12,7 @@ NULL
 #' @export
 automate <- function(path = "."){
   automate_docker(path)
+  #automate_publish(path)
   automate_make(path)
   return(invisible(NULL))
 }
@@ -23,6 +24,17 @@ automate_make <- function(path = "."){
   # automate_make_bookdown()
   use_make(docker = FALSE, singularity = FALSE, torque = FALSE)
   automate_make_rmd_check(path, target ="all")
+}
+
+#' @rdname automate
+#' @export
+automate_publish <- function(path = "."){
+  if(automate_dir()){
+    use_gha_docker()
+    use_gha_publish()
+    use_make_publish()
+    automate_make_rmd_check(path = ".", target = "publish/")
+  }
 }
 
 automate_make_rmd <- function(path){
