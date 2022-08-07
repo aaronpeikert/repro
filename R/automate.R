@@ -14,6 +14,8 @@ automate <- function(path = "."){
   automate_docker(path)
   #automate_publish(path)
   automate_make(path)
+  if(uses_gha_publish(silent = TRUE))
+    automate_make_rmd_check(path, target = "publish/")
   return(invisible(NULL))
 }
 
@@ -23,7 +25,8 @@ automate_make <- function(path = "."){
   automate_make_rmd(path)
   # automate_make_bookdown()
   use_make(docker = FALSE, singularity = FALSE, torque = FALSE)
-  automate_make_rmd_check(path, target ="all")
+  if(uses_make_rmds(silent = TRUE))
+    automate_make_rmd_check(path, target ="all")
 }
 
 #' @rdname automate
@@ -48,13 +51,13 @@ automate_make_rmd <- function(path){
       xfun::write_utf8(entries, getOption("repro.makefile.rmds"))
     }
     usethis::ui_done("Writing {usethis::ui_path(getOption('repro.makefile.rmds'))}")
-    if(!uses_make()){
-      use_make(open = FALSE)
-    }
   }
 }
 
-automate_make_rmd_check <- function(path, target = "all"){
+automate_make_rmd_check <- function(path, edit = FALSE, target = "all"){
+  if(!uses_make(silent = TRUE)){
+    return(invisible())
+  }
   yamls <- get_yamls(path)
   output_files <- lapply(yamls, function(x)do.call(get_output_files, x))
   output_files <- unlist(output_files)
@@ -77,7 +80,9 @@ automate_make_rmd_check <- function(path, target = "all"){
       "Maybe you want to add:\n{usethis::ui_value(missing)}\nto the {usethis::ui_value('Makefile')}-target {usethis::ui_value(target)}."
     )
   }
-  usethis::edit_file("Makefile")
+  if(edit){
+    usethis::edit_file("Makefile")
+  }
 }
 
 yaml_to_make <- function(file, output, data = NULL, scripts = NULL, bibliography = NULL, images = NULL, files = NULL, ...){

@@ -11,6 +11,7 @@
     repro.makefile.singularity = "Makefile_Singularity",
     repro.makefile.torque = "Makefile_TORQUE",
     repro.makefile.rmds = "Makefile_Rmds",
+    repro.makefile.publish = "Makefile_publish",
     repro.docker = NA,
     repro.docker.running = NA,
     repro.make = NA,

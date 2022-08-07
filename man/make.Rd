@@ -5,16 +5,27 @@
 \alias{use_make}
 \alias{use_make_docker}
 \alias{use_make_singularity}
+\alias{use_make_publish}
 \title{Use Make}
 \usage{
-use_make(docker = FALSE, singularity = FALSE, torque = FALSE, open = TRUE)
+use_make(
+  docker = FALSE,
+  publish = FALSE,
+  singularity = FALSE,
+  torque = FALSE,
+  open = TRUE
+)
 
 use_make_docker(file, use_docker = TRUE, dockerignore = TRUE, open = FALSE)
 
 use_make_singularity(file, use_singularity = TRUE, open = FALSE)
+
+use_make_publish(file, open = FALSE)
 }
 \arguments{
 \item{docker}{If true or a path a setup is created that can partially send make commands to a Docker container.}
+
+\item{publish}{Should the \code{Makefile_publish} also be created?}
 
 \item{singularity}{If true or a path a setup is created that can partially send make commands to a Singularity container (which requires the Dockerimage)}
 

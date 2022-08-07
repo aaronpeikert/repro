@@ -5,6 +5,7 @@
 #' @param docker If true or a path a setup is created that can partially send make commands to a Docker container.
 #' @param singularity If true or a path a setup is created that can partially send make commands to a Singularity container (which requires the Dockerimage)
 #' @param torque If true a or a path setup is created that can partially send make comands to a TORQUE job scheduler. Especially usefull in combination with a Singularity container.
+#' @param publish Should the `Makefile_publish` also be created?
 #' @param use_docker If true `use_docker()` is called.
 #' @param use_singularity If true `use_singularity()` is called.
 #' @param dockerignore If true a .dockerignore file is created.
@@ -14,7 +15,7 @@ NULL
 
 #' @rdname make
 #' @export
-use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open = TRUE){
+use_make <- function(docker = FALSE, publish = FALSE, singularity = FALSE, torque = FALSE, open = TRUE){
   if(uses_make(silent = TRUE)){
     return(uses_make())
   }
@@ -27,11 +28,20 @@ use_make <- function(docker = FALSE, singularity = FALSE, torque = FALSE, open =
     singularity = FALSE,
     torque = FALSE,
     rmds = FALSE,
+    publish = FALSE,
     makefile_docker = getOption("repro.makefile.docker"),
     makefile_singularity = getOption("repro.makefile.singularity"),
     makefile_torque = getOption("repro.makefile.torque"),
-    makefile_rmds = getOption("repro.makefile.rmds")
+    makefile_rmds = getOption("repro.makefile.rmds"),
+    makefile_publish = getOption("repro.makefile.publish")
   )
+  # add publish to template
+  if(isTRUE(publish) | is.character(publish)){
+    do.call(use_make_publish, list(file = publish))
+  }
+  if(uses_make_publish(silent = TRUE)){
+    template_data$publish <- TRUE
+  }
   # add Docker & Wrapper to template
   if(isTRUE(docker) | is.character(docker)){
     do.call(use_make_docker, list(file = docker))

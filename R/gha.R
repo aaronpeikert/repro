@@ -30,7 +30,7 @@ use_template_template <- function(template, save_as = template, escape = c(`\\[\
 
 use_gha_docker <- function(file = getOption("repro.gha.docker"), open = TRUE){
   if(uses_docker()){
-    fs::dir_create(fs::path_dir(file))
+    fs::dir_create(fs::path_dir(usethis::proj_path(file)))
     use_template_template(
       "push-container.yml",
       file,
@@ -56,7 +56,7 @@ use_gha_docker <- function(file = getOption("repro.gha.docker"), open = TRUE){
 
 use_gha_publish <- function(file = getOption("repro.gha.publish"), open = TRUE){
   if(uses_gha_docker()){
-    fs::dir_create(fs::path_dir(file))
+    fs::dir_create(fs::path_dir(usethis::proj_path(file)))
     use_template_template(
       "publish.yml",
       file,
@@ -65,7 +65,6 @@ use_gha_publish <- function(file = getOption("repro.gha.publish"), open = TRUE){
       open = open,
       package = "repro"
     )
-    automate_make_rmd_check(path = ".", target = "publish")
   } else {
     invisible()
   }
