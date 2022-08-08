@@ -12,7 +12,10 @@ NULL
 #' @export
 automate <- function(path = "."){
   automate_docker(path)
+  #automate_publish(path)
   automate_make(path)
+  if(uses_gha_publish(silent = TRUE))
+    automate_make_rmd_check(path, target = "publish/")
   return(invisible(NULL))
 }
 
@@ -22,6 +25,19 @@ automate_make <- function(path = "."){
   automate_make_rmd(path)
   # automate_make_bookdown()
   use_make(docker = FALSE, singularity = FALSE, torque = FALSE)
+  if(uses_make_rmds(silent = TRUE))
+    automate_make_rmd_check(path, target ="all")
+}
+
+#' @rdname automate
+#' @export
+automate_publish <- function(path = "."){
+  if(automate_dir()){
+    use_gha_docker()
+    use_gha_publish()
+    use_make_publish()
+    automate_make_rmd_check(path = ".", target = "publish/")
+  }
 }
 
 automate_make_rmd <- function(path){
@@ -35,18 +51,36 @@ automate_make_rmd <- function(path){
       xfun::write_utf8(entries, getOption("repro.makefile.rmds"))
     }
     usethis::ui_done("Writing {usethis::ui_path(getOption('repro.makefile.rmds'))}")
-    if(!uses_make()){
-      use_make(open = FALSE)
-    }
   }
+}
+
+automate_make_rmd_check <- function(path, edit = FALSE, target = "all"){
+  if(!uses_make(silent = TRUE)){
+    return(invisible())
+  }
+  yamls <- get_yamls(path)
   output_files <- lapply(yamls, function(x)do.call(get_output_files, x))
   output_files <- unlist(output_files)
   makefile <- xfun::read_utf8("Makefile")
-  all <- makefile[stringr::str_detect(makefile, "^all:")]
-  which_missing <- lapply(output_files, function(x)!stringr::str_detect(all, x))
+  target_line <- makefile[stringr::str_detect(makefile, stringr::str_c("^", target, ":"))]
+  which_missing <- lapply(output_files, function(x)!stringr::str_detect(target_line, x))
   missing <- output_files[unlist(which_missing)]
-  if(length(missing) > 0){
-    usethis::ui_todo("You probably want to add:\n{usethis::ui_value(missing)}\nto the {usethis::ui_value('Makefile')}-target {usethis::ui_value('all')}.")
+  if (length(target_line) > 1L) {
+    usethis::ui_oops(
+      "Ther are multiple {usethis::ui_value('Makefile')}-targets {usethis::ui_value(target)}. This is confusing, so consider joining them into one."
+    )
+  }
+  else if (length(target_line) == 0L) {
+    usethis::ui_todo(
+      "There is no {usethis::ui_value('Makefile')}-target {usethis::ui_value(target)}. Create one with one or more dependencies:\n{usethis::ui_value(output_files)}"
+    )
+  }
+  else if (length(missing) > 0){
+    usethis::ui_todo(
+      "Maybe you want to add:\n{usethis::ui_value(missing)}\nto the {usethis::ui_value('Makefile')}-target {usethis::ui_value(target)}."
+    )
+  }
+  if(edit){
     usethis::edit_file("Makefile")
   }
 }
@@ -165,7 +199,8 @@ automate_dir <- function(dir, warn = FALSE, create = !warn){
       "repro.makefile.docker",
       "repro.makefile.singularity",
       "repro.makefile.torque",
-      "repro.makefile.rmds"
+      "repro.makefile.rmds",
+      "repro.makefile.publish"
     )
     allready_changed <- function(x){
       stringr::str_detect(op[[x]], stringr::str_c("^", op[["repro.dir"]]))

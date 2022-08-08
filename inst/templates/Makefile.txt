@@ -4,6 +4,10 @@ WORKDIR := $(CURDIR)
 # list below your targets and their recipies
 all:
 
+{{#publish}}
+include {{makefile_publish}}
+
+{{/publish}}
 {{#wrapper}}
 ### Wrap Commands ###
 # if a command is to be send to another process e.g. a container/scheduler use:

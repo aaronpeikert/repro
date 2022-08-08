@@ -3,12 +3,15 @@
 \name{automate}
 \alias{automate}
 \alias{automate_make}
+\alias{automate_publish}
 \alias{automate_docker}
 \title{Automate the use of Docker & Make}
 \usage{
 automate(path = ".")
 
 automate_make(path = ".")
+
+automate_publish(path = ".")
 
 automate_docker(path = ".")
 }
