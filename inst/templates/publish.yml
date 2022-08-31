@@ -8,9 +8,19 @@ on:
 name: Render and publish
 
 jobs:
-  docker:
+  imagename:
     runs-on: ubuntu-latest
-    container: ghcr.io/$[[ github.repository ]]:main
+    outputs:
+      lowercase: ${{ steps.lowercase.outputs.test }}
+    steps:
+      -
+        name: Convert the repo name to lowercase.
+        id: lowercase
+        run: echo "::set-output name=test::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
+  publish:
+    runs-on: ubuntu-latest
+    needs: imagename
+    container: ghcr.io/${{needs.imagename.outputs.lowercase}}:main
     steps:
       -
         name: Checkout repository
@@ -30,4 +40,4 @@ jobs:
           # The folder the action should deploy.
           folder: publish/
           # Organizations require token of the bearer!
-          token: $[[ secrets.GITHUB_TOKEN ]]
+          token: ${{ secrets.GITHUB_TOKEN }}
