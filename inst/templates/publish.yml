@@ -4,6 +4,8 @@ on:
   registry_package:
     types: [published, updated]
   workflow_dispatch:
+permissions:
+  contents: write
 
 name: Render and publish
 
